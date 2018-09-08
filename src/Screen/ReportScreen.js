@@ -12,6 +12,7 @@ export default class ReportScreen extends Component {
     usersPlaces:[],
     topicText:"",
     descText:"",
+    reportType: ""
   }
   componentDidMount(){
     navigator.geolocation.getCurrentPosition(position => {
@@ -62,6 +63,10 @@ export default class ReportScreen extends Component {
   setDesc=(text)=>{
     this.setState({descText:text})
   }
+
+  setReportType = (reportType) => {
+    this.setState({ reportType: reportType })
+ }
   
   getUserPlacesHandler=()=>{
     fetch('https://test-2e10e.firebaseio.com/places.json')
@@ -93,6 +98,7 @@ export default class ReportScreen extends Component {
             <Report 
                 changeTopic={this.setTopic}                  
                 changeDescription={this.setDesc} 
+                changeReportType={this.setReportType}
                 onSendReport={this.sendReportHandler} 
             />
             <UsersMap 
