@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, View,Text,Button } from 'react-native';
+import CircleButton from 'react-native-circle-button';
 
 import UsersMap from 'src/Component/UsersMap';
 
@@ -74,6 +75,13 @@ export default class MainScreen extends Component {
           <Button 
             onPress={()=> this.props.navigation.navigate('NotificationScreen')} 
             title="Notification" 
+          />
+        </View> 
+        
+        <View style={styles.button}>
+          <Button 
+            onPress={()=> this.props.navigation.navigate('CallInfoScreen')} 
+            title="Call Info" 
           />
         </View> 
       </View> 
