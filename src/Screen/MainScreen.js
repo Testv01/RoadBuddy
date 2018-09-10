@@ -65,6 +65,7 @@ export default class MainScreen extends Component {
             onPress={this.getUserPlacesHandler} 
           />
         </View> 
+{/* 
         <View style={styles.button}>
           <Button 
             onPress={()=> this.props.navigation.navigate('ReportScreen')} 
@@ -84,6 +85,16 @@ export default class MainScreen extends Component {
             title="Call Info" 
           />
         </View> 
+*/} 
+        <View style={{ flex: 1 }}>
+                <CircleButton 
+                  size={45} 
+                  onPressButtonTop={()=> this.props.navigation.navigate('ReportScreen')}
+                  onPressButtonLeft={()=> this.props.navigation.navigate('NotificationScreen')}
+                  onPressButtonRight={()=> this.props.navigation.navigate('CallInfoScreen')}
+                />
+        </View>
+
       </View> 
     );
   }
