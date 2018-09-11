@@ -5,7 +5,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 const homePlace = { description: 'Home', geometry: { location: { lat: 48.8152937, lng: 2.4597668 } }};
 const workPlace = { description: 'Work', geometry: { location: { lat: 48.8496818, lng: 2.2940881 } }};
 
-const GooglePlacesInput = () => {
+const searchLocation = props => {
   return (
     <GooglePlacesAutocomplete
       placeholder='Search'
@@ -41,6 +41,7 @@ const GooglePlacesInput = () => {
       }}
       
       currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
+      /*
       currentLocationLabel="Current location"
       nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
       GoogleReverseGeocodingQuery={{
@@ -59,8 +60,9 @@ const GooglePlacesInput = () => {
       renderLeftButton={()  => <Text>Custom text after the input</Text>} 
                                 //<Image source={require('path/custom/left-icon')} />}
       renderRightButton={() => <Text>Custom text after the input</Text>}
+      */
     />
   );
 }
 
-export default GooglePlacesInput;
+export default searchLocation;

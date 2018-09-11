@@ -4,6 +4,7 @@ import { StyleSheet, View,Text,Button } from 'react-native';
 import CircleButton from 'react-native-circle-button';
 
 import UsersMap from 'src/Component/UsersMap';
+import SearchLocation from '../Component/Searchlocation';
 
 export default class MainScreen extends Component {
   state ={
@@ -53,7 +54,7 @@ export default class MainScreen extends Component {
   render() {
     return (
      <View style={styles.container}>
-      
+        
         <UsersMap 
                 userLocation={this.state.userLocation} 
                 usersPlaces={this.state.usersPlaces} 
@@ -64,7 +65,8 @@ export default class MainScreen extends Component {
             color='red' 
             onPress={this.getUserPlacesHandler} 
           />
-        </View> 
+        </View>         
+        <SearchLocation style={{ flex: 1,zIndex: 10}} />
 {/* 
         <View style={styles.button}>
           <Button 
