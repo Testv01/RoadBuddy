@@ -3,7 +3,7 @@ import { StyleSheet, View,Text,Button,FlatList,Image } from 'react-native';
 
 import UsersMap from 'src/Component/UsersMap';
 
-export default class MainScreen extends Component {
+export default class NotificationScreen extends Component {
   state ={
     userLocation:null,
     usersPlaces:[],

@@ -91,9 +91,6 @@ export default class ReportScreen extends Component {
   render() {
     return (
         <View style={styles.container}>
-            <Button onPress={()=>
-                this.props.navigation.navigate('MainScreen')} 
-            title="Back" />
             
             <Report 
                 changeTopic={this.setTopic}                  

@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, View,Text,Button } from 'react-native';
+import { StyleSheet, View,Text,Button, StatusBar  } from 'react-native';
 import CircleButton from 'react-native-circle-button';
 
 import UsersMap from 'src/Component/UsersMap';
@@ -13,6 +13,7 @@ export default class MainScreen extends Component {
     topicText:""
   }
   componentDidMount(){
+    StatusBar.setHidden(true);
     navigator.geolocation.getCurrentPosition(position => {
       this.setState({
         userLocation:{
@@ -55,6 +56,7 @@ export default class MainScreen extends Component {
     return (
      <View style={styles.container}>
         
+        <SearchLocation style={{ flex: 1,zIndex: 1}} />
         <UsersMap 
                 userLocation={this.state.userLocation} 
                 usersPlaces={this.state.usersPlaces} 
@@ -66,7 +68,6 @@ export default class MainScreen extends Component {
             onPress={this.getUserPlacesHandler} 
           />
         </View>         
-        <SearchLocation style={{ flex: 1,zIndex: 10}} />
 {/* 
         <View style={styles.button}>
           <Button 

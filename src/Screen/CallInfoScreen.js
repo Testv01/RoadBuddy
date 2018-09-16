@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View,Text,Button,FlatList,Image } from 'react-native';
 
-export default class MainScreen extends Component {
+export default class CallInfoScreen extends Component {
   state ={
     phoneNumbers:[],
   }
@@ -41,7 +41,7 @@ export default class MainScreen extends Component {
                 Description : {item.description}
             </Text>
             <Text style={{fontSize:16,color:'blue'}}>
-                Description : {item.number}
+                Numbers : {item.number}
             </Text>
           </View>
       </View>

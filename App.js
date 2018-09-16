@@ -17,10 +17,30 @@ export default class App extends Component {
 }
 
 const AppNavigator = StackNavigator({
-  MainScreen:{screen : MainScreen},
-  ReportScreen:{screen: ReportScreen},
-  NotificationScreen:{screen: NotificationScreen},
-  CallInfoScreen:{screen: CallInfoScreen}
+  MainScreen:{
+    screen : MainScreen,
+    navigationOptions: () => ({
+      title: `Road Buddy`,
+    }),
+  },
+  ReportScreen:{
+    screen: ReportScreen,
+    navigationOptions: () => ({
+      title: `Report`,
+    }),
+  },
+  NotificationScreen:{
+    screen: NotificationScreen,
+    navigationOptions: () => ({
+      title: `Notification`,
+    }),
+  },
+  CallInfoScreen:{
+    screen: CallInfoScreen,
+    navigationOptions: () => ({
+      title: `Call Info`,
+    }),
+  }
 })
 
 const styles = StyleSheet.create({
