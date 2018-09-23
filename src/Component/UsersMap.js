@@ -1,7 +1,6 @@
 import React from 'react';
 import {View,StyleSheet,TextInput} from 'react-native';
 import MapView from 'react-native-maps';
-import SearchLocation from '../Component/Searchlocation';
 
 const usersMap = props =>{
     
@@ -33,7 +32,6 @@ const usersMap = props =>{
                 {/*userLocationMarker*/}
                 {usersMarkers}
             </MapView>
-            <SearchLocation/>
         </View>
     );
 };

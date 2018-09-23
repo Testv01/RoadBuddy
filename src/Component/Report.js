@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Button,TextInput,View,StyleSheet,Picker} from 'react-native';
+import Tags from "react-native-tags";
 
 const report = props =>{
     
@@ -21,16 +22,16 @@ const report = props =>{
                 placeholder = "Enter Description" 
                 onChangeText={props.changeDescription}
             />
-
-            <Picker style={style.topic} 
-            selectedValue = {this.state.selectedValue} 
-            onValueChange = {(itemValue, itemIndex) => this.setState({reportType: itemValue})}>
-               <Picker.Item label = "Road Problem" value = "Road_Problem" />
-               <Picker.Item label = "Traffic" value = "Traffic" />
-               <Picker.Item label = "Accident" value = "Accident" />
-            </Picker>
-
-            
+            <Tags
+                initialText=""
+                initialTags={["Report"]}
+                onChangeTags={tags => console.log(tags)}
+                onTagPress={(index, tagLabel, event, deleted) =>
+                console.log(index, tagLabel, event, deleted ? "deleted" : "not deleted")
+                }
+                containerStyle={{ justifyContent: "center" }}
+                inputStyle={{ backgroundColor: "white" }}
+            />            
             <Button title="Send Report" onPress={props.onSendReport} />
         </View>
     );
