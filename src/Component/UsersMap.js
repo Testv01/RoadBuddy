@@ -41,7 +41,6 @@ const style = StyleSheet.create({
         width: '100%',
         height:300,
         marginTop:5,
-        zIndex: -1
     },
     map:{
         width: '100%',

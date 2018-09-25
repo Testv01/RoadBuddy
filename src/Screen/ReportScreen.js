@@ -1,9 +1,10 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, View,Text,Button } from 'react-native';
+import { StyleSheet, View,Text,Button,ScrollView, } from 'react-native';
 
 import UsersMap from 'src/Component/UsersMap';
 import Report from 'src/Component/Report';
+import ImagePicker from "react-native-image-picker";
 
 export default class ReportScreen extends Component {
 
@@ -12,7 +13,8 @@ export default class ReportScreen extends Component {
     usersPlaces:[],
     topicText:"",
     descText:"",
-    reportType: ""
+    reportType: "",    
+    pickedImage: null,
   }
   componentDidMount(){
     navigator.geolocation.getCurrentPosition(position => {
@@ -46,7 +48,8 @@ export default class ReportScreen extends Component {
             latitude:position.coords.latitude,
             longitude:position.coords.longitude, 
             topic: this.state.topicText,
-            description:this.state.descText
+            description:this.state.descText,
+            image:this.state.pickedImage
           })
         })
         alert("Send Success!");
@@ -87,9 +90,34 @@ export default class ReportScreen extends Component {
       })
   };
 
+  pickImageHandler = () => {
+    ImagePicker.showImagePicker({title: "Pick an Image", maxWidth: 800, maxHeight: 600}, res => {
+      if (res.didCancel) {
+        console.log("User cancelled!");
+      } else if (res.error) {
+        console.log("Error", res.error);
+      } else {
+        this.setState({
+          pickedImage: { uri: res.uri }
+        });
+        
+      }
+    });
+  }
+  /**
+     * The first arg is the options object for customization (it can also be null or omitted for default options),
+     * The second arg is the callback which sends object: response (more info below in README)
+     */
+    
+    resetHandler = () =>{
+      this.setState({
+        pickedImage: null
+      });
+    }
 
   render() {
     return (
+      <ScrollView>
         <View style={styles.container}>
             
             <Report 
@@ -97,19 +125,22 @@ export default class ReportScreen extends Component {
                 changeDescription={this.setDesc} 
                 changeReportType={this.setReportType}
                 onSendReport={this.sendReportHandler} 
+                pickImagePressed={this.pickImageHandler}
+                resetPressed={this.resetHandler}
             />
             <UsersMap 
                 userLocation={this.state.userLocation} 
                 usersPlaces={this.state.usersPlaces} 
             />
         </View> 
+        </ScrollView>
     )
   }
 }
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    position: 'absolute', 
+    flex:1,
     left:0,
     top:0,
     right:0,
