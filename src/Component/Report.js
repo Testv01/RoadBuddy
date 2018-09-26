@@ -9,6 +9,7 @@ const report = props =>{
             <View style={style.reportContainer}>
                 <View style={styles.container}>
                     <View style={styles.placeholder}>
+                    {/* โค้ดพังอยู่นี่จ้ะ VVV */}
                         <Image source={{uri: props.pickImage }} style={styles.previewImage} />
                     </View>
                     <View style={styles.button}>

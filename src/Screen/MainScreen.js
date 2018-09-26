@@ -142,6 +142,7 @@ export default class MainScreen extends Component{
   Direction(){
     this.setState({initail:this.state.origin})
     this.setState({destinate:this.state.destinationplace})
+    this.getUserPlacesHandler()
     }
   
   
@@ -207,11 +208,6 @@ export default class MainScreen extends Component{
       
       <View style={{width:50,left:100}}>
         <Button title='Go'  onPress={this.Direction.bind(this)}/>
-      </View>
-      <View style={{width:50,left:100}}>
-        <Button title="Get Places" 
-            color='red' 
-            onPress={this.getUserPlacesHandler}/>
       </View>
       </View>
       <View style={{position: 'absolute',bottom: 25,zIndex: 1,alignSelf:"center" }}>
