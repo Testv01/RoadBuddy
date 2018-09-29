@@ -4,19 +4,23 @@ import { StyleSheet, View,Text,Button,ScrollView, } from 'react-native';
 
 import UsersMap from 'src/Component/UsersMap';
 import Report from 'src/Component/Report';
-import ImagePicker from "react-native-image-picker";
 
 export default class ReportScreen extends Component {
 
-  state ={
-    userLocation:null,
-    usersPlaces:[],
-    topicText:"",
-    descText:"",
-    reportType: "",    
-    pickedImage: null,
+  constructor(props) {
+    super(props);
+		this.state = {
+      userLocation:null,
+      usersPlaces:[],
+      topicText:"",
+      descText:"",
+      reportType: "",    
+      pickedImage: null,
+      pic: null,
+    }
   }
-  componentDidMount(){
+  
+  componentDidMount() {
     navigator.geolocation.getCurrentPosition(position => {
       this.setState({
         userLocation:{
@@ -90,20 +94,7 @@ export default class ReportScreen extends Component {
       })
   };
 
-  pickImageHandler = () => {
-    ImagePicker.showImagePicker({title: "Pick an Image", maxWidth: 800, maxHeight: 600}, res => {
-      if (res.didCancel) {
-        console.log("User cancelled!");
-      } else if (res.error) {
-        console.log("Error", res.error);
-      } else {
-        this.setState({
-          pickedImage: { uri: res.uri }
-        });
-        
-      }
-    });
-  }
+  
   /**
      * The first arg is the options object for customization (it can also be null or omitted for default options),
      * The second arg is the callback which sends object: response (more info below in README)
@@ -125,7 +116,6 @@ export default class ReportScreen extends Component {
                 changeDescription={this.setDesc} 
                 changeReportType={this.setReportType}
                 onSendReport={this.sendReportHandler} 
-                pickImagePressed={this.pickImageHandler}
                 resetPressed={this.resetHandler}
             />
             <UsersMap 

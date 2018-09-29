@@ -3,6 +3,10 @@ package com.roadbuddy;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.github.wumke.RNImmediatePhoneCall.RNImmediatePhoneCallPackage;
+import com.imagepicker.ImagePickerPackage;
+import com.arttitude360.reactnative.rngoogleplaces.RNGooglePlacesPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.arttitude360.reactnative.rngoogleplaces.RNGooglePlacesPackage;
 import com.github.wumke.RNImmediatePhoneCall.RNImmediatePhoneCallPackage;
@@ -27,10 +31,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new ImagePickerPackage(),
-            new RNGooglePlacesPackage(),
+            new MapsPackage(),
             new RNImmediatePhoneCallPackage(),
-            new MapsPackage()
+            new ImagePickerPackage(),
+            new RNGooglePlacesPackage()
       );
     }
 
