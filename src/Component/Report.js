@@ -39,6 +39,12 @@ export default class Report extends Component {
         });
       }
 
+      resetHandler = () =>{
+        this.setState({
+          avatarSource: null
+        });
+      }
+
     render() {
         return (            
             <View style={style.reportContainer}>
@@ -52,7 +58,7 @@ export default class Report extends Component {
 
                         <Button title="Pick Image" onPress={this.pickImageHandler} buttonStyle={styles.round}/>
                         
-                        <Button title="Reset" onPress={this.props.resetPressed} />
+                        <Button title="Reset" onPress={this.resetHandler} />
                     
                     </View>
                 </View>

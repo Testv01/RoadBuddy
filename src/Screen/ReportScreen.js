@@ -100,11 +100,7 @@ export default class ReportScreen extends Component {
      * The second arg is the callback which sends object: response (more info below in README)
      */
     
-    resetHandler = () =>{
-      this.setState({
-        pickedImage: null
-      });
-    }
+    
 
   render() {
     return (
@@ -116,7 +112,6 @@ export default class ReportScreen extends Component {
                 changeDescription={this.setDesc} 
                 changeReportType={this.setReportType}
                 onSendReport={this.sendReportHandler} 
-                resetPressed={this.resetHandler}
             />
             <UsersMap 
                 userLocation={this.state.userLocation} 
