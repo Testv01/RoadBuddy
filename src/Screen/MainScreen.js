@@ -168,6 +168,7 @@ export default class MainScreen extends Component{
         showsUserLocation
         initialRegion={this.state.initialPosition}
         mapType="hybrid"
+        showsTraffic
      >
         <Marker coordinate={this.state.markerPosition} />
         <Marker coordinate={destination} />
@@ -191,7 +192,7 @@ export default class MainScreen extends Component{
       
       <Autocomplete 
            autoCapitalize="none"
-           autoCorrect={false}
+           autoCorrect={true}
            data={data.length>=0 &&  place.includes(this.state.query) == true   ? [] : data }
            containerStyle={styles.autocompleteContainer}
            defaultValue={this.state.query}
@@ -200,7 +201,6 @@ export default class MainScreen extends Component{
            renderItem={(item )=> (
             <TouchableOpacity onPress={() =>this.SelectPlace(item) }>
               <Text style={styles.itemText}>{Object.values(item)[3]} </Text>
-              <Text style={styles.itemText}>{Object.values(item)[2]} </Text>
               <Text style={styles.itemText}> </Text>
             </TouchableOpacity>
           )}
@@ -216,6 +216,8 @@ export default class MainScreen extends Component{
                   onPressButtonTop={()=> this.props.navigation.navigate('ReportScreen')}
                   onPressButtonLeft={()=> this.props.navigation.navigate('NotificationScreen')}
                   onPressButtonRight={()=> this.props.navigation.navigate('CallInfoScreen')}
+                  primaryColor="#f27663"
+                  secondaryColor="#f99a8b"
                 />
         </View>
       </View>
