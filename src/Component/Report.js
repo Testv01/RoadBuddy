@@ -37,7 +37,7 @@ export default class Report extends Component {
             });
           }
         });
-      }
+    }
 
       resetHandler = () =>{
         this.setState({

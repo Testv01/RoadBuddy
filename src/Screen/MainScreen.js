@@ -10,19 +10,23 @@ import MapView,{Marker,Callout} from 'react-native-maps';
 import RNGooglePlaces from 'react-native-google-places';
 import MapViewDirections from 'react-native-maps-directions';
 import Autocomplete from 'react-native-autocomplete-input'
-import CircleButton from 'react-native-circle-button';
+import CircleButton from 'react-native-circle-button'
 
-
+import FirebaseInitial from './../Services/FirebaseInitial'
 
 export default class MainScreen extends Component{
  
 
-    state = {
+    
+
+    constructor(props) {
+      super(props);
+      this.state = {
       usersPlaces:[],
       place: [],
       query: '', 
       initialPosition:{
-        latitude:	0,
+        latitude: 0,
         longitude:0,
         latitudeDelta:0.0922,
         longitudeDelta:0.0421
@@ -49,12 +53,12 @@ export default class MainScreen extends Component{
       },
       result:[]
     };
+    }
    
-  
-
   
  
   componentWillMount(){
+    FirebaseInitial.asd()
     navigator.geolocation.getCurrentPosition((position) => {
       console.log(position)
       this.setState({
