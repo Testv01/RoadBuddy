@@ -48,20 +48,24 @@ export default class ReportScreen extends Component {
             longitudeDelta: 0.0010,
           }
         });
-        fetch('https://test-2e10e.firebaseio.com/places.json',{
-          method: 'POST',
-          body: JSON.stringify({
-            latitude:position.coords.latitude,
-            longitude:position.coords.longitude, 
-            topic: this.state.topicText,
-            description:this.state.descText,
-            image:this.state.pickedImage,
-            date:FirebaseInitial.asd()
-          })
-        })
+        // fetch('https://test-2e10e.firebaseio.com/places.json',{
+        //   method: 'POST',
+        //   body: JSON.stringify({
+        //     latitude:position.coords.latitude,
+        //     longitude:position.coords.longitude, 
+        //     topic: this.state.topicText,
+        //     description:this.state.descText,
+        //     image:this.state.pickedImage,
+        //     // date:FirebaseInitial.asd()
+        //   })
+        // })
+
+        // change the way of using Firebase
+        
+        FirebaseInitial.insertReport(position.coords.latitude,position.coords.longitude,this.state.topicText,this.state.descText,this.state.pickedImage)
         alert("Send Success!");
         this.setTopic("");
-        this.props.navigation.navigate('MainScreen') ;
+        this.props.navigation.navigate('MainScreen') ;                            
       },
       err => console.log(err)
     );
