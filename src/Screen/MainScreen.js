@@ -12,7 +12,7 @@ import MapViewDirections from 'react-native-maps-directions';
 import Autocomplete from 'react-native-autocomplete-input'
 import CircleButton from 'react-native-circle-button'
 
-import FirebaseInitial from './../Services/FirebaseInitial'
+import FirebaseInitial from '../Services/FirebaseInitial';
 
 export default class MainScreen extends Component{
  
