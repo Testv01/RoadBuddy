@@ -17,7 +17,7 @@ const usersMap = props =>{
     return (
         <View style={style.mapContainer}>
             <MapView 
-                mapType="roadmap"
+                mapType="hybrid"
                 showsUserLocation ={true}
                 showsMyLocationButton={true}
                 initialRegion={{

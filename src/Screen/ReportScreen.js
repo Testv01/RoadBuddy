@@ -5,7 +5,7 @@ import { StyleSheet, View,Text,Button,ScrollView, } from 'react-native';
 import UsersMap from 'src/Component/UsersMap';
 import Report from 'src/Component/Report';
 
-//import FirebaseInitial from './../Services/FirebaseInitial'
+import FirebaseInitial from '../Services/FirebaseInitial';
 
 export default class ReportScreen extends Component {
 
@@ -55,8 +55,8 @@ export default class ReportScreen extends Component {
             longitude:position.coords.longitude, 
             topic: this.state.topicText,
             description:this.state.descText,
-            image:this.state.pickedImage
-           // date:FirebaseInitial.asd()
+            image:this.state.pickedImage,
+            date:FirebaseInitial.asd()
           })
         })
         alert("Send Success!");
