@@ -171,7 +171,6 @@ export default class MainScreen extends Component{
         showsMyLocationButton
         showsUserLocation
         initialRegion={this.state.initialPosition}
-        mapType="hybrid"
         showsTraffic
      >
         <Marker coordinate={this.state.markerPosition} />
