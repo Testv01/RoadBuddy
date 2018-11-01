@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Button,TextInput,View,StyleSheet,Text,
-    Image,} from 'react-native';
+    Image,CheckBox,} from 'react-native';
 import Tags from "react-native-tags";
 import ImagePicker from "react-native-image-picker";
 
@@ -16,6 +16,7 @@ export default class Report extends Component {
         super(props);
         this.state = {
           avatarSource: null,
+          try:["report","007"]
         }
     }
 
@@ -74,17 +75,17 @@ export default class Report extends Component {
                     placeholder = "Enter Description" 
                     onChangeText={this.props.changeDescription}
                 />
-                <Tags
+                
+                {/*<Tags
                     initialText=""
-                    initialTags={["Report"]}
+                    initialTags={this.state.try}
                     onChangeTags={tags => console.log(tags)}
                     onTagPress={(index, tagLabel, event, deleted) =>
                     console.log(index, tagLabel, event, deleted ? "deleted" : "not deleted")
                     }
                     containerStyle={{ justifyContent: "center" }}
                     inputStyle={{ backgroundColor: "white" }}
-                />            
-                <Button title="Send Report" onPress={this.props.onSendReport} />
+                /> */}           
             </View>
         );
     }

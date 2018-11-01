@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, View,Text,Button,ScrollView, } from 'react-native';
+import { StyleSheet, View,Text,Button,ScrollView,CheckBox, } from 'react-native';
 
 import UsersMap from 'src/Component/UsersMap';
 import Report from 'src/Component/Report';
@@ -19,6 +19,8 @@ export default class ReportScreen extends Component {
       reportType: "",    
       pickedImage: null,
       pic: null,
+      roadProblem: false,
+      accident:false,
     }
   }
   
@@ -62,10 +64,17 @@ export default class ReportScreen extends Component {
 
         // change the way of using Firebase
         
-        FirebaseInitial.insertReport(position.coords.latitude,position.coords.longitude,this.state.topicText,this.state.descText,this.state.pickedImage)
+        FirebaseInitial.insertReport(
+          position.coords.latitude,
+          position.coords.longitude,
+          this.state.topicText,
+          this.state.descText,
+          this.state.pickedImage,
+          this.state.accident,
+          this.state.roadProblem
+        )
         alert("Send Success!");
-        this.setTopic("");
-        this.props.navigation.navigate('MainScreen') ;                            
+        this.props.navigation.goBack() ;                            
       },
       err => console.log(err)
     );
@@ -81,7 +90,16 @@ export default class ReportScreen extends Component {
   setReportType = (reportType) => {
     this.setState({ reportType: reportType })
  }
-  
+ checkAcc() {
+  this.setState({ 
+    accident:!this.state.accident 
+  })
+}
+ checkRP(){
+  this.setState({ 
+    roadProblem:!this.state.roadProblem 
+  })
+}
   getUserPlacesHandler=()=>{
     fetch('https://test-2e10e.firebaseio.com/places.json')
       .then(res => res.json())
@@ -118,8 +136,12 @@ export default class ReportScreen extends Component {
                 changeTopic={this.setTopic}                  
                 changeDescription={this.setDesc} 
                 changeReportType={this.setReportType}
-                onSendReport={this.sendReportHandler} 
             />
+            <Text>Tags</Text>
+                <CheckBox value={this.state.accident} onChange={()=> this.checkAcc()}/><Text>Accident</Text>
+                <CheckBox value={this.state.roadProblem} onChange={()=> this.checkRP()}/><Text>Road Problem</Text>
+            
+            <Button title="Send Report" onPress={this.sendReportHandler} />
             <UsersMap 
                 userLocation={this.state.userLocation} 
                 usersPlaces={this.state.usersPlaces} 

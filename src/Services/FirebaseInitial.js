@@ -20,13 +20,15 @@ function asd () {
 //     var serverTime = Date.now() + offsetVal;
 // });
 
-function insertReport(a,b,c,d,e) {
+function insertReport(a,b,c,d,e,f,g) {
 	firebase.database().ref("Report").push({
 		latitude:a,
 		longitude:b, 
 		topic: c,
 		description:d,
 		image:e,
+		accident:f,
+		roadProblem:g,
 		date:firebase.database.ServerValue.TIMESTAMP
 	})
 }
