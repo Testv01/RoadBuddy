@@ -21,6 +21,7 @@ export default class ReportScreen extends Component {
       pic: null,
       roadProblem: false,
       accident:false,
+      buttonColor: 'lightblue',
     }
   }
   
@@ -100,6 +101,15 @@ export default class ReportScreen extends Component {
     roadProblem:!this.state.roadProblem 
   })
 }
+onButtonPress = () => {
+  const b1 = this.state.buttonColor;
+  if(b1=='lightblue'){
+  this.setState({ buttonColor: 'lightgreen' }); 
+  }else if(b1=='lightgreen'){    
+  this.setState({ buttonColor: 'lightblue' }); 
+  }
+}
+
   getUserPlacesHandler=()=>{
     fetch('https://test-2e10e.firebaseio.com/places.json')
       .then(res => res.json())
@@ -138,9 +148,28 @@ export default class ReportScreen extends Component {
                 changeReportType={this.setReportType}
             />
             <Text>Tags</Text>
-                <CheckBox value={this.state.accident} onChange={()=> this.checkAcc()}/><Text>Accident</Text>
-                <CheckBox value={this.state.roadProblem} onChange={()=> this.checkRP()}/><Text>Road Problem</Text>
             
+            
+            <ScrollView horizontal={true}>
+            <Button
+                title="TestTestTestTestTest"
+                color={this.state.buttonColor}
+                onPress={this.onButtonPress}
+              />
+              <Button
+                title="TestTestTestTestTest"
+                color={this.state.buttonColor}
+                onPress={this.onButtonPress}
+              />
+              <Button
+                title="TestTestTestTestTestTestTest"
+                color={this.state.buttonColor}
+                onPress={this.onButtonPress}
+              />
+              <CheckBox value={this.state.accident} onChange={()=> this.checkAcc()}/><Text>Accident</Text>
+              <CheckBox value={this.state.roadProblem} onChange={()=> this.checkRP()}/><Text>Road Problem</Text>
+            </ScrollView>
+                
             <Button title="Send Report" onPress={this.sendReportHandler} />
             <UsersMap 
                 userLocation={this.state.userLocation} 
