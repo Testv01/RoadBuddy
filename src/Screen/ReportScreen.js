@@ -21,7 +21,9 @@ export default class ReportScreen extends Component {
       pic: null,
       roadProblem: false,
       accident:false,
-      buttonColor: 'lightblue',
+      buttonColor: '',
+      buttonColorAcc: '',
+      buttonColorRP: '',
     }
   }
   
@@ -91,22 +93,42 @@ export default class ReportScreen extends Component {
   setReportType = (reportType) => {
     this.setState({ reportType: reportType })
  }
- checkAcc() {
+ checkAcc=() =>{
   this.setState({ 
     accident:!this.state.accident 
   })
 }
- checkRP(){
+ checkRP=()=>{
   this.setState({ 
     roadProblem:!this.state.roadProblem 
   })
 }
+onAccButtonPress = () => {
+  const b1 = this.state.buttonColorAcc;
+  if(b1==''){
+  this.setState({ buttonColorAcc: 'lightgreen' }); 
+  this.checkAcc();
+  }else if(b1=='lightgreen'){    
+  this.setState({ buttonColorAcc: '' }); 
+  this.checkAcc();
+  }
+}
+onRpButtonPress = () => {
+  const b1 = this.state.buttonColorRP;
+  if(b1==''){
+  this.setState({ buttonColorRP: 'lightgreen' }); 
+  this.checkRP();
+  }else if(b1=='lightgreen'){    
+  this.setState({ buttonColorRP: '' }); 
+  this.checkRP();
+  }
+}
 onButtonPress = () => {
   const b1 = this.state.buttonColor;
-  if(b1=='lightblue'){
+  if(b1==''){
   this.setState({ buttonColor: 'lightgreen' }); 
   }else if(b1=='lightgreen'){    
-  this.setState({ buttonColor: 'lightblue' }); 
+  this.setState({ buttonColor: '' }); 
   }
 }
 
@@ -149,28 +171,51 @@ onButtonPress = () => {
             />
             <Text>Tags</Text>
             
-            
-            <ScrollView horizontal={true}>
-            <Button
-                title="TestTestTestTestTest"
-                color={this.state.buttonColor}
-                onPress={this.onButtonPress}
-              />
-              <Button
-                title="TestTestTestTestTest"
-                color={this.state.buttonColor}
-                onPress={this.onButtonPress}
-              />
-              <Button
-                title="TestTestTestTestTestTestTest"
-                color={this.state.buttonColor}
-                onPress={this.onButtonPress}
-              />
-              <CheckBox value={this.state.accident} onChange={()=> this.checkAcc()}/><Text>Accident</Text>
-              <CheckBox value={this.state.roadProblem} onChange={()=> this.checkRP()}/><Text>Road Problem</Text>
-            </ScrollView>
+            <View style={styles.thatStyle}>
+            <ScrollView horizontal={true} contentContainerStyle={styles.contentContainer}>
+            <View style={styles.thatButton}>
+                <Button
+                  title="Accident"
+                  color={this.state.buttonColorAcc}
+                  onPress={this.onAccButtonPress}
+                />
                 
-            <Button title="Send Report" onPress={this.sendReportHandler} />
+            </View>    
+            <View style={styles.thatButton}>
+                <Button
+                  title="Road Problem"
+                  color={this.state.buttonColorRP}
+                  onPress={this.onRpButtonPress}
+                />
+                
+            </View>  
+            <View style={styles.thatButton}>
+                <Button
+                  title="Placeholder"
+                  color={this.state.buttonColor}
+                  onPress={this.onButtonPress}
+                />
+                
+            </View>  
+            <View style={styles.thatButton}>
+                <Button
+                  title="Placeholder"
+                  color={this.state.buttonColor}
+                  onPress={this.onButtonPress}
+                />
+                
+            </View>  
+            <View style={styles.thatButton}>
+                <Button
+                  title="Placeholder"
+                  color={this.state.buttonColor}
+                  onPress={this.onButtonPress}
+                />
+                
+            </View>  
+            </ScrollView>
+            </View>    
+            <Button title="Send Report" style={styles.reportButton} onPress={this.sendReportHandler} />
             <UsersMap 
                 userLocation={this.state.userLocation} 
                 usersPlaces={this.state.usersPlaces} 
@@ -190,5 +235,10 @@ const styles = StyleSheet.create({
     bottom:0,
     backgroundColor: '#ffe79b',
     margin:5
-  },
+  },thatStyle: {
+    padding: 10,
+    marginBottom: 5
+  },thatButton: {
+    margin: 5,
+  }
 });
