@@ -21,6 +21,12 @@ export default class ReportScreen extends Component {
       pic: null,
       roadProblem: false,
       accident:false,
+<<<<<<< HEAD
+=======
+      buttonColor: '',
+      buttonColorAcc: '',
+      buttonColorRP: '',
+>>>>>>> 4c3e4ca001af5331c6560c90a549261d363bf11d
     }
   }
   
@@ -90,16 +96,56 @@ export default class ReportScreen extends Component {
   setReportType = (reportType) => {
     this.setState({ reportType: reportType })
  }
+<<<<<<< HEAD
  checkAcc() {
+=======
+ checkAcc=() =>{
+>>>>>>> 4c3e4ca001af5331c6560c90a549261d363bf11d
   this.setState({ 
     accident:!this.state.accident 
   })
 }
+<<<<<<< HEAD
  checkRP(){
+=======
+ checkRP=()=>{
+>>>>>>> 4c3e4ca001af5331c6560c90a549261d363bf11d
   this.setState({ 
     roadProblem:!this.state.roadProblem 
   })
 }
+<<<<<<< HEAD
+=======
+onAccButtonPress = () => {
+  const b1 = this.state.buttonColorAcc;
+  if(b1==''){
+  this.setState({ buttonColorAcc: 'lightgreen' }); 
+  this.checkAcc();
+  }else if(b1=='lightgreen'){    
+  this.setState({ buttonColorAcc: '' }); 
+  this.checkAcc();
+  }
+}
+onRpButtonPress = () => {
+  const b1 = this.state.buttonColorRP;
+  if(b1==''){
+  this.setState({ buttonColorRP: 'lightgreen' }); 
+  this.checkRP();
+  }else if(b1=='lightgreen'){    
+  this.setState({ buttonColorRP: '' }); 
+  this.checkRP();
+  }
+}
+onButtonPress = () => {
+  const b1 = this.state.buttonColor;
+  if(b1==''){
+  this.setState({ buttonColor: 'lightgreen' }); 
+  }else if(b1=='lightgreen'){    
+  this.setState({ buttonColor: '' }); 
+  }
+}
+
+>>>>>>> 4c3e4ca001af5331c6560c90a549261d363bf11d
   getUserPlacesHandler=()=>{
     fetch('https://test-2e10e.firebaseio.com/places.json')
       .then(res => res.json())
@@ -138,10 +184,59 @@ export default class ReportScreen extends Component {
                 changeReportType={this.setReportType}
             />
             <Text>Tags</Text>
+<<<<<<< HEAD
                 <CheckBox value={this.state.accident} onChange={()=> this.checkAcc()}/><Text>Accident</Text>
                 <CheckBox value={this.state.roadProblem} onChange={()=> this.checkRP()}/><Text>Road Problem</Text>
             
             <Button title="Send Report" onPress={this.sendReportHandler} />
+=======
+            
+            <View style={styles.thatStyle}>
+            <ScrollView horizontal={true} contentContainerStyle={styles.contentContainer}>
+            <View style={styles.thatButton}>
+                <Button
+                  title="Accident"
+                  color={this.state.buttonColorAcc}
+                  onPress={this.onAccButtonPress}
+                />
+                
+            </View>    
+            <View style={styles.thatButton}>
+                <Button
+                  title="Road Problem"
+                  color={this.state.buttonColorRP}
+                  onPress={this.onRpButtonPress}
+                />
+                
+            </View>  
+            <View style={styles.thatButton}>
+                <Button
+                  title="Placeholder"
+                  color={this.state.buttonColor}
+                  onPress={this.onButtonPress}
+                />
+                
+            </View>  
+            <View style={styles.thatButton}>
+                <Button
+                  title="Placeholder"
+                  color={this.state.buttonColor}
+                  onPress={this.onButtonPress}
+                />
+                
+            </View>  
+            <View style={styles.thatButton}>
+                <Button
+                  title="Placeholder"
+                  color={this.state.buttonColor}
+                  onPress={this.onButtonPress}
+                />
+                
+            </View>  
+            </ScrollView>
+            </View>    
+            <Button title="Send Report" style={styles.reportButton} onPress={this.sendReportHandler} />
+>>>>>>> 4c3e4ca001af5331c6560c90a549261d363bf11d
             <UsersMap 
                 userLocation={this.state.userLocation} 
                 usersPlaces={this.state.usersPlaces} 
@@ -161,5 +256,10 @@ const styles = StyleSheet.create({
     bottom:0,
     backgroundColor: '#ffe79b',
     margin:5
-  },
+  },thatStyle: {
+    padding: 10,
+    marginBottom: 5
+  },thatButton: {
+    margin: 5,
+  }
 });
