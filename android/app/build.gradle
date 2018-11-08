@@ -93,9 +93,10 @@ def enableSeparateBuildPerCPUArchitecture = false
  */
 def enableProguardInReleaseBuilds = false
 
+
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 26
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
         applicationId "com.roadbuddy"
@@ -153,6 +154,8 @@ dependencies {
     compile project(':react-native-google-places')
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile project(':react-native-immediate-phone-call')
+
+    compile project(':react-native-mauron85-background-geolocation')
 }
 
 // Run this once to be able to run the application with BUCK

@@ -10,19 +10,23 @@ import MapView,{Marker,Callout} from 'react-native-maps';
 import RNGooglePlaces from 'react-native-google-places';
 import MapViewDirections from 'react-native-maps-directions';
 import Autocomplete from 'react-native-autocomplete-input'
-import CircleButton from 'react-native-circle-button';
+import CircleButton from 'react-native-circle-button'
 
-
+import FirebaseInitial from '../Services/FirebaseInitial';
 
 export default class MainScreen extends Component{
  
 
-    state = {
+    
+
+    constructor(props) {
+      super(props);
+      this.state = {
       usersPlaces:[],
       place: [],
       query: '', 
       initialPosition:{
-        latitude:	0,
+        latitude: 0,
         longitude:0,
         latitudeDelta:0.0922,
         longitudeDelta:0.0421
@@ -49,12 +53,12 @@ export default class MainScreen extends Component{
       },
       result:[]
     };
+    }
    
-  
-
   
  
   componentWillMount(){
+    FirebaseInitial.asd()
     navigator.geolocation.getCurrentPosition((position) => {
       console.log(position)
       this.setState({
@@ -167,7 +171,7 @@ export default class MainScreen extends Component{
         showsMyLocationButton
         showsUserLocation
         initialRegion={this.state.initialPosition}
-        mapType="hybrid"
+        showsTraffic
      >
         <Marker coordinate={this.state.markerPosition} />
         <Marker coordinate={destination} />
@@ -191,7 +195,7 @@ export default class MainScreen extends Component{
       
       <Autocomplete 
            autoCapitalize="none"
-           autoCorrect={false}
+           autoCorrect={true}
            data={data.length>=0 &&  place.includes(this.state.query) == true   ? [] : data }
            containerStyle={styles.autocompleteContainer}
            defaultValue={this.state.query}
@@ -200,7 +204,6 @@ export default class MainScreen extends Component{
            renderItem={(item )=> (
             <TouchableOpacity onPress={() =>this.SelectPlace(item) }>
               <Text style={styles.itemText}>{Object.values(item)[3]} </Text>
-              <Text style={styles.itemText}>{Object.values(item)[2]} </Text>
               <Text style={styles.itemText}> </Text>
             </TouchableOpacity>
           )}
@@ -216,6 +219,8 @@ export default class MainScreen extends Component{
                   onPressButtonTop={()=> this.props.navigation.navigate('ReportScreen')}
                   onPressButtonLeft={()=> this.props.navigation.navigate('NotificationScreen')}
                   onPressButtonRight={()=> this.props.navigation.navigate('CallInfoScreen')}
+                  primaryColor="#f27663"
+                  secondaryColor="#f99a8b"
                 />
         </View>
       </View>

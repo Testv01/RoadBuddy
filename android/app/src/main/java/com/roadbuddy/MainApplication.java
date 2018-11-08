@@ -3,6 +3,7 @@ package com.roadbuddy;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.marianhello.bgloc.react.BackgroundGeolocationPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.github.wumke.RNImmediatePhoneCall.RNImmediatePhoneCallPackage;
 import com.imagepicker.ImagePickerPackage;
@@ -30,7 +31,8 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
+            new MainReactPackage(),
+            new BackgroundGeolocationPackage(),
             new MapsPackage(),
             new RNImmediatePhoneCallPackage(),
             new ImagePickerPackage(),
