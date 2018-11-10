@@ -11,7 +11,7 @@ import RNGooglePlaces from 'react-native-google-places';
 import MapViewDirections from 'react-native-maps-directions';
 import Autocomplete from 'react-native-autocomplete-input'
 import CircleButton from 'react-native-circle-button'
-
+import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
 import FirebaseInitial from '../Services/FirebaseInitial';
 
 export default class MainScreen extends Component{
@@ -60,7 +60,6 @@ export default class MainScreen extends Component{
   componentWillMount(){
     FirebaseInitial.asd()
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position)
       this.setState({
         initialPosition:{
           latitude:position.coords.latitude,
@@ -75,7 +74,23 @@ export default class MainScreen extends Component{
       })
     },
     (error) =>console.log(error))
-  
+
+    BackgroundGeolocation.configure({
+      desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
+      stationaryRadius: 50,
+      distanceFilter: 50,
+      notificationTitle: 'Background tracking',
+      notificationText: 'enabled',
+      debug: true,
+      startOnBoot: false,
+      stopOnTerminate: true,
+      locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
+      interval: 10000,
+      fastestInterval: 5000,
+      activitiesInterval: 10000,
+      stopOnStillActivity: false,
+    });
+
   }
   componentDidMount(){
     
@@ -88,6 +103,11 @@ export default class MainScreen extends Component{
       })
     },
     (error) =>console.log(error))
+  }
+
+  componentWillUnmount() {
+    BackgroundGeolocation.stop();
+    BackgroundGeolocation.removeAllListeners('location');
   }
 
   
@@ -115,17 +135,20 @@ export default class MainScreen extends Component{
   SelectPlace(item){
     this.setState({ query: Object.values(item)[3]})
     RNGooglePlaces.lookUpPlaceByID((item.placeID))
-    .then((results) => 
-    this.setState({destinationplace:{
-      latitude:results.latitude,
-      longitude:results.longitude
-    }})
+    .then((results) => {
+        this.setState({
+          destinationplace:{
+            latitude:results.latitude,
+            longitude:results.longitude
+          }
+        });
+      }
     )
     .catch((error) => console.log(error.message));
   }
 
   getUserPlacesHandler=()=>{
-    fetch('https://test-2e10e.firebaseio.com/places.json')
+    fetch('https://test-2e10e.firebaseio.com/Report.json')
       .then(res => res.json())
       .then(parsedRes => {
         const placesArray=[];
@@ -140,6 +163,23 @@ export default class MainScreen extends Component{
         this.setState({
           usersPlaces: placesArray
         });
+        BackgroundGeolocation.on('location', (location) => {
+          let alertPlaces = [];
+          BackgroundGeolocation.getCurrentLocation(function(response) {
+            const lat = [response.latitude-0.005, response.latitude+0.005];
+            const lon = [response.longitude-0.005, response.longitude+0.005];
+            Object.keys(placesArray).map(key => {
+              if(placesArray[key].latitude >= lat[0] && placesArray[key].latitude <= lat[1]
+                && placesArray[key].longitude >= lon[0] && placesArray[key].longitude <= lon[1]) {
+                  let report = placesArray[key];
+                  alertPlaces.push(placesArray[key]) // <------ add report in area
+                }
+            });
+
+            alert(alertPlaces)
+          })
+        });
+        BackgroundGeolocation.start();
       })
   };
 
