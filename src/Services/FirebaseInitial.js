@@ -1,14 +1,5 @@
 import firebase from 'firebase';
 
-var config = {
-    apiKey: "AIzaSyAQqXC7P_OwwkkSfJscHLUIfro84Ipc0SI",
-    authDomain: "test-2e10e.firebaseapp.com",
-	databaseURL: "https://test-2e10e.firebaseio.com",
-	projectId: "test-2e10e",
-	storageBucket: "test-2e10e.appspot.com",
-	messagingSenderId: "872972741228"
-};
-firebase.initializeApp(config);
 
 function asd () {
 	return firebase.database().ref("sss").set(firebase.database.ServerValue.TIMESTAMP)
@@ -19,6 +10,19 @@ function asd () {
 //     var offsetVal = offset.val() || 0;
 //     var serverTime = Date.now() + offsetVal;
 // });
+function onAuthStateChanged () {
+	firebase.auth().onAuthStateChanged(user => 
+      this.props.navigation.navigate(user ? 'MainScreen' : 'SignUpScreen')
+    )
+};
+
+function handleSignUp  (a,b)  {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(a, b)
+      .then(this.next)
+  };
+
 
 function insertReport(a,b,c,d,e,f,g) {
 	firebase.database().ref("Report").push({
@@ -31,9 +35,11 @@ function insertReport(a,b,c,d,e,f,g) {
 		roadProblem:g,
 		date:firebase.database.ServerValue.TIMESTAMP
 	})
-}
+};
 
 export default{
 	asd,
-	insertReport
+	insertReport,
+	onAuthStateChanged,
+	handleSignUp,
 };
