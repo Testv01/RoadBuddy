@@ -6,6 +6,9 @@ import {
   SafeAreaView, Keyboard, TouchableOpacity,
   KeyboardAVoidingView } from 'react-native';
 import firebase from 'firebase';
+<style>
+@import url('https://fonts.googleapis.com/css?family=Comfortaa');
+</style>
 
 export default class LoginScreen extends React.Component {
   constructor(props) {
@@ -29,7 +32,7 @@ export default class LoginScreen extends React.Component {
       <SafeAreaView style={styles.container}>
         <StatusBar barStyle="light-content" />
         <View style={styles.container}>
-          <Text style={styles.tiitle}>Login</Text>
+          <Text style={styles.title}>Road Buddy</Text>
           {this.state.errorMessage &&
             <Text style={{ color: 'red' }}>
               {this.state.errorMessage}
@@ -49,7 +52,7 @@ export default class LoginScreen extends React.Component {
             onChangeText={password => this.setState({ password })}
             value={this.state.password}
           />
-          <Button title="Login" onPress={this.onLoginButtonPress.bind(this)} />
+          <Button title="Login" onPress={this.onLoginButtonPress.bind(this)} />         
           <Button
             title="Don't have an account? Sign Up"
             onPress={() => this.props.navigation.navigate('SignUpScreen')}
@@ -62,14 +65,23 @@ export default class LoginScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'rgb(32, 53, 70)',
     justifyContent: 'center',
     alignItems: 'center'
   },
   textInput: {
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    color: '#f7c744',
     height: 40,
     width: '90%',
     borderColor: 'gray',
     borderWidth: 1,
-    marginTop: 8
+    marginTop: 8,
+    paddingHorizontal: 10
+  },
+  title: {
+    fontFamily: 'Comfortaa',
+    fontSize: 28,
+    color: '#FFFFFF',
   }
 })
