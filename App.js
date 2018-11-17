@@ -25,7 +25,7 @@ export default class App extends Component {
       storageBucket: "test-2e10e.appspot.com",
       messagingSenderId: "872972741228"
     };
-    firebase.initializeApp(config);
+      firebase.initializeApp(config);
   }
   componentDidMount() {
     this.initializeFirebase();

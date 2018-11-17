@@ -33,7 +33,8 @@ function insertReport(a,b,c,d,e,f,g) {
 		image:e,
 		accident:f,
 		roadProblem:g,
-		date:firebase.database.ServerValue.TIMESTAMP
+		date:firebase.database.ServerValue.TIMESTAMP,
+		user:firebase.auth().currentUser.email
 	})
 };
 
