@@ -5,10 +5,15 @@ import {
   Image, TouchableWithoutFeedback, StatusBar,
   SafeAreaView, Keyboard, TouchableOpacity,
   KeyboardAVoidingView } from 'react-native';
+// import { Button } from 'react-native-elements';
+// import Icon from 'react-native-vector-icons/FontAwesome'
+
 import firebase from 'firebase';
 <style>
 @import url('https://fonts.googleapis.com/css?family=Comfortaa');
 </style>
+
+
 
 export default class LoginScreen extends React.Component {
   constructor(props) {
@@ -52,9 +57,12 @@ export default class LoginScreen extends React.Component {
             onChangeText={password => this.setState({ password })}
             value={this.state.password}
           />
-          <Button title="Login" onPress={this.onLoginButtonPress.bind(this)} />         
+          <Text>{"\n"}</Text>
+          <Button title="Login" color= '#00000000' onPress={this.onLoginButtonPress.bind(this)} />         
+          <Text>{"\n"}</Text>
           <Button
-            title="Don't have an account? Sign Up"
+            title="Do not have an account? Sign Up"
+            color="#2FB052"
             onPress={() => this.props.navigation.navigate('SignUpScreen')}
           />
         </View>
