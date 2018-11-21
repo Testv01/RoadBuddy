@@ -82,8 +82,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10
   },
   title: {
-    fontFamily: "vincHand",
-    fontSize: 28,
+    fontFamily: "Comfortaa-Regular",
+    fontSize: 36,
     color: '#FFFFFF',
   },
   loginScreenButton:{
