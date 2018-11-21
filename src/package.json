@@ -1,3 +1,8 @@
 {
-    "name" : "src"
+    "rnpm": {
+        "assets": [
+            "./assets/fonts/"
+        ]
+    },
+    "name": "src"
 }

@@ -2,18 +2,12 @@
 import React from 'react'
 import {
   StyleSheet, Text, TextInput, View, Button,
-  Image, TouchableWithoutFeedback, StatusBar,
+  Image, TouchableNativeFeedback, TouchableWithoutFeedback, StatusBar,
   SafeAreaView, Keyboard, TouchableOpacity,
   KeyboardAVoidingView } from 'react-native';
 // import { Button } from 'react-native-elements';
 // import Icon from 'react-native-vector-icons/FontAwesome'
-
-import firebase from 'firebase';
-<style>
-@import url('https://fonts.googleapis.com/css?family=Comfortaa');
-</style>
-
-
+import firebase from 'firebase'
 
 export default class LoginScreen extends React.Component {
   constructor(props) {
@@ -88,8 +82,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10
   },
   title: {
-    fontFamily: 'Comfortaa',
+    fontFamily: "vincHand",
     fontSize: 28,
     color: '#FFFFFF',
-  }
+  },
+  loginScreenButton:{
+    marginRight:40,
+    marginLeft:40,
+   marginTop:10,
+    paddingTop:10,
+    paddingBottom:10,
+    backgroundColor:'#1E6738',
+    borderRadius:10,
+    borderWidth: 1,
+    borderColor: '#fff'
+  },
 })
