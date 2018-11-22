@@ -43,6 +43,9 @@ const AppNavigator = StackNavigator({
   //},
   LoginScreen:{
     screen : LoginScreen,
+    navigationOptions: {
+      header: null
+    }
   },
   SignUpScreen:{
     screen : SignUpScreen,

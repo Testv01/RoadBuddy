@@ -108,6 +108,7 @@ export default class MainScreen extends Component{
   componentWillUnmount() {
     BackgroundGeolocation.stop();
     BackgroundGeolocation.removeAllListeners('location');
+    
   }
 
   

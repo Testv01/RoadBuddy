@@ -19,6 +19,7 @@ export default class LoginScreen extends React.Component {
       errorMessage: null
     }
   }
+ 
   onLoginButtonPress = () => {
     const { email, password } = this.state;
     firebase.auth().signInWithEmailAndPassword(email, password)
@@ -37,17 +38,17 @@ export default class LoginScreen extends React.Component {
             <Text style={{ color: 'red' }}>
               {this.state.errorMessage}
             </Text>}
-          <Text style={{ color: 'white' }}>
+          <Text style={styles.text}>
             Email Address
             </Text>
-          <TextInput
+          <TextInput 
             style={styles.textInput}
             autoCapitalize="none"
             placeholder="Email"
             onChangeText={email => this.setState({ email })}
             value={this.state.email}
           />
-          <Text style={{ color: 'white' }}>
+          <Text style={styles.text}>
             Password
             </Text>
           <TextInput
@@ -96,14 +97,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'rgb(32, 53, 70)',
+    color:'white',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  text: {
+    color : 'white',
+    marginLeft: 1
   },
   textInput: {
     backgroundColor: 'rgba(255,255,255,0.2)',
     color: '#f7c744',
     height: 40,
-    width: 200,
+    width: 250,
     borderColor: 'gray',
     borderWidth: 1,
     marginTop: 8,
@@ -113,7 +119,7 @@ const styles = StyleSheet.create({
     fontFamily: "Comfortaa-Bold",
     fontSize: 36,
     color: '#FFFFFF',
-    marginTop: 0
+    marginBottom: 70
   },
   loginScreenButton: {
     marginRight: 40,
