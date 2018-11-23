@@ -238,12 +238,14 @@ const styles = StyleSheet.create({
     top:0,
     right:0,
     bottom:0,
-    backgroundColor: '#ffe79b',
+    backgroundColor: '#203546',
     margin:5
-  },thatStyle: {
+  },
+  thatStyle: {
     padding: 10,
     marginBottom: 5
-  },thatButton: {
+  },
+  thatButton: {
     margin: 5,
   }
 });
