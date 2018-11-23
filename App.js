@@ -14,8 +14,9 @@ import SignUpScreen from 'src/Screen/SignUpScreen'
 export default class App extends Component {
 
   
-
+  
   initializeFirebase() {
+    let instance = null;
     const firebase = require("firebase");
     const config = {
       apiKey: "AIzaSyAQqXC7P_OwwkkSfJscHLUIfro84Ipc0SI",
@@ -25,7 +26,16 @@ export default class App extends Component {
       storageBucket: "test-2e10e.appspot.com",
       messagingSenderId: "872972741228"
     };
-      firebase.initializeApp(config);
+   
+    if (!firebase.apps.length) { 
+             this.app = firebase.initializeApp(config); 
+              instance = this; 
+              const settings = {timestampsInSnapshots: true}; 
+              
+          } 
+            return instance 
+      
+
   }
   componentDidMount() {
     this.initializeFirebase();

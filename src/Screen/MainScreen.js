@@ -13,6 +13,7 @@ import Autocomplete from 'react-native-autocomplete-input'
 import CircleButton from 'react-native-circle-button'
 import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
 import FirebaseInitial from '../Services/FirebaseInitial';
+import {  Icon, Fab } from 'native-base';
 
 export default class MainScreen extends Component{
  
@@ -51,8 +52,10 @@ export default class MainScreen extends Component{
         latitude:0,
         longitude:0,
       },
-      result:[]
+      result:[],
+      active: false
     };
+    
     }
    
   
@@ -254,15 +257,33 @@ export default class MainScreen extends Component{
         <Button title='Go'  onPress={this.Direction.bind(this)}/>
       </View>
       </View>
-      <View style={{position: 'absolute',bottom: 25,zIndex: 1,alignSelf:"center" }}>
-        <CircleButton 
+      <View  style={{ flex: 1 }}>
+        {/* <CircleButton 
                   size={45} 
                   onPressButtonTop={()=> this.props.navigation.navigate('ReportScreen')}
                   onPressButtonLeft={()=> this.props.navigation.navigate('NotificationScreen')}
                   onPressButtonRight={()=> this.props.navigation.navigate('CallInfoScreen')}
                   primaryColor="#f27663"
                   secondaryColor="#f99a8b"
-                />
+                /> */}
+            <Fab
+                active={this.state.active}
+                direction="up"
+                containerStyle={{ }}
+                style={{ backgroundColor: '#5067FF' }}
+                position="bottomRight"
+                onPress={() => this.setState({ active: !this.state.active })}>
+            <Icon name="add" type='MaterialIcons' />
+            <Button style={{ backgroundColor: '#34A34F' }} onPress={()=> this.props.navigation.navigate('CallInfoScreen')}>
+              <Icon name="info-outline" type='MaterialIcons' />
+            </Button>
+            <Button style={{ backgroundColor: '#3B5998' }} onPress={()=> this.props.navigation.navigate('NotificationScreen')}>
+              <Icon name="ios-notifications" type='Ionicons' />
+            </Button>
+            <Button  style={{ backgroundColor: '#DD5144' }} onPress={()=> this.props.navigation.navigate('ReportScreen')}>
+              <Icon name="report-problem" type='MaterialIcons' />
+            </Button>
+          </Fab>
         </View>
       </View>
     );

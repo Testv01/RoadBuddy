@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "firebase": "^5.5.6",
+    "native-base": "^2.8.1",
     "react": "16.3.1",
     "react-native": "^0.55.4",
     "react-native-autocomplete-input": "^3.5.0",
@@ -21,6 +22,7 @@
     "react-native-mauron85-background-geolocation": "^0.5.0-alpha.44",
     "react-native-multiple-tags": "0.0.4",
     "react-native-tags": "^1.5.0",
+    "react-native-vector-icons": "^6.1.0",
     "react-navigation": "^1.2.1"
   },
   "devDependencies": {

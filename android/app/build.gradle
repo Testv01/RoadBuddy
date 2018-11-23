@@ -154,7 +154,7 @@ dependencies {
     compile project(':react-native-google-places')
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile project(':react-native-immediate-phone-call')
-
+compile project(':react-native-vector-icons')
     compile project(':react-native-mauron85-background-geolocation')
 }
 
