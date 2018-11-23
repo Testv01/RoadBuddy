@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View,Text,Button,FlatList,Image } from 'react-native';
 import RNImmediatePhoneCall from 'react-native-immediate-phone-call';
+import { Icon } from 'native-base';
 export default class CallInfoScreen extends Component {
   state ={
     phoneNumbers:[],
@@ -44,9 +45,10 @@ export default class CallInfoScreen extends Component {
                 Numbers : {item.number}
             </Text>
           </View>
-          <Button 
-              title="Call" 
-              color='red' 
+          <Icon 
+              name='call'
+              type='MaterialIcons'
+              style={{backgroundColor:'green',color:'white',marginTop:20,height:40,borderRadius:15,fontSize:36}}
               onPress={()=>RNImmediatePhoneCall.immediatePhoneCall(item.number)} 
           />
           

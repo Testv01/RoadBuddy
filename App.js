@@ -16,7 +16,7 @@ export default class App extends Component {
   
   
   initializeFirebase() {
-    let instance = null;
+  
     const firebase = require("firebase");
     const config = {
       apiKey: "AIzaSyAQqXC7P_OwwkkSfJscHLUIfro84Ipc0SI",
@@ -28,12 +28,9 @@ export default class App extends Component {
     };
    
     if (!firebase.apps.length) { 
-             this.app = firebase.initializeApp(config); 
-              instance = this; 
-              const settings = {timestampsInSnapshots: true}; 
-              
-          } 
-            return instance 
+             firebase.initializeApp(config); 
+        } 
+           
       
 
   }
@@ -64,7 +61,7 @@ const AppNavigator = StackNavigator({
     screen : MainScreen,
     navigationOptions: () => ({
       title: `Road Buddy`,
-      headerLeft: null
+      header: null
     }),
   },
   ReportScreen:{

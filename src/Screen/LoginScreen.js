@@ -38,7 +38,7 @@ export default class LoginScreen extends React.Component {
             <Text style={{ color: 'red' }}>
               {this.state.errorMessage}
             </Text>}
-          <Text style={styles.text}>
+          <Text style={{color:'white',marginRight:160}}>
             Email Address
             </Text>
           <TextInput 
@@ -48,7 +48,7 @@ export default class LoginScreen extends React.Component {
             onChangeText={email => this.setState({ email })}
             value={this.state.email}
           />
-          <Text style={styles.text}>
+          <Text style={{color:'white',marginRight:183,paddingTop:5}}>
             Password
             </Text>
           <TextInput
@@ -108,12 +108,12 @@ const styles = StyleSheet.create({
   textInput: {
     backgroundColor: 'rgba(255,255,255,0.2)',
     color: '#f7c744',
-    height: 40,
+    height: 42,
     width: 250,
     borderColor: 'gray',
     borderWidth: 1,
     marginTop: 8,
-    paddingHorizontal: 10
+    paddingHorizontal: 12,
   },
   title: {
     fontFamily: "Comfortaa-Bold",

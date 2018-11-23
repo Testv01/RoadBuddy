@@ -7,8 +7,8 @@ export default class NotificationScreen extends Component {
     userLocation:null,
     usersPlaces:[],
   }
-  componentDidMount(){
-    const url = 'https://test-2e10e.firebaseio.com/places.json'
+  componentWillMount(){
+    const url = 'https://test-2e10e.firebaseio.com/Report'
     fetch(url)
       .then(res => res.json())
       .then(parsedRes => {

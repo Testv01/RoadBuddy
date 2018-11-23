@@ -6,6 +6,7 @@ import UsersMap from 'src/Component/UsersMap';
 import Report from 'src/Component/Report';
 
 import FirebaseInitial from '../Services/FirebaseInitial';
+import { Icon } from 'native-base';
 
 export default class ReportScreen extends Component {
 
@@ -215,12 +216,16 @@ onButtonPress = () => {
             </View>  
             </ScrollView>
             </View>    
-            <Button title="Send Report" style={styles.reportButton} onPress={this.sendReportHandler} />
+            
             <UsersMap 
                 userLocation={this.state.userLocation} 
                 usersPlaces={this.state.usersPlaces} 
             />
         </View> 
+        <View style={{marginLeft:178,marginTop:5}}>
+        <Icon fontSize='50'  name='send' type='FontAwesome' style={{color:'blue',width:70,fontSize:48}} onPress={this.sendReportHandler} />
+        <Text style={{fontSize:24,fontWeight:'bold',right:15}}>Submit</Text>
+        </View>
         </ScrollView>
     )
   }

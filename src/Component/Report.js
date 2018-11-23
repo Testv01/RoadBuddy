@@ -3,7 +3,7 @@ import {Button,TextInput,View,StyleSheet,Text,
     Image,CheckBox,} from 'react-native';
 import Tags from "react-native-tags";
 import ImagePicker from "react-native-image-picker";
-
+import {  Icon } from 'native-base';
 const options = {
 	title: 'img picker',
 	takePhotoButtonTitle: 'Take photo with your camera',
@@ -55,13 +55,19 @@ export default class Report extends Component {
                         <Image source={this.state.avatarSource} style={styles.previewImage} />
                         {/* <Image source={{uri: props.pickImage }} style={styles.previewImage} /> */}
                     </View>
-                    <View style={styles.button}>
+                   
+                </View>
+                <View style={styles.button}>
+                <View>
+                    {/* <Button title='' onPress={this.pickImageHandler} buttonStyle={styles.round}/> */}
+                        <Icon name="photo" type='FontAwesome'  onPress={this.pickImageHandler}/>
+                </View>
+                <View style={{marginLeft:10}}>
+                     {/* <Button title='' onPress={this.resetHandler} />  */}
+                        <Icon name="repeat" type='FontAwesome' onPress={this.resetHandler} />
+                </View>
+              
 
-                        <Button title="Pick Image" onPress={this.pickImageHandler} buttonStyle={styles.round}/>
-                        
-                        <Button title="Reset" onPress={this.resetHandler} />
-                    
-                    </View>
                 </View>
                 <TextInput 
                     style={style.topic}
@@ -107,7 +113,6 @@ const style = StyleSheet.create({
 const styles = StyleSheet.create({
     container: {
         alignItems:"center"  ,      
-        flexDirection:"row",
         margin:20
     },
     placeholder: {
@@ -119,9 +124,11 @@ const styles = StyleSheet.create({
     },
     button: {
         width: "20%",
-        marginLeft:20,
-        flexDirection:"column",
-        justifyContent: "space-around"
+        marginLeft:170,
+        marginBottom:20,
+        flexDirection:'row'
+
+        
     },  
     previewImage: {
         width: "100%",
