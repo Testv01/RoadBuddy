@@ -170,7 +170,7 @@ onButtonPress = () => {
                 changeDescription={this.setDesc} 
                 changeReportType={this.setReportType}
             />
-            <Text>Tags</Text>
+            <Text style={{color:'white',marginVertical:5,padding:5}} >Tags</Text>
             
             <View style={styles.thatStyle}>
             <ScrollView horizontal={true} contentContainerStyle={styles.contentContainer}>
@@ -222,9 +222,9 @@ onButtonPress = () => {
                 usersPlaces={this.state.usersPlaces} 
             />
         </View> 
-        <View style={{marginLeft:178,marginTop:5}}>
-        <Icon fontSize='50'  name='send' type='FontAwesome' style={{color:'blue',width:70,fontSize:48}} onPress={this.sendReportHandler} />
-        <Text style={{fontSize:24,fontWeight:'bold',right:15}}>Submit</Text>
+        <View style={{marginTop:5,backgroundColor:'#1A70C9',paddingTop:5}}>
+        <Icon fontSize='50'  name='send' type='FontAwesome' style={{color:'white',width:70,fontSize:48,marginLeft:178,}} onPress={this.sendReportHandler} />
+        <Text style={{fontSize:24,fontWeight:'bold',right:15,marginLeft:178,color:'white'}}>Submit</Text>
         </View>
         </ScrollView>
     )
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     top:0,
     right:0,
     bottom:0,
-    backgroundColor: '#ffe79b',
+    backgroundColor: 'rgb(32, 53, 70)',
     margin:5
   },thatStyle: {
     padding: 10,

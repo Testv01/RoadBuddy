@@ -45,12 +45,14 @@ export default class CallInfoScreen extends Component {
                 Numbers : {item.number}
             </Text>
           </View>
+          <View style={{backgroundColor:'#203546'}}> 
           <Icon 
-              name='call'
+              name='phone-in-talk'
               type='MaterialIcons'
-              style={{backgroundColor:'green',color:'white',marginTop:20,height:40,borderRadius:15,fontSize:36}}
+              style={{color:'white',marginVertical:40,height:40,borderRadius:15,fontSize:36}}
               onPress={()=>RNImmediatePhoneCall.immediatePhoneCall(item.number)} 
           />
+          </View>
           
       </View>
     )
