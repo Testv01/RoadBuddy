@@ -60,20 +60,22 @@ export default class Report extends Component {
                 <View style={styles.button}>
                 <View>
                     {/* <Button title='' onPress={this.pickImageHandler} buttonStyle={styles.round}/> */}
-                        <Icon name="photo" type='FontAwesome'  onPress={this.pickImageHandler}/>
+                        <Icon name="photo" type='FontAwesome' style={{color:'white'}} onPress={this.pickImageHandler}/>
                 </View>
                 <View style={{marginLeft:10}}>
                      {/* <Button title='' onPress={this.resetHandler} />  */}
-                        <Icon name="repeat" type='FontAwesome' onPress={this.resetHandler} />
+                        <Icon name="repeat" type='FontAwesome' style={{color:'white'}} onPress={this.resetHandler} />
                 </View>
               
 
                 </View>
+                <Text style={{color:'white',marginVertical:5,padding:5}}>Topic</Text>
                 <TextInput 
                     style={style.topic}
                     placeholder = "Enter Topic" 
                     onChangeText={this.props.changeTopic}
                 />
+                <Text style={{color:'white',marginVertical:5,padding:5}} >Description</Text>
                 <TextInput 
                     style={style.topic}
                     multiline = {true}
@@ -106,7 +108,8 @@ const style = StyleSheet.create({
     topic:{
         borderColor: 'gray',
         borderWidth: 1,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        marginTop:5
     },
 })
 

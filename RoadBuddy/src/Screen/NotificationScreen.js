@@ -8,7 +8,7 @@ export default class NotificationScreen extends Component {
     usersPlaces:[],
   }
   componentWillMount(){
-    const url = 'https://test-2e10e.firebaseio.com/Report'
+    const url = 'https://test-2e10e.firebaseio.com/Report.json'
     fetch(url)
       .then(res => res.json())
       .then(parsedRes => {
@@ -76,6 +76,6 @@ const styles = StyleSheet.create({
     top:0,
     right:0,
     bottom:0,
-    backgroundColor: '#203546',
+    backgroundColor: 'rgb(32, 53, 70)',
   },
 });

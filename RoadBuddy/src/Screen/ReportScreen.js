@@ -1,55 +1,61 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, View,Text,Button,ScrollView,CheckBox, } from 'react-native';
+import { StyleSheet, View, Text, Button, ScrollView, CheckBox, } from 'react-native';
 
 import UsersMap from 'src/Component/UsersMap';
 import Report from 'src/Component/Report';
+import { Icon } from 'native-base';
 
 import FirebaseInitial from '../Services/FirebaseInitial';
-import { Icon } from 'native-base';
 
 export default class ReportScreen extends Component {
 
   constructor(props) {
     super(props);
-		this.state = {
-      userLocation:null,
-      usersPlaces:[],
-      topicText:"",
-      descText:"",
-      reportType: "",    
+    this.state = {
+      userLocation: null,
+      usersPlaces: [],
+      topicText: "",
+      descText: "",
+      reportType: "",
       pickedImage: null,
       pic: null,
       roadProblem: false,
-      accident:false,
+      accident: false,
+      drainSystem: false,
+      electricity: false,
+      lightSystem: false,
       buttonColor: '',
       buttonColorAcc: '',
       buttonColorRP: '',
+      buttonColorDS: '',
+      buttonColorEL: '',
+      buttonColorLS: '',
     }
   }
-  
+
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(position => {
       this.setState({
-        userLocation:{
-          latitude:position.coords.latitude,
-          longitude:position.coords.longitude,
+        userLocation: {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
           latitudeDelta: 0.0010,
           longitudeDelta: 0.0010,
         }
       });
-      
+
     }, err => console.log(err));
 
   }
-  
-  sendReportHandler=()=>{
+
+  sendReportHandler = () => {
     navigator.geolocation.getCurrentPosition(
       position => {
         this.setState({
-          userLocation:{
-            latitude:position.coords.latitude,
-            longitude:position.coords.longitude,
+          userLocation: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
             latitudeDelta: 0.0010,
             longitudeDelta: 0.0010,
           }
@@ -67,7 +73,7 @@ export default class ReportScreen extends Component {
         // })
 
         // change the way of using Firebase
-        
+
         FirebaseInitial.insertReport(
           position.coords.latitude,
           position.coords.longitude,
@@ -75,70 +81,118 @@ export default class ReportScreen extends Component {
           this.state.descText,
           this.state.pickedImage,
           this.state.accident,
-          this.state.roadProblem
+          this.state.roadProblem,
+          this.state.drainSystem,
+          this.state.electricity,
+          this.state.lightSystem,
         )
         alert("Send Success!");
-        this.props.navigation.goBack() ;                            
+        this.props.navigation.goBack();
       },
       err => console.log(err)
     );
   };
 
-  setTopic=(text)=>{
-    this.setState({topicText:text})
+  setTopic = (text) => {
+    this.setState({ topicText: text })
   }
-  setDesc=(text)=>{
-    this.setState({descText:text})
+  setDesc = (text) => {
+    this.setState({ descText: text })
   }
 
   setReportType = (reportType) => {
     this.setState({ reportType: reportType })
- }
- checkAcc=() =>{
-  this.setState({ 
-    accident:!this.state.accident 
-  })
-}
- checkRP=()=>{
-  this.setState({ 
-    roadProblem:!this.state.roadProblem 
-  })
-}
-onAccButtonPress = () => {
-  const b1 = this.state.buttonColorAcc;
-  if(b1==''){
-  this.setState({ buttonColorAcc: 'lightgreen' }); 
-  this.checkAcc();
-  }else if(b1=='lightgreen'){    
-  this.setState({ buttonColorAcc: '' }); 
-  this.checkAcc();
   }
-}
-onRpButtonPress = () => {
-  const b1 = this.state.buttonColorRP;
-  if(b1==''){
-  this.setState({ buttonColorRP: 'lightgreen' }); 
-  this.checkRP();
-  }else if(b1=='lightgreen'){    
-  this.setState({ buttonColorRP: '' }); 
-  this.checkRP();
+  checkAcc = () => {
+    this.setState({
+      accident: !this.state.accident
+    })
   }
-}
-onButtonPress = () => {
-  const b1 = this.state.buttonColor;
-  if(b1==''){
-  this.setState({ buttonColor: 'lightgreen' }); 
-  }else if(b1=='lightgreen'){    
-  this.setState({ buttonColor: '' }); 
+  checkRP = () => {
+    this.setState({
+      roadProblem: !this.state.roadProblem
+    })
   }
-}
+  checkDS = () => {
+    this.setState({
+      drainSystem: !this.state.drainSystem
+    })
+  }
+  checkEL = () => {
+    this.setState({
+      electricity: !this.state.electricity
+    })
+  }
+  checkLS = () => {
+    this.setState({
+      lightSystem: !this.state.lightSystem
+    })
+  }
+  onAccButtonPress = () => {
+    const b1 = this.state.buttonColorAcc;
+    if (b1 == '') {
+      this.setState({ buttonColorAcc: 'lightgreen' });
+      this.checkAcc();
+    } else if (b1 == 'lightgreen') {
+      this.setState({ buttonColorAcc: '' });
+      this.checkAcc();
+    }
+  }
+  onRpButtonPress = () => {
+    const b1 = this.state.buttonColorRP;
+    if (b1 == '') {
+      this.setState({ buttonColorRP: 'lightgreen' });
+      this.checkRP();
+    } else if (b1 == 'lightgreen') {
+      this.setState({ buttonColorRP: '' });
+      this.checkRP();
+    }
+  }
+  onDsButtonPress = () => {
+    const b1 = this.state.buttonColorDS;
+    if (b1 == '') {
+      this.setState({ buttonColorDS: 'lightgreen' });
+      this.checkDS();
+    } else if (b1 == 'lightgreen') {
+      this.setState({ buttonColorDS: '' });
+      this.checkDS();
+    }
+  }
+  onElButtonPress = () => {
+    const b1 = this.state.buttonColorEL;
+    if (b1 == '') {
+      this.setState({ buttonColorEL: 'lightgreen' });
+      this.checkEL();
+    } else if (b1 == 'lightgreen') {
+      this.setState({ buttonColorEL: '' });
+      this.checkEL();
+    }
+  }
+  onLsButtonPress = () => {
+    const b1 = this.state.buttonColorLS;
+    if (b1 == '') {
+      this.setState({ buttonColorLS: 'lightgreen' });
+      this.checkLS();
+    } else if (b1 == 'lightgreen') {
+      this.setState({ buttonColorLS: '' });
+      this.checkLS();
+    }
+  }
+  onButtonPress = () => {
+    const b1 = this.state.buttonColor;
+    if (b1 == '') {
+      this.setState({ buttonColor: 'lightgreen' });
+    } else if (b1 == 'lightgreen') {
+      this.setState({ buttonColor: '' });
+    }
+  }
 
-  getUserPlacesHandler=()=>{
+  getUserPlacesHandler = () => {
     fetch('https://test-2e10e.firebaseio.com/report.json')
       .then(res => res.json())
       .then(parsedRes => {
-        const placesArray=[];
-        for(const key in parsedRes){
+        const placesArray = [];
+        for (const key in parsedRes) {
           placesArray.push({
             latitude: parsedRes[key].latitude,
             longitude: parsedRes[key].longitude,
@@ -152,94 +206,94 @@ onButtonPress = () => {
       })
   };
 
-  
+
   /**
      * The first arg is the options object for customization (it can also be null or omitted for default options),
      * The second arg is the callback which sends object: response (more info below in README)
      */
-    
-    
+
+
 
   render() {
     return (
       <ScrollView>
         <View style={styles.container}>
-            
-            <Report 
-                changeTopic={this.setTopic}                  
-                changeDescription={this.setDesc} 
-                changeReportType={this.setReportType}
-            />
-            <Text>Tags</Text>
-            
-            <View style={styles.thatStyle}>
+
+          <Report
+            changeTopic={this.setTopic}
+            changeDescription={this.setDesc}
+            changeReportType={this.setReportType}
+          />
+          <Text style={{ color: 'white', padding: 5 }}>Tags</Text>
+
+          <View style={styles.thatStyle}>
             <ScrollView horizontal={true} contentContainerStyle={styles.contentContainer}>
-            <View style={styles.thatButton}>
+              <View style={styles.thatButton}>
                 <Button
                   title="Accident"
                   color={this.state.buttonColorAcc}
                   onPress={this.onAccButtonPress}
                 />
-                
-            </View>    
-            <View style={styles.thatButton}>
+
+              </View>
+              <View style={styles.thatButton}>
                 <Button
                   title="Road Problem"
                   color={this.state.buttonColorRP}
                   onPress={this.onRpButtonPress}
                 />
-                
-            </View>  
-            <View style={styles.thatButton}>
+
+              </View>
+              <View style={styles.thatButton}>
                 <Button
-                  title="Placeholder"
-                  color={this.state.buttonColor}
-                  onPress={this.onButtonPress}
+                  title="Drain System"
+                  color={this.state.buttonColorDS}
+                  onPress={this.onDsButtonPress}
                 />
-                
-            </View>  
-            <View style={styles.thatButton}>
+
+              </View>
+              <View style={styles.thatButton}>
                 <Button
-                  title="Placeholder"
-                  color={this.state.buttonColor}
-                  onPress={this.onButtonPress}
+                  title="Electricity"
+                  color={this.state.buttonColorEL}
+                  onPress={this.onElButtonPress}
                 />
-                
-            </View>  
-            <View style={styles.thatButton}>
+
+              </View>
+              <View style={styles.thatButton}>
                 <Button
-                  title="Placeholder"
-                  color={this.state.buttonColor}
-                  onPress={this.onButtonPress}
+                  title="Light System"
+                  color={this.state.buttonColorLS}
+                  onPress={this.onLsButtonPress}
                 />
-                
-            </View>  
+
+              </View>
             </ScrollView>
-            </View>    
-            
-            <UsersMap 
-                userLocation={this.state.userLocation} 
-                usersPlaces={this.state.usersPlaces} 
-            />
-        </View> 
-        <View style={{marginLeft:178,marginTop:5}}>
-        <Icon fontSize='50'  name='send' type='FontAwesome' style={{color:'blue',width:70,fontSize:48}} onPress={this.sendReportHandler} />
-        <Text style={{fontSize:24,fontWeight:'bold',right:15}}>Submit</Text>
+          </View>
+
+          <UsersMap
+            userLocation={this.state.userLocation}
+            usersPlaces={this.state.usersPlaces}
+          />
         </View>
-        </ScrollView>
-    )
+        <View style={{ marginTop: 5, backgroundColor: '#1A70C9', paddingTop: 5 }}>
+          <Icon fontSize='50' name='send' type='FontAwesome' style={{ color: 'white', width: 70, fontSize: 48, marginLeft: 178, }} onPress={this.sendReportHandler} />
+          <Text style={{ fontSize: 24, fontWeight: 'bold', right: 15, marginLeft: 178, color: 'white' }}>Submit</Text>
+        </View>
+      </ScrollView>
+    );
   }
 }
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    flex:1,
-    left:0,
-    top:0,
-    right:0,
-    bottom:0,
+    flex: 1,
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
     backgroundColor: '#203546',
-    margin:5
+    margin: 5
   },
   thatStyle: {
     padding: 10,

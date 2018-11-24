@@ -32,7 +32,7 @@ export default class CallInfoScreen extends Component {
     return(
       <View style={{flex:1,flexDirection:'row',padding:10,backgroundColor:'white'}}>
           <Image style={{width:80,height:80, margin:5}}
-            source={{uri: 'https://www.ototroniks.com/img/p/2/7/8/7/2787-large_default.jpg'}}
+            source={{uri: 'https://upload.wikimedia.org/wikipedia/th/2/26/DLT_logo.jpg'}}
           />
           <View style={{flex:1,justifyContent:'center'}}>
             <Text style={{fontSize:18,color:'green',marginBottom:15}}>
@@ -45,12 +45,14 @@ export default class CallInfoScreen extends Component {
                 Numbers : {item.number}
             </Text>
           </View>
+          <View style={{backgroundColor:'#203546'}}> 
           <Icon 
-              name='call'
+              name='phone-in-talk'
               type='MaterialIcons'
-              style={{backgroundColor:'green',color:'white',marginTop:20,height:40,borderRadius:15,fontSize:36}}
+              style={{color:'white',marginVertical:40,height:40,borderRadius:15,fontSize:36}}
               onPress={()=>RNImmediatePhoneCall.immediatePhoneCall(item.number)} 
           />
+          </View>
           
       </View>
     )
@@ -84,6 +86,6 @@ const styles = StyleSheet.create({
     top:0,
     right:0,
     bottom:0,
-    backgroundColor: '#203546',
+    backgroundColor: 'rgb(32, 53, 70)',
   },
 });
