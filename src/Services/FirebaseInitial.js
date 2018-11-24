@@ -24,7 +24,7 @@ function handleSignUp  (a,b)  {
   };
 
 
-function insertReport(a,b,c,d,e,f,g) {
+  function insertReport(a,b,c,d,e,f,g,h,i,j) {
 	firebase.database().ref("Report").push({
 		latitude:a,
 		longitude:b, 
@@ -33,6 +33,9 @@ function insertReport(a,b,c,d,e,f,g) {
 		image:e,
 		accident:f,
 		roadProblem:g,
+		drainSystem:h,
+        electricity:i,
+        lightSystem:j,
 		date:firebase.database.ServerValue.TIMESTAMP,
 		user:firebase.auth().currentUser.email
 	})
