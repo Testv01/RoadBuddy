@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, View,Text,Button,ScrollView,CheckBox, } from 'react-native';
+import { StyleSheet, View, Text, Button, ScrollView, CheckBox, TouchableHighlight,TouchableOpacity} from 'react-native';
 
 import UsersMap from 'src/Component/UsersMap';
 import Report from 'src/Component/Report';
@@ -26,11 +26,12 @@ export default class ReportScreen extends Component {
       electricity: false,
       lightSystem: false,
       buttonColor: '',
-      buttonColorAcc: '',
-      buttonColorRP: '',
-      buttonColorDS: '',
-      buttonColorEC: '',
-      buttonColorLS: '',
+      buttonColorAcc: null, // เปลี่ยน String เป็น null นะ
+      buttonColorRP: null,
+      buttonColorDS: null,
+      buttonColorEL: null,
+      buttonColorLS: null,
+      
     }
   }
 
@@ -130,51 +131,51 @@ export default class ReportScreen extends Component {
   }
   onAccButtonPress = () => {
     const b1 = this.state.buttonColorAcc;
-    if (b1 == '') {
+    if (b1 == null) {
       this.setState({ buttonColorAcc: 'lightgreen' });
       this.checkAcc();
     } else if (b1 == 'lightgreen') {
-      this.setState({ buttonColorAcc: '' });
+      this.setState({ buttonColorAcc: null });
       this.checkAcc();
     }
   }
   onRpButtonPress = () => {
     const b1 = this.state.buttonColorRP;
-    if (b1 == '') {
+    if (b1 == null) {
       this.setState({ buttonColorRP: 'lightgreen' });
       this.checkRP();
     } else if (b1 == 'lightgreen') {
-      this.setState({ buttonColorRP: '' });
+      this.setState({ buttonColorRP: null });
       this.checkRP();
     }
   }
   onDsButtonPress = () => {
     const b1 = this.state.buttonColorDS;
-    if (b1 == '') {
+    if (b1 == null) {
       this.setState({ buttonColorDS: 'lightgreen' });
       this.checkDS();
     } else if (b1 == 'lightgreen') {
-      this.setState({ buttonColorDS: '' });
+      this.setState({ buttonColorDS: null });
       this.checkDS();
     }
   }
-  onEcButtonPress = () => {
-    const b1 = this.state.buttonColorEC;
-    if (b1 == '') {
-      this.setState({ buttonColorEC: 'lightgreen' });
-      this.checkEC();
+  onElButtonPress = () => {
+    const b1 = this.state.buttonColorEL;
+    if (b1 == null) {
+      this.setState({ buttonColorEL: 'lightgreen' });
+      this.checkEL();
     } else if (b1 == 'lightgreen') {
-      this.setState({ buttonColorEC: '' });
-      this.checkEC();
+      this.setState({ buttonColorEL: null });
+      this.checkEL();
     }
   }
   onLsButtonPress = () => {
     const b1 = this.state.buttonColorLS;
-    if (b1 == '') {
+    if (b1 == null) {
       this.setState({ buttonColorLS: 'lightgreen' });
       this.checkLS();
     } else if (b1 == 'lightgreen') {
-      this.setState({ buttonColorLS: '' });
+      this.setState({ buttonColorLS: null });
       this.checkLS();
     }
   }
@@ -219,8 +220,8 @@ export default class ReportScreen extends Component {
 
           <View style={styles.thatStyle}>
             <ScrollView horizontal={true} contentContainerStyle={styles.contentContainer}>
-              <View style={styles.thatButton}>
-                <Button
+              {/* <View style={styles.thatButton}> */}
+                {/* <Button
                   title="Accident"
                   color={this.state.buttonColorAcc}
                   onPress={this.onAccButtonPress}
@@ -256,9 +257,24 @@ export default class ReportScreen extends Component {
                   title="Light System"
                   color={this.state.buttonColorLS}
                   onPress={this.onLsButtonPress}
-                />
+                /> */}
+                <TouchableOpacity onPress={this.onAccButtonPress} style={{backgroundColor:this.state.buttonColorAcc , marginLeft:5, borderRadius:4}}>
+                  <Text style={styles.thatButton}>Accident</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.onRpButtonPress} style={{backgroundColor:this.state.buttonColorRP ,  marginLeft:5 , borderRadius:4}}>
+                  <Text style={styles.thatButton}>Road Problem</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.onDsButtonPress} style={{backgroundColor:this.state.buttonColorDS , marginLeft:5 ,borderRadius:4}}>
+                  <Text style={styles.thatButton}>Drain System</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.onElButtonPress} style={{backgroundColor:this.state.buttonColorEL , marginLeft:5 , borderRadius:4}}>
+                 <Text style={styles.thatButton}>Electricity</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.onLsButtonPress} style={{backgroundColor:this.state.buttonColorLS , marginLeft:5 , borderRadius:4}}>
+                  <Text style={styles.thatButton}>Light System</Text>
+                </TouchableOpacity>
 
-              </View>
+              {/* </View> */}
             </ScrollView>
           </View>
 
@@ -292,5 +308,8 @@ const styles = StyleSheet.create({
   },
   thatButton: {
     margin: 5,
+    color:'white',
+    fontSize:16,
+   
   }
 });
