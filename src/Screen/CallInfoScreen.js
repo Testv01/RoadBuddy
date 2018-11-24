@@ -86,6 +86,6 @@ const styles = StyleSheet.create({
     top:0,
     right:0,
     bottom:0,
-    backgroundColor: '#ffe79b',
+    backgroundColor: 'rgb(32, 53, 70)',
   },
 });
