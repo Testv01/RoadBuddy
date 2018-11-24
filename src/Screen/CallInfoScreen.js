@@ -17,7 +17,8 @@ export default class CallInfoScreen extends Component {
             id: key,
             number:parsedRes[key].number,
             name: parsedRes[key].name,
-            description: parsedRes[key].description
+            description: parsedRes[key].description,
+            pic: parsedRes[key].pic
           });
         }
         this.setState({
@@ -32,7 +33,7 @@ export default class CallInfoScreen extends Component {
     return(
       <View style={{flex:1,flexDirection:'row',padding:10,backgroundColor:'white'}}>
           <Image style={{width:80,height:80, margin:5}}
-            source={{uri: 'https://www.ototroniks.com/img/p/2/7/8/7/2787-large_default.jpg'}}
+            source={{uri: item.pic}}
           />
           <View style={{flex:1,justifyContent:'center'}}>
             <Text style={{fontSize:18,color:'green',marginBottom:15}}>
