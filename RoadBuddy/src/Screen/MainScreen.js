@@ -253,8 +253,8 @@ export default class MainScreen extends Component{
           )}
       />
       
-      <View style={{width:50,left:100}}>
-        <Button title='Go'  onPress={this.Direction.bind(this)}/>
+      <View style={{width:100,left:100}}>
+        <Button style={{width:50}} title='Enter'  onPress={this.Direction.bind(this)}/>
       </View>
       </View>
       <View  style={{ flex: 1 }}>

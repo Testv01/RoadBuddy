@@ -68,18 +68,39 @@ const AppNavigator = StackNavigator({
     screen: ReportScreen,
     navigationOptions: () => ({
       title: `Report`,
+      headerStyle: {
+        backgroundColor: 'rgb(32, 53, 70)',
+       
+      },
+      headerTitleStyle: { color: 'white' },
+        headerTintColor: 'white',
+          
     }),
+   
+    
   },
   NotificationScreen: {
     screen: NotificationScreen,
     navigationOptions: () => ({
       title: `Notification`,
+      headerStyle: {
+        backgroundColor: 'rgb(32, 53, 70)',
+       
+      },
+      headerTitleStyle: { color: 'white' },
+        headerTintColor: 'white',
     }),
   },
   CallInfoScreen: {
     screen: CallInfoScreen,
     navigationOptions: () => ({
       title: `Call Info`,
+      headerStyle: {
+        backgroundColor: 'rgb(32, 53, 70)',
+       
+      },
+      headerTitleStyle: { color: 'white' },
+        headerTintColor: 'white',
     }),
   }
 })
