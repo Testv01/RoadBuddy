@@ -110,13 +110,13 @@ export default class CallInfoScreen extends Component {
           />
           <View style={{flex:1,justifyContent:'center'}}>
             <Text style={{fontSize:18,color:'green',marginBottom:15}}>
-                Topic : {item.name}
+                Name : {item.name}
             </Text>            
             <Text style={{fontSize:16,color:'red'}}>
                 Description : {item.description}
             </Text>
             <Text style={{fontSize:16,color:'blue'}}>
-                Numbers : {item.number}
+                Number : {item.number}
             </Text>
             {/* <Text style={{fontSize:16,color:'blue'}}>
                 tag : {item.id}
