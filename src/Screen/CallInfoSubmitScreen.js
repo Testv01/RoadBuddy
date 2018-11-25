@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, View,Text,Button,FlatList,Image } from 'react-native';
+import { StyleSheet, View,Text,Button,FlatList,Image,TouchableOpacity } from 'react-native';
 import RNImmediatePhoneCall from 'react-native-immediate-phone-call';
 import { Icon } from 'native-base';
 export default class CallInfoSubmitScreen extends Component {
   state ={
     phoneNumbers:[],
     lasttag:[],
-    tagtrue:[]
+    tagtrue:[],
   }
   componentWillMount(){
     const url = 'https://test-2e10e.firebaseio.com/Report.json'
@@ -18,42 +18,44 @@ export default class CallInfoSubmitScreen extends Component {
           
           lastArray.push({
             
-            accident:parsedRes[key].accident,
-            roadProblem: parsedRes[key].roadProblem,
-            drainSystem: parsedRes[key].drainSystem,
-            electricity: parsedRes[key].electricity,
-            lightSystem: parsedRes[key].lightSystem
+            Accident:parsedRes[key].accident,
+            RoadProblem: parsedRes[key].roadProblem,
+            DrainSystem: parsedRes[key].drainSystem,
+            Electricity: parsedRes[key].electricity,
+            LightSystem: parsedRes[key].lightSystem
             ,
           });
         }
         this.setState({
           lasttag: lastArray[lastArray.length - 1]
         });
+        
         var tagtrue=[]
        if(this.state.lasttag != null){
-         if(this.state.lasttag.accident == true){
-          tagtrue.push('accident')
+         if(this.state.lasttag.Accident == true){
+          tagtrue.push('Accident')
          }
-         if(this.state.lasttag.roadProblem == true){
-          tagtrue.push('roadProblem')
+         if(this.state.lasttag.RoadProblem == true){
+          tagtrue.push('Road Problem')
          }
-         if(this.state.lasttag.drainSystem == true){
-          tagtrue.push('drainSystem')
+         if(this.state.lasttag.DrainSystem == true){
+          tagtrue.push('Drain System')
          }
-         if(this.state.lasttag.electricity == true){
-          tagtrue.push('electricity')
+         if(this.state.lasttag.Electricity == true){
+          tagtrue.push('Electricity')
          }
-         if(this.state.lasttag.lightSystem == true){
-          tagtrue.push('lightSystem')
+         if(this.state.lasttag.LightSystem == true){
+          tagtrue.push('Light System')
          }
        }
-        const url = 'https://test-2e10e.firebaseio.com/phoneNumber.json'
+       
+        const url = 'https://test-2e10e.firebaseio.com/ShownCall.json'
        fetch(url)
       .then(res => res.json())
       .then(parsedRes => {
-        const phonesArray=[];
+        var phonesArray=[];
         for(const key in parsedRes){
-          
+           console.log(parsedRes)
           if(tagtrue.includes(key)){
             for(i=0; i < Object.values(parsedRes[key]).length ;i++){
                 phonesArray.push({
@@ -64,6 +66,7 @@ export default class CallInfoSubmitScreen extends Component {
         
         }
         }
+        
         this.setState({
           phoneNumbers: phonesArray
         });
@@ -105,9 +108,9 @@ export default class CallInfoSubmitScreen extends Component {
    
     return(
       <View style={{flex:1,flexDirection:'row',padding:10,backgroundColor:'white'}}>
-          {/* <Image style={{width:80,height:80, margin:5}}
+          <Image style={{width:80,height:80, margin:5}}
             source={{uri: item.tag.pic}}
-          /> */}
+          />
           <View style={{flex:1,justifyContent:'center'}}>
             <Text style={{fontSize:18,color:'green',marginBottom:15}}>
                 Topic : {item.tag.name}
@@ -115,11 +118,11 @@ export default class CallInfoSubmitScreen extends Component {
             <Text style={{fontSize:16,color:'red'}}>
                 Description : {item.tag.description}
             </Text>
-            {/* <Text style={{fontSize:16,color:'blue'}}>
-                Numbers : {item.tag.number}
-            </Text> */}
             <Text style={{fontSize:16,color:'blue'}}>
-                tag : {item.id}
+                Numbers : {item.tag.number}
+            </Text>
+            <Text style={{fontSize:16,color:'blue'}}>
+tag                 : {item.id}
             </Text>
           </View>
           <View style={{backgroundColor:'#203546'}}> 
