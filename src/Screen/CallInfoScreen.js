@@ -90,7 +90,8 @@ export default class CallInfoScreen extends Component {
             number:parsedRes[key].number,
             name: parsedRes[key].name,
             description: parsedRes[key].description,
-            pic: parsedRes[key].pic
+            pic: parsedRes[key].pic,
+            // tags: parasedRes[key].tags
           });
         }
         this.setState({
@@ -109,15 +110,18 @@ export default class CallInfoScreen extends Component {
             source={{uri: item.pic}}
           />
           <View style={{flex:1,justifyContent:'center'}}>
-            <Text style={{fontSize:18,color:'green',marginBottom:15}}>
+            <Text style={{fontSize:18,color:'green',marginBottom:7}}>
                 Name : {item.name}
             </Text>            
-            <Text style={{fontSize:16,color:'red'}}>
+            <Text style={{fontSize:16,color:'red',marginBottom:5}}>
                 Description : {item.description}
             </Text>
             <Text style={{fontSize:16,color:'blue'}}>
                 Number : {item.number}
             </Text>
+            {/* <Text style={{fontSize:16,color:'black'}}>
+                Tags : {item.tags}
+            </Text> */}
             {/* <Text style={{fontSize:16,color:'blue'}}>
                 tag : {item.id}
             </Text> */}
