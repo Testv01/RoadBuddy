@@ -22,8 +22,7 @@ export default class CallInfoSubmitScreen extends Component {
             RoadProblem: parsedRes[key].roadProblem,
             DrainSystem: parsedRes[key].drainSystem,
             Electricity: parsedRes[key].electricity,
-            LightSystem: parsedRes[key].lightSystem
-            ,
+            LightSystem: parsedRes[key].lightSystem,
           });
         }
         this.setState({

@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
-import { StyleSheet, View,Text,Button,FlatList,Image } from 'react-native';
+import { StyleSheet, View, Text, Button, FlatList, Image } from 'react-native';
 import RNImmediatePhoneCall from 'react-native-immediate-phone-call';
 import { Icon } from 'native-base';
 export default class CallInfoScreen extends Component {
-  state ={
-    phoneNumbers:[],
-    lasttag:[],
-    tagtrue:[]
+  state = {
+    phoneNumbers: [],
+    lasttag: [],
+    tagtrue: []
   }
-  componentWillMount(){
+  componentWillMount() {
     // const url = 'https://test-2e10e.firebaseio.com/Report.json'
     // fetch(url)
     //   .then(res => res.json())
     //   .then(parsedRes => {
     //     var lastArray=[];
     //     for(const key in parsedRes){
-          
+
     //       lastArray.push({
-            
+
     //         accident:parsedRes[key].accident,
     //         roadProblem: parsedRes[key].roadProblem,
     //         drainSystem: parsedRes[key].drainSystem,
@@ -53,7 +53,7 @@ export default class CallInfoScreen extends Component {
     //   .then(parsedRes => {
     //     const phonesArray=[];
     //     for(const key in parsedRes){
-          
+
     //       if(tagtrue.includes(key)){
     //         for(i=0; i < Object.values(parsedRes[key]).length ;i++){
     //             phonesArray.push({
@@ -61,37 +61,37 @@ export default class CallInfoScreen extends Component {
     //                tag:Object.values(parsedRes[key])[i],
     //             });
     //         }
-        
+
     //     }
     //     }
     //     this.setState({
     //       phoneNumbers: phonesArray
     //     });
-       
-      
-    //   })
-          
-        
-    //   })
-      
 
-   
+
+    //   })
+
+
+    //   })
+
+
+
   }
-  componentDidMount(){
-   
+  componentDidMount() {
+
     const url = 'https://test-2e10e.firebaseio.com/phoneNumber.json'
     fetch(url)
       .then(res => res.json())
       .then(parsedRes => {
-        const phonesArray=[];
-        for(const key in parsedRes){
+        const phonesArray = [];
+        for (const key in parsedRes) {
           phonesArray.push({
             id: key,
-            number:parsedRes[key].number,
+            number: parsedRes[key].number,
             name: parsedRes[key].name,
             description: parsedRes[key].description,
             pic: parsedRes[key].pic,
-            // tags: parasedRes[key].tags
+            tags: parsedRes[key].tags
           });
         }
         this.setState({
@@ -101,72 +101,77 @@ export default class CallInfoScreen extends Component {
 
   }
 
-  
-  renderReport=({item})=>{
-   
-    return(
-      <View style={{flex:1,flexDirection:'row',padding:10,backgroundColor:'white'}}>
-          <Image style={{width:80,height:80, margin:5}}
-            source={{uri: item.pic}}
-          />
-          <View style={{flex:1,justifyContent:'center'}}>
-            <Text style={{fontSize:18,color:'green',marginBottom:7}}>
-                Name : {item.name}
-            </Text>            
-            <Text style={{fontSize:16,color:'red',marginBottom:5}}>
-                Description : {item.description}
-            </Text>
-            <Text style={{fontSize:16,color:'blue'}}>
-                Number : {item.number}
-            </Text>
-            {/* <Text style={{fontSize:16,color:'black'}}>
-                Tags : {item.tags}
-            </Text> */}
-            {/* <Text style={{fontSize:16,color:'blue'}}>
+
+  renderReport = ({ item }) => {
+    // const isTagged = isTagged;
+    // if (isTagged === null) {
+    //   return "none";
+    // }  มันใช้ไงวะ
+    return (
+      <View style={{ flex: 1, flexDirection: 'row', padding: 10, backgroundColor: 'white' }}>
+        <Image style={{ width: 80, height: 80, margin: 5 }}
+          source={{ uri: item.pic }}
+        />
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Text style={{ fontSize: 18, color: 'green', marginBottom: 7 }}>
+            Name : {item.name}
+          </Text>
+          <Text style={{ fontSize: 16, color: 'red', marginBottom: 5 }}>
+            Description : {item.description}
+          </Text>
+          <Text style={{ fontSize: 16, color: 'blue' }}>
+            Number : {item.number}
+          </Text>
+          {item.tags !== null ? <Text style={{ fontSize: 16, color: 'black' }}>
+            Tags : {item.tags}
+          </Text> : null}
+
+
+          {/* <Text style={{fontSize:16,color:'blue'}}>
                 tag : {item.id}
             </Text> */}
-          </View>
-          <View style={{backgroundColor:'#203546'}}> 
-          <Icon 
-              name='phone-in-talk'
-              type='MaterialIcons'
-              style={{color:'white',marginVertical:40,height:40,borderRadius:15,fontSize:36}}
-              onPress={()=>RNImmediatePhoneCall.immediatePhoneCall(item.number)} 
+        </View>
+        <View style={{ backgroundColor: '#203546' }}>
+          <Icon
+            name='phone-in-talk'
+            type='MaterialIcons'
+            style={{ color: 'white', marginVertical: 40, height: 40, borderRadius: 15, fontSize: 36 }}
+            onPress={() => RNImmediatePhoneCall.immediatePhoneCall(item.number)}
           />
-          </View>
-          
-      </View>
+        </View>
+
+      </View >
     )
   };
 
-  renderSeparator=()=>{
-    return(
-      <View style={{height:1,width:'100%',backgroundColor:'black'}}>
+  renderSeparator = () => {
+    return (
+      <View style={{ height: 1, width: '100%', backgroundColor: 'black' }}>
       </View>
     )
   };
 
   render() {
     return (
-     <View style={styles.container}>
+      <View style={styles.container}>
         <FlatList
           data={this.state.phoneNumbers}
           renderItem={this.renderReport}
-          keyExtractor={(item,index) => index}
+          keyExtractor={(item, index) => index}
           ItemSeparatorComponent={this.renderSeparator}
         />
-      </View> 
+      </View>
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    position: 'absolute', 
-    left:0,
-    top:0,
-    right:0,
-    bottom:0,
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
     backgroundColor: 'rgb(32, 53, 70)',
   },
 });
