@@ -91,7 +91,7 @@ export default class CallInfoScreen extends Component {
             name: parsedRes[key].name,
             description: parsedRes[key].description,
             pic: parsedRes[key].pic,
-            // tags: parasedRes[key].tags
+            tags: parsedRes[key].tags
           });
         }
         this.setState({
@@ -119,9 +119,9 @@ export default class CallInfoScreen extends Component {
             <Text style={{fontSize:16,color:'blue'}}>
                 Number : {item.number}
             </Text>
-            {/* <Text style={{fontSize:16,color:'black'}}>
+            <Text style={{fontSize:16,color:'black'}}>
                 Tags : {item.tags}
-            </Text> */}
+            </Text> 
             {/* <Text style={{fontSize:16,color:'blue'}}>
                 tag : {item.id}
             </Text> */}
