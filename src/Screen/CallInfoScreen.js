@@ -103,10 +103,9 @@ export default class CallInfoScreen extends Component {
 
 
   renderReport = ({ item }) => {
-    // const isTagged = isTagged;
-    // if (isTagged === null) {
-    //   return "none";
-    // }  มันใช้ไงวะ
+    if(item.tags==null){
+      item.tags = "none"
+    }
     return (
       <View style={{ flex: 1, flexDirection: 'row', padding: 10, backgroundColor: 'white' }}>
         <Image style={{ width: 80, height: 80, margin: 5 }}
@@ -119,10 +118,10 @@ export default class CallInfoScreen extends Component {
           <Text style={{ fontSize: 16, color: 'red', marginBottom: 5 }}>
             Description : {item.description}
           </Text>
-          <Text style={{ fontSize: 16, color: 'blue' }}>
+          <Text style={{ fontSize: 16, color: 'blue',marginBottom : 3 }}>
             Number : {item.number}
           </Text>
-          {item.tags !== null ? <Text style={{ fontSize: 16, color: 'black' }}>
+          {item.tags !== null ? <Text style={{ fontSize: 14, color: 'black',fontStyle:'italic' }}>
             Tags : {item.tags}
           </Text> : null}
 
