@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button, ScrollView, CheckBox, TouchableHighlight,TouchableOpacity} from 'react-native';
+import { StyleSheet, View, Text, Button, ScrollView, CheckBox, TouchableHighlight, TouchableOpacity } from 'react-native';
 
 import UsersMap from 'src/Component/UsersMap';
 import Report from 'src/Component/Report';
@@ -54,7 +54,7 @@ export default class ReportScreen extends Component {
       buttonColorEL: null,
       buttonColorLS: null,
       Modal: false,
-      
+
     }
   }
 
@@ -73,11 +73,11 @@ export default class ReportScreen extends Component {
 
   }
   setModalVisible(visible) {
-    this.setState({modalVisible: visible});
+    this.setState({ modalVisible: visible });
   }
 
-  hadleSelectedFile = (data) =>{
-    this.setState({selectedFile:data})
+  hadleSelectedFile = (data) => {
+    this.setState({ selectedFile: data })
   }
 
   sendReportHandler = () => {
@@ -120,7 +120,7 @@ export default class ReportScreen extends Component {
         )
         // alert("Send Success!");
         // this.props.navigation.goBack();
-        this.setState({Modal:true})
+        this.setState({ Modal: true })
         // this.props.navigation.replace('CallInfoSubmitScreen')
       },
       err => console.log(err)
@@ -236,14 +236,14 @@ export default class ReportScreen extends Component {
      * The first arg is the options object for customization (it can also be null or omitted for default options),
      * The second arg is the callback which sends object: response (more info below in README)
      */
-    goCallinfo(){
-      this.setState({Modal:false}) 
-      this.props.navigation.replace('CallInfoSubmitScreen')
-    }
-    goMain(){
-      this.setState({Modal:false})  
-      this.props.navigation.replace('MainScreen')
-    }
+  goCallinfo() {
+    this.setState({ Modal: false })
+    this.props.navigation.replace('CallInfoSubmitScreen')
+  }
+  goMain() {
+    this.setState({ Modal: false })
+    this.props.navigation.replace('MainScreen')
+  }
 
 
 
@@ -263,7 +263,7 @@ export default class ReportScreen extends Component {
           <View style={styles.thatStyle}>
             <ScrollView horizontal={true} contentContainerStyle={styles.contentContainer}>
               {/* <View style={styles.thatButton}> */}
-                {/* <Button
+              {/* <Button
                   title="Accident"
                   color={this.state.buttonColorAcc}
                   onPress={this.onAccButtonPress}
@@ -300,21 +300,21 @@ export default class ReportScreen extends Component {
                   color={this.state.buttonColorLS}
                   onPress={this.onLsButtonPress}
                 /> */}
-                <TouchableOpacity onPress={this.onAccButtonPress} style={{backgroundColor:this.state.buttonColorAcc , marginLeft:5, borderRadius:4}}>
-                  <Text style={styles.thatButton}>Accident</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this.onRpButtonPress} style={{backgroundColor:this.state.buttonColorRP ,  marginLeft:5 , borderRadius:4}}>
-                  <Text style={styles.thatButton}>Road Problem</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this.onDsButtonPress} style={{backgroundColor:this.state.buttonColorDS , marginLeft:5 ,borderRadius:4}}>
-                  <Text style={styles.thatButton}>Drain System</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this.onElButtonPress} style={{backgroundColor:this.state.buttonColorEL , marginLeft:5 , borderRadius:4}}>
-                 <Text style={styles.thatButton}>Electricity</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this.onLsButtonPress} style={{backgroundColor:this.state.buttonColorLS , marginLeft:5 , borderRadius:4}}>
-                  <Text style={styles.thatButton}>Light System</Text>
-                </TouchableOpacity>
+              <TouchableOpacity onPress={this.onAccButtonPress} style={{ backgroundColor: this.state.buttonColorAcc, marginLeft: 5, borderRadius: 4 }}>
+                <Text style={styles.thatButton}>Accident</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this.onRpButtonPress} style={{ backgroundColor: this.state.buttonColorRP, marginLeft: 5, borderRadius: 4 }}>
+                <Text style={styles.thatButton}>Road Problem</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this.onDsButtonPress} style={{ backgroundColor: this.state.buttonColorDS, marginLeft: 5, borderRadius: 4 }}>
+                <Text style={styles.thatButton}>Drain System</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this.onElButtonPress} style={{ backgroundColor: this.state.buttonColorEL, marginLeft: 5, borderRadius: 4 }}>
+                <Text style={styles.thatButton}>Electricity</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this.onLsButtonPress} style={{ backgroundColor: this.state.buttonColorLS, marginLeft: 5, borderRadius: 4 }}>
+                <Text style={styles.thatButton}>Light System</Text>
+              </TouchableOpacity>
 
               {/* </View> */}
             </ScrollView>
@@ -329,28 +329,30 @@ export default class ReportScreen extends Component {
           <Icon fontSize='50' name='send' type='FontAwesome' style={{ color: 'blue', width: 70, fontSize: 48 }} onPress={this.sendReportHandler} />
           <Text style={{ fontSize: 24, fontWeight: 'bold', right: 15 }}>Submit</Text>
         </View>
-        <Dialog   style={{color:'#203546'}}
-           visible={this.state.Modal}   
-            title="Send Success! Do you want to contact organization immediately?" 
-            titleStyle={{textAlign:'center'}} 
-            onTouchOutside={()=>{this.setState({Modal:false})}}
-          > 
-            <View style={{marginBottom:20,alignItems:'center'}}> 
+        <Dialog style={{ color: '#203546' }}
+          visible={this.state.Modal}
+          title="Send Success! Do you want to contact an organization immediately?"
+          // title="Do you want to contact an organization immediately?" 
+          titleStyle={{ textAlign: 'center', color: 'white' }}
+          onTouchOutside={() => { this.setState({ Modal: false }) }}
+        >
+          <View style={{ marginBottom: 20, alignItems: 'center', flexDirection: 'row', flex:1 }}>
             <TouchableOpacity
-            style={[styles.ScreenButton, { backgroundColor: "#4D6375" }]} 
-            onPress={()=>{this.goCallinfo()}}
-            >             
-            <Text style={{color: 'white'}}>Yes</Text>
+              style={[styles.ScreenButton, { /*backgroundColor: "#4D6375",*/ marginRight: 120, }]}
+              onPress={() => { this.goMain() }}
+            >
+              <Text style={{ color: 'white' }}>No</Text>
             </TouchableOpacity>
-        
             <TouchableOpacity
-            style={[styles.ScreenButton, { backgroundColor: "#4D6375" }]} 
-            onPress={()=>{this.goMain()}}
-            >             
-            <Text style={{color: 'white'}}>No</Text>
+              style={[styles.ScreenButton, { backgroundColor: "#35495A", /*marginLeft: 100,*/ }]}
+              onPress={() => { this.goCallinfo() }}
+            >
+              <Text style={{ color: 'white' }}>Yes</Text>
             </TouchableOpacity>
-           </View> 
-          </Dialog> 
+
+
+          </View>
+        </Dialog>
 
       </ScrollView>
     )
@@ -373,18 +375,18 @@ const styles = StyleSheet.create({
   },
   thatButton: {
     margin: 5,
-    color:'white',
-    fontSize:16,   
+    color: 'white',
+    fontSize: 16,
   },
   ScreenButton: {
     height: 40,
     width: 100,
     borderRadius: 20,
-    marginLeft: 50,
-    marginRight: 50,
+    // marginLeft: 50,
+    // marginRight: 50,
     marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    
+
   },
 });
