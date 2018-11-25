@@ -4,7 +4,7 @@ import {
   StyleSheet, Text, TextInput, View, Button,
   Image, TouchableNativeFeedback, TouchableOpacity, StatusBar,
   SafeAreaView, Keyboard, TouchableHighlight,
-  KeyboardAVoidingView
+  KeyboardAVoidingView,Alert
 } from 'react-native';
 // import { Button } from 'react-native-elements';
 // import Icon from 'react-native-vector-icons/FontAwesome'
@@ -23,10 +23,18 @@ export default class LoginScreen extends React.Component {
   onLoginButtonPress = () => {
     const { email, password } = this.state;
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(() => this.props.navigation.navigate('MainScreen'))
-      .then(() => { alert("Welcome " + email); })
-      .catch(error => this.setState({ errorMessage: error.message }));
-
+    .catch(error => this.setState({ errorMessage: error.message }))
+      .then(function (checkVerify){
+          firebase.auth().onAuthStateChanged(firebaseUser =>{
+            if (firebaseUser.emailVerified){
+             Alert.alert("  Greeting", "Welcome to Road Buddy , " + email + " !")
+            } else{
+              
+              Alert.alert(" Email not verify ");
+            }
+          })
+      }) 
+      .then(() => this.props.navigation.navigate('MainScreen')) ;
   }
   render() {
     return (
