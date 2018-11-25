@@ -19,7 +19,7 @@ export default class LoginScreen extends React.Component {
       errorMessage: null
     }
   }
-
+ 
   onLoginButtonPress = () => {
     const { email, password } = this.state;
     firebase.auth().signInWithEmailAndPassword(email, password)
@@ -38,17 +38,17 @@ export default class LoginScreen extends React.Component {
             <Text style={{ color: 'red' }}>
               {this.state.errorMessage}
             </Text>}
-          <Text style={{ color: 'white', marginRight: 260 }}>
+          <Text style={{color:'white',marginRight:160}}>
             Email Address
             </Text>
-          <TextInput
+          <TextInput 
             style={styles.textInput}
             autoCapitalize="none"
             placeholder="Email"
             onChangeText={email => this.setState({ email })}
             value={this.state.email}
           />
-          <Text style={{ color: 'white', marginRight: 287.5, paddingTop: 8 }}>
+          <Text style={{color:'white',marginRight:183,paddingTop:5}}>
             Password
             </Text>
           <TextInput
@@ -61,29 +61,35 @@ export default class LoginScreen extends React.Component {
           />
           <Text>{"\n"}</Text>
           <TouchableOpacity
-            style={[styles.loginScreenButton, { backgroundColor: "#4D6375" }]
-            }
+            style={{
+              height: 40,
+              width: 160,
+              borderRadius: 20,
+              backgroundColor: "black",
+              marginLeft: 50,
+              marginRight: 50,
+              marginTop: 20,
+              alignItems: 'center',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
             onPress={this.onLoginButtonPress.bind(this)}
           >
             <Text style={{ color: 'white' }}>
               Login
-            </Text>
+                </Text>
             {/* https://material.io/tools/color/#!/?view.left=0&view.right=0&primary.color=00695C */}
             {/* <Button title="Login" color= '#00000000' onPress={this.onLoginButtonPress.bind(this)} />     */}
           </TouchableOpacity>
           {/* <Button title="Login" className="test" color= '#00000000' onPress={this.onLoginButtonPress.bind(this)} />          */}
           <Text>{"\n"}</Text>
-          <TouchableOpacity
-            style={[styles.loginScreenButton, {marginTop:1}/* , { backgroundColor:'black' } */]
-            }
-            onPress={ () => this.props.navigation.navigate('SignUpScreen')}
-          >
-            <Text style={{ color: 'white' }}>
-              Sign Up
-          </Text>
-          </TouchableOpacity>
+          <Button
+            title="Do not have an account? Sign Up"
+            color="#2FB052"
+            onPress={() => this.props.navigation.navigate('SignUpScreen')}
+          />
         </View>
-      </SafeAreaView >
+      </SafeAreaView>
     )
   }
 }
@@ -91,19 +97,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'rgb(32, 53, 70)',
-    color: 'white',
+    color:'white',
     justifyContent: 'center',
     alignItems: 'center'
   },
   text: {
-    color: 'white',
+    color : 'white',
     marginLeft: 1
   },
   textInput: {
     backgroundColor: 'rgba(255,255,255,0.2)',
     color: '#f7c744',
     height: 42,
-    width: 350,
+    width: 250,
     borderColor: 'gray',
     borderWidth: 1,
     marginTop: 8,
@@ -116,15 +122,15 @@ const styles = StyleSheet.create({
     marginBottom: 70
   },
   loginScreenButton: {
-    height: 40,
-    width: 150,
-    borderRadius: 20,
-    marginLeft: 50,
-    marginRight: 50,
-    marginTop: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignItems: 'center'
+    marginRight: 40,
+    marginLeft: 40,
+    marginTop: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: '#1E6738',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#fff'
   },
   Borderza: {
     borderRadius: 50

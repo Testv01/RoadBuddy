@@ -4,9 +4,9 @@ import { StyleSheet, View, Text, Button, ScrollView, CheckBox, TouchableHighligh
 
 import UsersMap from 'src/Component/UsersMap';
 import Report from 'src/Component/Report';
-import { Icon } from 'native-base';
 
 import FirebaseInitial from '../Services/FirebaseInitial';
+import { Icon } from 'native-base';
 
 export default class ReportScreen extends Component {
 
@@ -85,7 +85,7 @@ export default class ReportScreen extends Component {
           this.state.roadProblem,
           this.state.drainSystem,
           this.state.electricity,
-          this.state.lightSystem,
+          this.state.lightSystem
         )
         alert("Send Success!");
         // this.props.navigation.goBack();
@@ -120,7 +120,7 @@ export default class ReportScreen extends Component {
       drainSystem: !this.state.drainSystem
     })
   }
-  checkEL = () => {
+  checkEC = () => {
     this.setState({
       electricity: !this.state.electricity
     })
@@ -180,15 +180,6 @@ export default class ReportScreen extends Component {
       this.checkLS();
     }
   }
-  onButtonPress = () => {
-    const b1 = this.state.buttonColor;
-    if (b1 == '') {
-      this.setState({ buttonColor: 'lightgreen' });
-    } else if (b1 == 'lightgreen') {
-      this.setState({ buttonColor: '' });
-    }
-  }
-
   getUserPlacesHandler = () => {
     fetch('https://test-2e10e.firebaseio.com/report.json')
       .then(res => res.json())
@@ -257,8 +248,8 @@ export default class ReportScreen extends Component {
               <View style={styles.thatButton}>
                 <Button
                   title="Electricity"
-                  color={this.state.buttonColorEL}
-                  onPress={this.onElButtonPress}
+                  color={this.state.buttonColorEC}
+                  onPress={this.onEcButtonPress}
                 />
 
               </View>
@@ -293,12 +284,12 @@ export default class ReportScreen extends Component {
             usersPlaces={this.state.usersPlaces}
           />
         </View>
-        <View style={{ marginTop: 5, backgroundColor: '#1A70C9', paddingTop: 5 }}>
-          <Icon fontSize='50' name='send' type='FontAwesome' style={{ color: 'white', width: 70, fontSize: 48, marginLeft: 178, }} onPress={this.sendReportHandler} />
-          <Text style={{ fontSize: 24, fontWeight: 'bold', right: 15, marginLeft: 178, color: 'white' }}>Submit</Text>
+        <View style={{ marginLeft: 178, marginTop: 5 }}>
+          <Icon fontSize='50' name='send' type='FontAwesome' style={{ color: 'blue', width: 70, fontSize: 48 }} onPress={this.sendReportHandler} />
+          <Text style={{ fontSize: 24, fontWeight: 'bold', right: 15 }}>Submit</Text>
         </View>
       </ScrollView>
-    );
+    )
   }
 }
 const styles = StyleSheet.create({

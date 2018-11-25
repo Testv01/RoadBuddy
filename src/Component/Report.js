@@ -69,13 +69,13 @@ export default class Report extends Component {
               
 
                 </View>
-                <Text style={{color:'white',marginVertical:5,padding:5}}>Topic</Text>
+                <Text style={{color:'white',marginVertical:5}}>Topic</Text>
                 <TextInput 
                     style={style.topic}
                     placeholder = "Enter Topic" 
                     onChangeText={this.props.changeTopic}
                 />
-                <Text style={{color:'white',marginVertical:5,padding:5}} >Description</Text>
+                <Text style={{color:'white',marginVertical:5}} >Description</Text>
                 <TextInput 
                     style={style.topic}
                     multiline = {true}

@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, AppRegistry, Text, Button } from 'react-native';
+import { StyleSheet, AppRegistry ,Text,Button } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
 import MainScreen from 'src/Screen/MainScreen'
@@ -14,10 +14,10 @@ import SignUpScreen from 'src/Screen/SignUpScreen'
 
 export default class App extends Component {
 
-
-
+  
+  
   initializeFirebase() {
-
+  
     const firebase = require("firebase");
     const config = {
       apiKey: "AIzaSyAQqXC7P_OwwkkSfJscHLUIfro84Ipc0SI",
@@ -27,12 +27,12 @@ export default class App extends Component {
       storageBucket: "test-2e10e.appspot.com",
       messagingSenderId: "872972741228"
     };
-
-    if (!firebase.apps.length) {
-      firebase.initializeApp(config);
-    }
-
-
+   
+    if (!firebase.apps.length) { 
+             firebase.initializeApp(config); 
+        } 
+           
+      
 
   }
   componentDidMount() {
@@ -40,32 +40,32 @@ export default class App extends Component {
   }
   render() {
     return (
-      <AppNavigator />
+      <AppNavigator/>
     );
   }
 }
 
 const AppNavigator = StackNavigator({
   //LoadingScreen:{
-  //screen : LoadingScreen,
+    //screen : LoadingScreen,
   //},
-  LoginScreen: {
-    screen: LoginScreen,
+  LoginScreen:{
+    screen : LoginScreen,
     navigationOptions: {
       header: null
     }
   },
-  SignUpScreen: {
-    screen: SignUpScreen,
+  SignUpScreen:{
+    screen : SignUpScreen,
   },
-  MainScreen: {
-    screen: MainScreen,
+  MainScreen:{
+    screen : MainScreen,
     navigationOptions: () => ({
       title: `Road Buddy`,
       header: null
     }),
   },
-  ReportScreen: {
+  ReportScreen:{
     screen: ReportScreen,
     navigationOptions: () => ({
       title: `Report`,
@@ -80,7 +80,7 @@ const AppNavigator = StackNavigator({
    
     
   },
-  NotificationScreen: {
+  NotificationScreen:{
     screen: NotificationScreen,
     navigationOptions: () => ({
       title: `Notification`,
@@ -92,7 +92,7 @@ const AppNavigator = StackNavigator({
         headerTintColor: 'white',
     }),
   },
-  CallInfoScreen: {
+  CallInfoScreen:{
     screen: CallInfoScreen,
     navigationOptions: () => ({
       title: `Call Info`,
