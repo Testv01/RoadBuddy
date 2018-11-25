@@ -30,7 +30,7 @@ export default class LoginScreen extends React.Component {
              Alert.alert("  Greeting", "Welcome to Road Buddy , " + email + " !")
             } else{
               
-              Alert.alert(" Email not verify ");
+              Alert.alert(" Email not verify ", "Please verify your email");
             }
           })
       }) 
