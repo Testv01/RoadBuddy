@@ -16,7 +16,8 @@ export default class Report extends Component {
         super(props);
         this.state = {
           avatarSource: null,
-          try:["report","007"]
+          try:["report","007"],
+          selectedFile:null
         }
     }
 
@@ -32,9 +33,11 @@ export default class Report extends Component {
       
           else {
             let source = { uri: response.uri };
+            this.props.hadleSelectedFile(response)
             this.setState({
               avatarSource: {uri: response.uri},
-              pic: response.data
+              pic: response.data,
+              selectedFile:response
             });
           }
         });

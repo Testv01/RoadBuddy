@@ -14,14 +14,14 @@ import {
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 
-
+import FirebaseInitial from '../Services/FirebaseInitial';
 const options = {
 	title: 'img picker',
 	takePhotoButtonTitle: 'Take photo with your camera',
 	chooseFromLibraryButtonTitle: 'Choose photo from library',
 }
 
-export default class App extends Component < Props > {
+export default class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {

@@ -4,12 +4,40 @@ import { StyleSheet, View, Text, Button, ScrollView, CheckBox, TouchableHighligh
 
 import UsersMap from 'src/Component/UsersMap';
 import Report from 'src/Component/Report';
-
+import firebase from '../Services/firebaseCfg.js'
 import FirebaseInitial from '../Services/FirebaseInitial';
 import { Icon } from 'native-base';
+// const uploadImage = (uri, mime = 'application/octet-stream') => {
+//   return new Promise((resolve, reject) => {
+//     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
+//       const sessionId = new Date().getTime()
+//       let uploadBlob = null
+//       const imageRef = storage.ref('images').child(`${sessionId}`)
+//       let storageRef = firebase.storage().ref(this.state.selectedFile.Filename)
+
+//       fs.readFile(uploadUri, 'base64')
+//       .then((data) => {
+//         return Blob.build(data, { type: `${mime};BASE64` })
+//       })
+//       .then((blob) => {
+//         uploadBlob = blob
+//         storageRef.put(blob, { contentType: mime })
+//         return imageRef.put(blob, { contentType: mime })
+//       })
+//       .then(() => {
+//         uploadBlob.close()
+//         return imageRef.getDownloadURL()
+//       })
+//       .then((url) => {
+//         resolve(url)
+//       })
+//       .catch((error) => {
+//         reject(error)
+//       })
+//   })
+// }
 
 export default class ReportScreen extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -31,6 +59,8 @@ export default class ReportScreen extends Component {
       buttonColorDS: null,
       buttonColorEL: null,
       buttonColorLS: null,
+      selectedFile:null,
+      uploadURL:null
       
     }
   }
@@ -48,6 +78,10 @@ export default class ReportScreen extends Component {
 
     }, err => console.log(err));
 
+  }
+
+  hadleSelectedFile = (data) =>{
+    this.setState({selectedFile:data})
   }
 
   sendReportHandler = () => {
@@ -73,7 +107,7 @@ export default class ReportScreen extends Component {
         //   })
         // })
 
-        // change the way of using Firebase
+        console.log(this.state.selectedFile)
 
         FirebaseInitial.insertReport(
           position.coords.latitude,
@@ -85,7 +119,8 @@ export default class ReportScreen extends Component {
           this.state.roadProblem,
           this.state.drainSystem,
           this.state.electricity,
-          this.state.lightSystem
+          this.state.lightSystem,
+          this.state.uploadURL
         )
         alert("Send Success!");
         // this.props.navigation.goBack();
@@ -211,11 +246,11 @@ export default class ReportScreen extends Component {
     return (
       <ScrollView>
         <View style={styles.container}>
-
           <Report
             changeTopic={this.setTopic}
             changeDescription={this.setDesc}
             changeReportType={this.setReportType}
+            hadleSelectedFile={this.hadleSelectedFile}
           />
           <Text style={{ color: 'white', padding: 5 }}>Tags</Text>
 
