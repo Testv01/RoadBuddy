@@ -95,7 +95,7 @@ const AppNavigator = StackNavigator({
   CallInfoScreen:{
     screen: CallInfoScreen,
     navigationOptions: () => ({
-      title: `Call Info`,
+      title: `Organization Contact Information`,
       headerStyle: {
         backgroundColor: 'rgb(32, 53, 70)',
        
@@ -107,7 +107,7 @@ const AppNavigator = StackNavigator({
   CallInfoSubmitScreen: {
     screen: CallInfoSubmitScreen,
     navigationOptions: () => ({
-      title: `Call Info Submit`,
+      title: `Organization Contact Information `,
       headerStyle: {
         backgroundColor: 'rgb(32, 53, 70)',
        
