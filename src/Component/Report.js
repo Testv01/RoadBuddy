@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import {Button,TextInput,View,StyleSheet,Text,
-    Image,CheckBox,} from 'react-native';
+    Image,} from 'react-native';
 import Tags from "react-native-tags";
 import ImagePicker from "react-native-image-picker";
 import {  Icon } from 'native-base';
 const options = {
-	title: 'img picker',
-	takePhotoButtonTitle: 'Take photo with your camera',
-	chooseFromLibraryButtonTitle: 'Choose photo from library',
+	title: 'Attach a file',
+	takePhotoButtonTitle: 'Take a photo with camera',
+	chooseFromLibraryButtonTitle: 'Choose a photo from the library',
 }
 
 export default class Report extends Component {
@@ -72,13 +72,13 @@ export default class Report extends Component {
               
 
                 </View>
-                <Text style={{color:'white',marginVertical:5}}>Topic</Text>
+                <Text style={styles.title}>TOPIC</Text>
                 <TextInput 
                     style={style.topic}
                     placeholder = "Enter Topic" 
                     onChangeText={this.props.changeTopic}
                 />
-                <Text style={{color:'white',marginVertical:5}} >Description</Text>
+                <Text style={styles.title} >DESCRIPTION</Text>
                 <TextInput 
                     style={style.topic}
                     multiline = {true}
@@ -121,6 +121,12 @@ const styles = StyleSheet.create({
     container: {
         alignItems:"center"  ,      
         margin:20
+    },
+    title: {
+        color:'white',
+        marginVertical:5,
+        fontWeight:'bold',
+        padding: 8
     },
     placeholder: {
         borderWidth: 1,

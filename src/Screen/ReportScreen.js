@@ -165,9 +165,9 @@ export default class ReportScreen extends Component {
   onAccButtonPress = () => {
     const b1 = this.state.buttonColorAcc;
     if (b1 == null) {
-      this.setState({ buttonColorAcc: 'lightgreen' });
+      this.setState({ buttonColorAcc: 'green' });
       this.checkAcc();
-    } else if (b1 == 'lightgreen') {
+    } else if (b1 == 'green') {
       this.setState({ buttonColorAcc: null });
       this.checkAcc();
     }
@@ -175,9 +175,9 @@ export default class ReportScreen extends Component {
   onRpButtonPress = () => {
     const b1 = this.state.buttonColorRP;
     if (b1 == null) {
-      this.setState({ buttonColorRP: 'lightgreen' });
+      this.setState({ buttonColorRP: 'green' });
       this.checkRP();
-    } else if (b1 == 'lightgreen') {
+    } else if (b1 == 'green') {
       this.setState({ buttonColorRP: null });
       this.checkRP();
     }
@@ -185,9 +185,9 @@ export default class ReportScreen extends Component {
   onDsButtonPress = () => {
     const b1 = this.state.buttonColorDS;
     if (b1 == null) {
-      this.setState({ buttonColorDS: 'lightgreen' });
+      this.setState({ buttonColorDS: 'green' });
       this.checkDS();
-    } else if (b1 == 'lightgreen') {
+    } else if (b1 == 'green') {
       this.setState({ buttonColorDS: null });
       this.checkDS();
     }
@@ -195,9 +195,9 @@ export default class ReportScreen extends Component {
   onElButtonPress = () => {
     const b1 = this.state.buttonColorEL;
     if (b1 == null) {
-      this.setState({ buttonColorEL: 'lightgreen' });
+      this.setState({ buttonColorEL: 'green' });
       this.checkEL();
-    } else if (b1 == 'lightgreen') {
+    } else if (b1 == 'green') {
       this.setState({ buttonColorEL: null });
       this.checkEL();
     }
@@ -205,9 +205,9 @@ export default class ReportScreen extends Component {
   onLsButtonPress = () => {
     const b1 = this.state.buttonColorLS;
     if (b1 == null) {
-      this.setState({ buttonColorLS: 'lightgreen' });
+      this.setState({ buttonColorLS: 'green' });
       this.checkLS();
-    } else if (b1 == 'lightgreen') {
+    } else if (b1 == 'green') {
       this.setState({ buttonColorLS: null });
       this.checkLS();
     }
@@ -258,7 +258,7 @@ export default class ReportScreen extends Component {
             changeReportType={this.setReportType}
             hadleSelectedFile={this.hadleSelectedFile}
           />
-          <Text style={{ color: 'white', padding: 5 }}>Tags</Text>
+          <Text style={{ color: 'white', padding: 8,fontWeight : 'bold',marginTop: 6}}>TAGS</Text>
 
           <View style={styles.thatStyle}>
             <ScrollView horizontal={true} contentContainerStyle={styles.contentContainer}>
@@ -375,7 +375,7 @@ const styles = StyleSheet.create({
   },
   thatButton: {
     margin: 5,
-    color: 'white',
+    color: '#f7c744',
     fontSize: 16,
   },
   ScreenButton: {
