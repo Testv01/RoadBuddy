@@ -120,7 +120,7 @@ export default class ReportScreen extends Component {
       drainSystem: !this.state.drainSystem
     })
   }
-  checkEC = () => {
+  checkEL = () => {
     this.setState({
       electricity: !this.state.electricity
     })

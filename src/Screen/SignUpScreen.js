@@ -9,7 +9,8 @@ export default class SignUpScreen extends React.Component {
     this.state = { 
       email: '', 
       password: '', 
-      errorMessage: null 
+      errorMessage: null ,
+      confirmPassword: ''
     }
   }
   
@@ -20,6 +21,15 @@ export default class SignUpScreen extends React.Component {
       .then(() => this.props.navigation.navigate('MainScreen'))
       .then(()=>{ alert("Welcome , "+this.state.email); })
       .catch(error => this.setState({ errorMessage: error.message }))
+  }
+  checkConfirmPass=()=>{
+    const pass = this.state.password
+    const cPass = this.state.confirmPassword
+    if (pass !== cPass){
+      this.setState({ errorMessage : "Password not matching" })
+    } else {
+      this.handleSignUp()
+    }
   }
 
 render() {
@@ -45,7 +55,15 @@ render() {
           onChangeText={password => this.setState({ password })}
           value={this.state.password}
         />
-        <Button title="Sign Up" onPress={this.handleSignUp} />
+        <TextInput
+          secureTextEntry
+          placeholder="Confirm Password"
+          autoCapitalize="none"
+          style={styles.textInput}
+          onChangeText={confirmPassword => this.setState({ confirmPassword })}
+          value={this.state.confirmPassword}
+        />
+        <Button title="Sign Up" onPress={this.checkConfirmPass} />
         <Button
           title="Already have an account? Login"
           onPress={() => this.props.navigation.navigate('LoginScreen')}
