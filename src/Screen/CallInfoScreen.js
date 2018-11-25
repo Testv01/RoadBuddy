@@ -115,12 +115,12 @@ export default class CallInfoScreen extends Component {
             <Text style={{fontSize:16,color:'red'}}>
                 Description : {item.description}
             </Text>
-            {/* <Text style={{fontSize:16,color:'blue'}}>
-                Numbers : {item.tag.number}
-            </Text> */}
             <Text style={{fontSize:16,color:'blue'}}>
-                tag : {item.id}
+                Numbers : {item.number}
             </Text>
+            {/* <Text style={{fontSize:16,color:'blue'}}>
+                tag : {item.id}
+            </Text> */}
           </View>
           <View style={{backgroundColor:'#203546'}}> 
           <Icon 

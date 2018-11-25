@@ -7,13 +7,7 @@ import Report from 'src/Component/Report';
 import firebase from '../Services/firebaseCfg.js'
 import FirebaseInitial from '../Services/FirebaseInitial';
 import { Icon } from 'native-base';
-// const uploadImage = (uri, mime = 'application/octet-stream') => {
-//   return new Promise((resolve, reject) => {
-//     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
-//       const sessionId = new Date().getTime()
-//       let uploadBlob = null
-//       const imageRef = storage.ref('images').child(`${sessionId}`)
-//       let storageRef = firebase.storage().ref(this.state.selectedFile.Filename)
+import { Dialog } from 'react-native-simple-dialogs';
 
 //       fs.readFile(uploadUri, 'base64')
 //       .then((data) => {
@@ -59,8 +53,7 @@ export default class ReportScreen extends Component {
       buttonColorDS: null,
       buttonColorEL: null,
       buttonColorLS: null,
-      selectedFile:null,
-      uploadURL:null
+      Modal: false,
       
     }
   }
@@ -78,6 +71,9 @@ export default class ReportScreen extends Component {
 
     }, err => console.log(err));
 
+  }
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
   }
 
   hadleSelectedFile = (data) =>{
@@ -122,9 +118,10 @@ export default class ReportScreen extends Component {
           this.state.lightSystem,
           this.state.uploadURL
         )
-        alert("Send Success!");
+        // alert("Send Success!");
         // this.props.navigation.goBack();
-        this.props.navigation.replace('CallInfoSubmitScreen')
+        this.setState({Modal:true})
+        // this.props.navigation.replace('CallInfoSubmitScreen')
       },
       err => console.log(err)
     );
@@ -239,6 +236,15 @@ export default class ReportScreen extends Component {
      * The first arg is the options object for customization (it can also be null or omitted for default options),
      * The second arg is the callback which sends object: response (more info below in README)
      */
+    goCallinfo(){
+      this.setState({Modal:false}) 
+      this.props.navigation.replace('CallInfoSubmitScreen')
+    }
+    goMain(){
+      this.setState({Modal:false})  
+      this.props.navigation.replace('MainScreen')
+    }
+
 
 
 
@@ -323,6 +329,29 @@ export default class ReportScreen extends Component {
           <Icon fontSize='50' name='send' type='FontAwesome' style={{ color: 'blue', width: 70, fontSize: 48 }} onPress={this.sendReportHandler} />
           <Text style={{ fontSize: 24, fontWeight: 'bold', right: 15 }}>Submit</Text>
         </View>
+        <Dialog   style={{color:'#203546'}}
+           visible={this.state.Modal}   
+            title="Send Success! Do you want to contact organization immediately?" 
+            titleStyle={{textAlign:'center'}} 
+            onTouchOutside={()=>{this.setState({Modal:false})}}
+          > 
+            <View style={{marginBottom:20,alignItems:'center'}}> 
+            <TouchableOpacity
+            style={[styles.ScreenButton, { backgroundColor: "#4D6375" }]} 
+            onPress={()=>{this.goCallinfo()}}
+            >             
+            <Text style={{color: 'white'}}>Yes</Text>
+            </TouchableOpacity>
+        
+            <TouchableOpacity
+            style={[styles.ScreenButton, { backgroundColor: "#4D6375" }]} 
+            onPress={()=>{this.goMain()}}
+            >             
+            <Text style={{color: 'white'}}>No</Text>
+            </TouchableOpacity>
+           </View> 
+          </Dialog> 
+
       </ScrollView>
     )
   }
@@ -345,7 +374,17 @@ const styles = StyleSheet.create({
   thatButton: {
     margin: 5,
     color:'white',
-    fontSize:16,
-   
-  }
+    fontSize:16,   
+  },
+  ScreenButton: {
+    height: 40,
+    width: 100,
+    borderRadius: 20,
+    marginLeft: 50,
+    marginRight: 50,
+    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    
+  },
 });
