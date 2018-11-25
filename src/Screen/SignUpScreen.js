@@ -17,11 +17,20 @@ export default class SignUpScreen extends React.Component {
   handleSignUp = () => {
     firebase
       .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(() => this.props.navigation.navigate('MainScreen'))
-      .then(() => { alert("Welcome , " + this.state.email); })
-      .catch(error => this.setState({ errorMessage: error.message }))
+      .createUserWithEmailAndPassword(this.state.email, this.state.password)  
+      .catch(error => this.setState({ errorMessage: error.message }))    
+      .then(() => this.props.navigation.navigate('LoginScreen'))
+      .then(function (sendEmailVerify){
+        if (sendEmailVerify ===false ){
+          return false;
+        }else{
+          firebase.auth().currentUser.sendEmailVerification()
+          .then(() => { alert("Email Varification Sent! Please check your email."); })
+          return true;
+        }
+    })
   }
+  
   checkConfirmPass = () => {
     const pass = this.state.password
     const cPass = this.state.confirmPassword
