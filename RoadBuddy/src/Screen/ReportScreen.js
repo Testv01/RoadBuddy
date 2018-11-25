@@ -88,7 +88,8 @@ export default class ReportScreen extends Component {
           this.state.lightSystem,
         )
         alert("Send Success!");
-        this.props.navigation.goBack();
+        // this.props.navigation.goBack();
+        this.props.navigation.replace('CallInfoSubmitScreen')
       },
       err => console.log(err)
     );

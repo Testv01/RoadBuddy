@@ -7,6 +7,7 @@ import MainScreen from 'src/Screen/MainScreen'
 import ReportScreen from 'src/Screen/ReportScreen'
 import NotificationScreen from 'src/Screen/NotificationScreen'
 import CallInfoScreen from 'src/Screen/CallInfoScreen'
+import CallInfoSubmitScreen from 'src/Screen/CallInfoSubmitScreen'
 import LoadingScreen from 'src/Screen/LoadingScreen'
 import LoginScreen from 'src/Screen/LoginScreen'
 import SignUpScreen from 'src/Screen/SignUpScreen'
@@ -102,7 +103,21 @@ const AppNavigator = StackNavigator({
       headerTitleStyle: { color: 'white' },
         headerTintColor: 'white',
     }),
-  }
+  },
+  CallInfoSubmitScreen: {
+    screen: CallInfoSubmitScreen,
+    navigationOptions: () => ({
+      title: `Call Info Submit`,
+      headerStyle: {
+        backgroundColor: 'rgb(32, 53, 70)',
+       
+      },
+      headerTitleStyle: { color: 'white' },
+        headerTintColor: 'white',
+    }),
+  },
+
+
 })
 
 const styles = StyleSheet.create({
