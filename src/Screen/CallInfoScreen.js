@@ -103,7 +103,9 @@ export default class CallInfoScreen extends Component {
 
   
   renderReport=({item})=>{
-   
+    if(item.tags==null){
+      item.tags = "None"
+    }
     return(
       <View style={{flex:1,flexDirection:'row',padding:10,backgroundColor:'white'}}>
           <Image style={{width:80,height:80, margin:5}}
