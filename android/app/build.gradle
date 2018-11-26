@@ -96,7 +96,7 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "27.0.3"
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         applicationId "com.roadbuddy"
@@ -147,6 +147,7 @@ dependencies {
       exclude group: 'com.google.android.gms', module: 'play-services-maps'
   }
     compile project(':react-native-image-picker')
+    compile project(':react-native-fetch-blob')
     compile 'com.google.android.gms:play-services-base:10.0.1'
     compile 'com.google.android.gms:play-services-maps:10.0.1'
     compile fileTree(dir: "libs", include: ["*.jar"])
@@ -155,6 +156,7 @@ dependencies {
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile project(':react-native-immediate-phone-call')
 compile project(':react-native-vector-icons')
+
     compile project(':react-native-mauron85-background-geolocation')
 }
 

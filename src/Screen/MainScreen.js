@@ -185,6 +185,30 @@ export default class MainScreen extends Component{
         //   })
         // });
         // BackgroundGeolocation.start();
+        BackgroundGeolocation.on('location', (location) => {
+          let alertPlaces = [];
+          BackgroundGeolocation.getCurrentLocation(function(response) {
+            const lat = [response.latitude-0.005, response.latitude+0.005];
+            const lon = [response.longitude-0.005, response.longitude+0.005];
+            Object.keys(placesArray).map(key => {
+              if(placesArray[key].latitude >= lat[0] && placesArray[key].latitude <= lat[1]
+                && placesArray[key].longitude >= lon[0] && placesArray[key].longitude <= lon[1]) {
+                  let report = placesArray[key];
+                  alertPlaces.push(placesArray[key]) // <------ add report in area
+                  Alert.alert(
+                    'Report Nearby',
+                    ''+report.topic,
+                    [
+                      {text: 'Cancel', onPress: () => {  BackgroundGeolocation.stop(); }},
+                      {text: 'OK', onPress: () => console.log('OK Pressed')},
+                    ],
+                    { cancelable: false }
+                  )
+                }
+            });
+          })
+        });
+        BackgroundGeolocation.start();
       })
   };
 
