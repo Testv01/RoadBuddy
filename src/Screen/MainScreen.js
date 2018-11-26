@@ -146,6 +146,7 @@ export default class MainScreen extends Component{
             longitude:results.longitude
           }
         });
+       
       }
     )
     .catch((error) => console.log(error.message));
@@ -167,36 +168,44 @@ export default class MainScreen extends Component{
         this.setState({
           usersPlaces: placesArray
         });
-        BackgroundGeolocation.on('location', (location) => {
-          let alertPlaces = [];
-          BackgroundGeolocation.getCurrentLocation(function(response) {
-            const lat = [response.latitude-0.005, response.latitude+0.005];
-            const lon = [response.longitude-0.005, response.longitude+0.005];
-            Object.keys(placesArray).map(key => {
-              if(placesArray[key].latitude >= lat[0] && placesArray[key].latitude <= lat[1]
-                && placesArray[key].longitude >= lon[0] && placesArray[key].longitude <= lon[1]) {
-                  let report = placesArray[key];
-                  alertPlaces.push(placesArray[key]) // <------ add report in area
-                }
-            });
+        // BackgroundGeolocation.on('location', (location) => {
+        //   let alertPlaces = [];
+        //   BackgroundGeolocation.getCurrentLocation(function(response) {
+        //     const lat = [response.latitude-0.005, response.latitude+0.005];
+        //     const lon = [response.longitude-0.005, response.longitude+0.005];
+        //     Object.keys(placesArray).map(key => {
+        //       if(placesArray[key].latitude >= lat[0] && placesArray[key].latitude <= lat[1]
+        //         && placesArray[key].longitude >= lon[0] && placesArray[key].longitude <= lon[1]) {
+        //           let report = placesArray[key];
+        //           alertPlaces.push(placesArray[key]) // <------ add report in area
+        //         }
+        //     });
 
-            alert(alertPlaces)
-          })
-        });
-        BackgroundGeolocation.start();
+        //     alert(alertPlaces)
+        //   })
+        // });
+        // BackgroundGeolocation.start();
       })
   };
 
   Direction(){
     this.setState({initail:this.state.origin})
-    this.setState({destinate:this.state.destinationplace})
-    this.getUserPlacesHandler()
+    this.setState({
+      destination:{
+        latitude:this.state.destinationplace.latitude,
+        longitude:this.state.destinationplace.latitude
+      }
+    });
+    // this.setState({destinate:this.state.destinationplace})
+    // this.getUserPlacesHandler()
     }
   
   
   
 
   render() {
+    console.log(this.state.initail)
+    console.log('des',this.state.destination)
     const usersMarkers = this.state.usersPlaces.map(userPlace => (
       <MapView.Marker coordinate={userPlace} key={userPlace.id} title={userPlace.topic} />
     ));
@@ -213,9 +222,9 @@ export default class MainScreen extends Component{
       <View style={styles.container}>
       <MapView style={styles.map}
         showsMyLocationButton
-        showsUserLocation
+        // showsUserLocation
         initialRegion={this.state.initialPosition}
-        showsTraffic
+        // showsTraffic
      >
         <Marker coordinate={this.state.markerPosition} />
         <Marker coordinate={destination} />

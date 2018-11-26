@@ -54,7 +54,7 @@ export default class Report extends Component {
             <View style={style.reportContainer}>
                 <View style={styles.container}>
                     <View style={styles.placeholder}>
-                    {/* โค้ดพังอยู่นี่จ้ะ VVV */}
+                    {/* โค้ดพังอยู่นี่จ้ะ VVV */} 
                         <Image source={this.state.avatarSource} style={styles.previewImage} />
                         {/* <Image source={{uri: props.pickImage }} style={styles.previewImage} /> */}
                     </View>
