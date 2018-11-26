@@ -177,10 +177,17 @@ export default class MainScreen extends Component{
                 && placesArray[key].longitude >= lon[0] && placesArray[key].longitude <= lon[1]) {
                   let report = placesArray[key];
                   alertPlaces.push(placesArray[key]) // <------ add report in area
+                  Alert.alert(
+                    'Report Nearby',
+                    ''+report.topic,
+                    [
+                      {text: 'Cancel', onPress: () => {  BackgroundGeolocation.stop(); }},
+                      {text: 'OK', onPress: () => console.log('OK Pressed')},
+                    ],
+                    { cancelable: false }
+                  )
                 }
             });
-
-            alert(alertPlaces)
           })
         });
         BackgroundGeolocation.start();

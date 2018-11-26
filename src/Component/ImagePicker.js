@@ -13,7 +13,6 @@ import {
 	Picker
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
-
 import FirebaseInitial from '../Services/FirebaseInitial';
 const options = {
 	title: 'img picker',
@@ -56,25 +55,5 @@ export default class App extends Component {
 		});
 	}
 
-	uploadPic = () => {
-		// alert('ddf');
-		RNFetchBlob.fetch('POST', 'https://unentertaining-sect.000webhostapp.com/war/upload.php', {
-			Authorization: "Bearer access-token",
-			otherHeader: "foo",
-			'Content-Type': 'multipart/form-data',
-		}, [
-			// element with property `filename` will be transformed into `file` in form data
-			{
-				name: 'image',
-				filename: 'avatar.png',
-				data: this.state.pic
-			}
-		]).then((resp) => {
-			console.log(resp);
-			alert('your image uploaded successfully');
-			this.setState({
-				avatarSource: null
-			})
-		})
-	}
+
 }

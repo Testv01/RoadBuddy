@@ -7,6 +7,7 @@ import Report from 'src/Component/Report';
 import firebase from '../Services/firebaseCfg.js'
 import FirebaseInitial from '../Services/FirebaseInitial';
 import { Icon } from 'native-base';
+import RNFetchBlob from 'react-native-fetch-blob';
 import { Dialog } from 'react-native-simple-dialogs';
 
 //       fs.readFile(uploadUri, 'base64')
@@ -54,6 +55,7 @@ export default class ReportScreen extends Component {
       buttonColorEL: null,
       buttonColorLS: null,
       Modal: false,
+      uploadURL : "",
 
     }
   }
@@ -104,20 +106,8 @@ export default class ReportScreen extends Component {
         // })
 
         console.log(this.state.selectedFile)
+        this.uploadPic();
 
-        FirebaseInitial.insertReport(
-          position.coords.latitude,
-          position.coords.longitude,
-          this.state.topicText,
-          this.state.descText,
-          this.state.pickedImage,
-          this.state.accident,
-          this.state.roadProblem,
-          this.state.drainSystem,
-          this.state.electricity,
-          this.state.lightSystem,
-          this.state.uploadURL
-        )
         // alert("Send Success!");
         // this.props.navigation.goBack();
         this.setState({ Modal: true })
@@ -126,6 +116,72 @@ export default class ReportScreen extends Component {
       err => console.log(err)
     );
   };
+  
+	uploadPic = () => {
+		const img = (this.state.selectedFile).uri;
+
+		const blob = RNFetchBlob.polyfill.Blob;
+		const fs = RNFetchBlob.fs;
+    window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
+    const Fetch = RNFetchBlob.polyfill.Fetch
+    window.fetch = new Fetch({
+      // enable this option so that the response data conversion handled automatically
+      auto : true,
+      // when receiving response data, the module will match its Content-Type header
+      // with strings in this array. If it contains any one of string in this array, 
+      // the response body will be considered as binary data and the data will be stored
+      // in file system instead of in memory.
+      // By default, it only store response data to file system when Content-Type 
+      // contains string `application/octet`.
+      binaryContentTypes : [
+          'image/',
+          'video/',
+          'audio/',
+          'foo/',
+      ]
+  }).build()
+		window.Blob = blob;
+    let rand = Math.random().toString(36);
+		let uploadBlob = null;
+		const imgRef = firebase.storage().ref('avatar').child(rand+'.jpg');
+		let mime = 'image/jpg'
+		fs.readFile( img ,'base64')
+		.then( (data) => {
+			return blob.build(data , {type : '${mime};BASE64'})
+		}).then( (blob) => {
+			uploadBlob = blob
+			return imgRef.put(blob , { contentType : mime})
+		}).then((resp) => {
+			console.log(resp);
+      return imgRef.getDownloadURL();
+  }).then( (url) => {
+    this.setState({uploadURL : url} );
+  })
+  .then( () => {
+    this.setState({
+      avatarSource: null
+    })
+  }).then( () => {
+    console.log(this.state.uploadURL);
+    FirebaseInitial.insertReport(
+      position.coords.latitude,
+      position.coords.longitude,
+      this.state.topicText,
+      this.state.descText,
+      this.state.uploadURL,
+      this.state.accident,
+      this.state.roadProblem,
+      this.state.drainSystem,
+      this.state.electricity,
+      this.state.lightSystem,
+    )
+    uploadBlob.close();
+    alert('your new report successfully');
+  })
+  .catch( (error) => {
+			console.log(error);
+		})
+	}
 
   setTopic = (text) => {
     this.setState({ topicText: text })
