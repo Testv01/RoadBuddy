@@ -22,8 +22,7 @@ export default class CallInfoSubmitScreen extends Component {
             RoadProblem: parsedRes[key].roadProblem,
             DrainSystem: parsedRes[key].drainSystem,
             Electricity: parsedRes[key].electricity,
-            LightSystem: parsedRes[key].lightSystem
-            ,
+            LightSystem: parsedRes[key].lightSystem,
           });
         }
         this.setState({
@@ -41,12 +40,18 @@ export default class CallInfoSubmitScreen extends Component {
           if (this.state.lasttag.DrainSystem == true) {
             tagtrue.push('Drain System')
           }
-          if (this.state.lasttag.Electricity == true) {
-            tagtrue.push('Electricity')
+          if ((this.state.lasttag.Electricity == true) && (this.state.lasttag.LightSystem == true)) {
+            tagtrue.push('Electricity, Light System')
+          } else {
+            if (this.state.lasttag.Electricity == true) {
+              tagtrue.push('Electricity')
+            }
+            if (this.state.lasttag.LightSystem == true) {
+              tagtrue.push('Light System')
+            }
           }
-          if (this.state.lasttag.LightSystem == true) {
-            tagtrue.push('Light System')
-          }
+
+
         }
 
         const url = 'https://test-2e10e.firebaseio.com/ShownCall.json'
@@ -105,7 +110,9 @@ export default class CallInfoSubmitScreen extends Component {
 
 
   renderReport = ({ item }) => {
-
+    if (item.tags == null) {
+      item.tags = "None"
+    }
     return (
       <View style={{ flex: 1, flexDirection: 'row', padding: 10, backgroundColor: 'white' }}>
         <Image style={{ width: 80, height: 80, margin: 5 }}
@@ -121,7 +128,7 @@ export default class CallInfoSubmitScreen extends Component {
           <Text style={{ fontSize: 16, color: 'blue' }}>
             Number : {item.tag.number}
           </Text>
-          <Text style={{ fontSize: 16, color: 'blue' }}>
+          <Text style={{ fontSize: 14, color: 'black', fontStyle: 'italic' }}>
             Tags : {item.id}
           </Text>
         </View>
