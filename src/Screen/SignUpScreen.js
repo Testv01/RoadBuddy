@@ -13,7 +13,7 @@ export default class SignUpScreen extends React.Component {
       confirmPassword: ''
     }
   }
-
+//โค้ดสำหรับ sign up
   handleSignUp = () => {
     firebase
       .auth()
@@ -30,7 +30,7 @@ export default class SignUpScreen extends React.Component {
         }
     })
   }
-  
+//โค้ดเช็คว่า confirm password ตรงกับ password ไหม  
   checkConfirmPass = () => {
     const pass = this.state.password
     const cPass = this.state.confirmPassword
@@ -76,7 +76,7 @@ export default class SignUpScreen extends React.Component {
         />
         <TouchableOpacity
           style={[styles.signupScreenButton]}
-          onPress={this.handleSignUp}
+          onPress={this.checkConfirmPass}
         >
           <Text style={{ color: 'white' }}>
             COMFIRM

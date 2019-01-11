@@ -27,10 +27,10 @@ export default class LoginScreen extends React.Component {
       .then(function (checkVerify){
           firebase.auth().onAuthStateChanged(firebaseUser =>{
             if (firebaseUser.emailVerified){
-            //  Alert.alert("  Greeting", "Welcome to Road Buddy , " + email + " !")
+              Alert.alert("  Greeting", "Welcome to Road Buddy , " + email + " !")
             } else{
               
-              // Alert.alert(" Email not verify ", "Please verify your email");
+               Alert.alert(" Email not verify ", "Please verify your email");
             }
           })
       }) 
