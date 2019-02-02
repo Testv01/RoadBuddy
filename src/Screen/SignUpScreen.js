@@ -79,7 +79,7 @@ export default class SignUpScreen extends React.Component {
           onPress={this.checkConfirmPass}
         >
           <Text style={{ color: 'white' }}>
-            COMFIRM
+            CONFIRM
         </Text>
         </TouchableOpacity>
         {/* <Button
