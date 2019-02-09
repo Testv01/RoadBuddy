@@ -81,7 +81,20 @@ export default class SignUpScreen extends React.Component {
           <Text style={{ color: 'white' }}>
             CONFIRM
         </Text>
+        
         </TouchableOpacity>
+        <TouchableOpacity
+            style={[styles.loginScreenButton, {marginTop:20}/* , { backgroundColor:'black' } */]
+            }
+            onPress={ () => this.props.navigation.navigate('LoginScreen')}
+          >
+            <Text style={{ color: 'white' }}>
+            Already have an account? 
+          </Text>
+          <Text style={{ color: 'white' }}>
+            Login
+          </Text>
+          </TouchableOpacity>
         {/* <Button
           title="Already have an account? Login"
           onPress={() => this.props.navigation.navigate('LoginScreen')}
@@ -94,7 +107,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#203546',
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   textInput: {
@@ -117,6 +130,17 @@ const styles = StyleSheet.create({
     fontSize: 36,
     color: '#FFFFFF',
     marginTop: 10
+  },
+  loginScreenButton: {
+    height: 40,
+    width: 200,
+    borderRadius: 20,
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   signupScreenButton: {
     height: 40,
