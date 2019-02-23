@@ -146,6 +146,7 @@ export default class MainScreen extends Component{
             longitude:results.longitude
           }
         });
+       
       }
     )
     .catch((error) => console.log(error.message));
@@ -164,9 +165,11 @@ export default class MainScreen extends Component{
             topic: parsedRes[key].topic
           });
         }
+
         this.setState({
           usersPlaces: placesArray
         });
+
         BackgroundGeolocation.on('location', (location) => {
           let alertPlaces = [];
           BackgroundGeolocation.getCurrentLocation(function(response) {
@@ -196,6 +199,12 @@ export default class MainScreen extends Component{
 
   Direction(){
     this.setState({initail:this.state.origin})
+    this.setState({
+      destination:{
+        latitude:this.state.destinationplace.latitude,
+        longitude:this.state.destinationplace.latitude
+      }
+    });
     this.setState({destinate:this.state.destinationplace})
     this.getUserPlacesHandler()
     }
@@ -204,6 +213,8 @@ export default class MainScreen extends Component{
   
 
   render() {
+    console.log(this.state.initail)
+    console.log('des',this.state.destination)
     const usersMarkers = this.state.usersPlaces.map(userPlace => (
       <MapView.Marker coordinate={userPlace} key={userPlace.id} title={userPlace.topic} />
     ));
@@ -220,10 +231,10 @@ export default class MainScreen extends Component{
       <View style={styles.container}>
       <MapView style={styles.map}
         showsMyLocationButton
-        showsUserLocation
+        // showsUserLocation
         initialRegion={this.state.initialPosition}
-        showsTraffic
-     >
+        // showsTraffic
+>
         <Marker coordinate={this.state.markerPosition} />
         <Marker coordinate={destination} />
           
@@ -253,7 +264,9 @@ export default class MainScreen extends Component{
            onChangeText={text => this.FindPlace(text)}
            placeholder="Enter Place"
            renderItem={(item )=> (
-            <TouchableOpacity onPress={() =>this.SelectPlace(item) }>
+            <TouchableOpacity onPress={() => { 
+              this.SelectPlace(item) 
+            }  }>
               <Text style={styles.itemText}>{Object.values(item)[3]} </Text>
               <Text style={styles.itemText}> </Text>
             </TouchableOpacity>
