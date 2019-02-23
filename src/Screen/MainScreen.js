@@ -169,7 +169,6 @@ export default class MainScreen extends Component{
         this.setState({
           usersPlaces: placesArray
         });
-
         BackgroundGeolocation.on('location', (location) => {
           let alertPlaces = [];
           BackgroundGeolocation.getCurrentLocation(function(response) {
