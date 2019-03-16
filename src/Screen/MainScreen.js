@@ -4,22 +4,20 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Button
+  Button,
+  Image,
+  Keyboard
 } from 'react-native';
+import {Drawer} from 'native-base';
 import MapView,{Marker,Callout} from 'react-native-maps';
 import RNGooglePlaces from 'react-native-google-places';
 import MapViewDirections from 'react-native-maps-directions';
-import Autocomplete from 'react-native-autocomplete-input'
-import CircleButton from 'react-native-circle-button'
 import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
 import FirebaseInitial from '../Services/FirebaseInitial';
-import {  Icon, Fab } from 'native-base';
-
+import SearchBar from './Searchbar'
+import SideBar from './DrawerMenu';
 export default class MainScreen extends Component{
  
-
-    
-
     constructor(props) {
       super(props);
       this.state = {
@@ -53,7 +51,7 @@ export default class MainScreen extends Component{
         longitude:0,
       },
       result:[],
-      active: false
+      showlist:false
     };
     
     }
@@ -117,7 +115,8 @@ export default class MainScreen extends Component{
   
 
   
-  FindPlace(text){
+  FindPlace=(text)=>{
+    this.setState({showlist:true})
     this.setState({query:text})
     if(text == ''){
       this.setState({destinationplace:{
@@ -136,7 +135,9 @@ export default class MainScreen extends Component{
   }
 
 
-  SelectPlace(item){
+  SelectPlace=(item)=>{
+    this.setState({showlist:false})
+    this.Direction()
     this.setState({ query: Object.values(item)[3]})
     RNGooglePlaces.lookUpPlaceByID((item.placeID))
     .then((results) => {
@@ -179,7 +180,7 @@ export default class MainScreen extends Component{
                 && placesArray[key].longitude >= lon[0] && placesArray[key].longitude <= lon[1]) {
                   let report = placesArray[key];
                   alertPlaces.push(placesArray[key]) // <------ add report in area
-                  Alert.alert(
+                  alert(
                     'Report Nearby',
                     ''+report.topic,
                     [
@@ -196,7 +197,7 @@ export default class MainScreen extends Component{
       })
   };
 
-  Direction(){
+  Direction=()=>{
     this.setState({initail:this.state.origin})
     this.setState({
       destination:{
@@ -205,40 +206,42 @@ export default class MainScreen extends Component{
       }
     });
     this.setState({destinate:this.state.destinationplace})
-    this.getUserPlacesHandler()
+    // this.getUserPlacesHandler() // comment function alert พื้นที่ใกล้เคียง
     }
-  
-  
+
+  closeDrawer = () => {
+      this.drawer._root.close()
+  };
+  openDrawer = () => {
+   
+      this.drawer._root.open()
+  };
   
 
   render() {
-    console.log(this.state.initail)
-    console.log('des',this.state.destination)
+    
     const usersMarkers = this.state.usersPlaces.map(userPlace => (
       <MapView.Marker coordinate={userPlace} key={userPlace.id} title={userPlace.topic} />
     ));
     const data = this. state.place;
     const place = []
-    const x =  Object.values(this.state.place).forEach(function(value) {
-      place.push(Object.values(value)[3])
-    });
-      
     const origin = this.state.initail;
     const destination = this.state.destinate;
     const GOOGLE_MAPS_APIKEY = "AIzaSyB_1gqNDYMyc10X_3lp5qh2iTM3DlAm4gE"
     return (
+      <Drawer
+      ref={(ref) => { this.drawer = ref; }}
+      content={<SideBar navigator={this.navigator} />}
+      onClose={() => this.closeDrawer()} >
       <View style={styles.container}>
       <MapView style={styles.map}
         showsMyLocationButton
         // showsUserLocation
         initialRegion={this.state.initialPosition}
         // showsTraffic
->
+      >
         <Marker coordinate={this.state.markerPosition} />
         <Marker coordinate={destination} />
-          
-        
-
         <MapViewDirections
         origin={origin}
         destination={destination}
@@ -246,65 +249,21 @@ export default class MainScreen extends Component{
         strokeWidth={10}
         strokeColor='hotpink'
         alternatives={true}
-        
-        
-        
-  />
+      />
   {usersMarkers}
      </MapView>
-      <View style={{justifyContent:'center',flexDirection:'row'}}>
-      
-      <Autocomplete 
-           autoCapitalize="none"
-           autoCorrect={true}
-           data={data.length>=0 &&  place.includes(this.state.query) == true   ? [] : data }
-           containerStyle={styles.autocompleteContainer}
-           defaultValue={this.state.query}
-           onChangeText={text => this.FindPlace(text)}
-           placeholder="Enter Place"
-           renderItem={(item )=> (
-            <TouchableOpacity onPress={() => { 
-              this.SelectPlace(item) 
-            }  }>
-              <Text style={styles.itemText}>{Object.values(item)[3]} </Text>
-              <Text style={styles.itemText}> </Text>
-            </TouchableOpacity>
-          )}
+     <SearchBar 
+      navigation={this.props.navigation}
+      // direction={this.Direction} 
+      findplace={this.FindPlace} 
+      defaultvalue={this.state.query}
+      data={data.length>=0 &&  place.includes(this.state.query) == true   ? [] : data}
+      selectplace={this.SelectPlace}
+      opendrawer={this.openDrawer}
+      showlist={this.state.showlist}
       />
-      
-      <View style={{width:100,left:100}}>
-        <Button style={{width:50}} title='Enter'  onPress={this.Direction.bind(this)}/>
       </View>
-      </View>
-      <View  style={{ flex: 1 }}>
-        {/* <CircleButton 
-                  size={45} 
-                  onPressButtonTop={()=> this.props.navigation.navigate('ReportScreen')}
-                  onPressButtonLeft={()=> this.props.navigation.navigate('NotificationScreen')}
-                  onPressButtonRight={()=> this.props.navigation.navigate('CallInfoScreen')}
-                  primaryColor="#f27663"
-                  secondaryColor="#f99a8b"
-                /> */}
-            <Fab
-                active={this.state.active}
-                direction="up"
-                containerStyle={{ }}
-                style={{ backgroundColor: '#5067FF' }}
-                position="bottomRight"
-                onPress={() => this.setState({ active: !this.state.active })}>
-            <Icon name="add" type='MaterialIcons' />
-            <Button style={{ backgroundColor: '#34A34F' }} onPress={()=> this.props.navigation.navigate('CallInfoScreen')}>
-              <Icon name="info-outline" type='MaterialIcons' />
-            </Button>
-            <Button style={{ backgroundColor: '#3B5998' }} onPress={()=> this.props.navigation.navigate('NotificationScreen')}>
-              <Icon name="ios-notifications" type='Ionicons' />
-            </Button>
-            <Button  style={{ backgroundColor: '#DD5144' }} onPress={()=> this.props.navigation.navigate('ReportScreen')}>
-              <Icon name="report-problem" type='MaterialIcons' />
-            </Button>
-          </Fab>
-        </View>
-      </View>
+      </Drawer>
     );
   }
 }
@@ -313,16 +272,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#F5FCFF',
     flex: 1,
-    paddingTop: 50
-  },
-  autocompleteContainer: {
-    flex: 1,
-    left: 0,
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    zIndex: 1,
-    width:240
+    
   },
   itemText: {
     fontSize: 15,

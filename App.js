@@ -11,6 +11,8 @@ import CallInfoSubmitScreen from 'src/Screen/CallInfoSubmitScreen'
 import LoadingScreen from 'src/Screen/LoadingScreen'
 import LoginScreen from 'src/Screen/LoginScreen'
 import SignUpScreen from 'src/Screen/SignUpScreen'
+import SearchBar from './src/Screen/Searchbar'
+import NotificationDetailScreen from './src/Screen/NotificationDetailScreen'
 
 export default class App extends Component {
 
@@ -68,6 +70,13 @@ const AppNavigator = StackNavigator({
       header: null
     }),
   },
+  SearchBar:{
+    screen : SearchBar,
+    navigationOptions: () => ({
+      title: `Road Buddy`,
+      header: null
+    }),
+  },
   ReportScreen:{
     screen: ReportScreen,
     navigationOptions: () => ({
@@ -87,6 +96,18 @@ const AppNavigator = StackNavigator({
     screen: NotificationScreen,
     navigationOptions: () => ({
       title: `Notification`,
+      headerStyle: {
+        backgroundColor: 'rgb(32, 53, 70)',
+       
+      },
+      headerTitleStyle: { color: 'white' },
+        headerTintColor: 'white',
+    }),
+  },
+  NotificationDetailScreen:{
+    screen: NotificationDetailScreen,
+    navigationOptions: () => ({
+      title: `NotificationDetail`,
       headerStyle: {
         backgroundColor: 'rgb(32, 53, 70)',
        
