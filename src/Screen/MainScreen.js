@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   Button,
   Image,
-  Keyboard
+  Keyboard,
+  Alert
 } from 'react-native';
 import {Drawer} from 'native-base';
 import MapView,{Marker,Callout} from 'react-native-maps';
@@ -162,6 +163,7 @@ export default class MainScreen extends Component{
           placesArray.push({
             latitude: parsedRes[key].latitude,
             longitude: parsedRes[key].longitude,
+            description: parsedRes[key].description,
             id: key,
             topic: parsedRes[key].topic
           });
@@ -170,30 +172,30 @@ export default class MainScreen extends Component{
         this.setState({
           usersPlaces: placesArray
         });
-        BackgroundGeolocation.on('location', (location) => {
-          let alertPlaces = [];
-          BackgroundGeolocation.getCurrentLocation(function(response) {
-            const lat = [response.latitude-0.005, response.latitude+0.005];
-            const lon = [response.longitude-0.005, response.longitude+0.005];
-            Object.keys(placesArray).map(key => {
-              if(placesArray[key].latitude >= lat[0] && placesArray[key].latitude <= lat[1]
-                && placesArray[key].longitude >= lon[0] && placesArray[key].longitude <= lon[1]) {
-                  let report = placesArray[key];
-                  alertPlaces.push(placesArray[key]) // <------ add report in area
-                  alert(
-                    'Report Nearby',
-                    ''+report.topic,
-                    [
-                      {text: 'Cancel', onPress: () => {  BackgroundGeolocation.stop(); }},
-                      {text: 'OK', onPress: () => console.log('OK Pressed')},
-                    ],
-                    { cancelable: false }
-                  )
-                }
-            });
-          })
-        });
-        BackgroundGeolocation.start();
+        // BackgroundGeolocation.on('location', (location) => {
+        //   let alertPlaces = [];
+        //   BackgroundGeolocation.getCurrentLocation(function(response) {
+        //     const lat = [response.latitude-0.005, response.latitude+0.005];
+        //     const lon = [response.longitude-0.005, response.longitude+0.005];
+        //     Object.keys(placesArray).map(key => {
+        //       if(placesArray[key].latitude >= lat[0] && placesArray[key].latitude <= lat[1]
+        //         && placesArray[key].longitude >= lon[0] && placesArray[key].longitude <= lon[1]) {
+        //           let report = placesArray[key];
+        //           alertPlaces.push(placesArray[key]) // <------ add report in area
+        //           alert(
+        //             'Report Nearby',
+        //             ''+report.topic,
+        //             [
+        //               {text: 'Cancel', onPress: () => {  BackgroundGeolocation.stop(); }},
+        //               {text: 'OK', onPress: () => console.log('OK Pressed')},
+        //             ],
+        //             { cancelable: false }
+        //           )
+        //         }
+        //     });
+        //   })
+        // });
+        // BackgroundGeolocation.start();
       })
   };
 
@@ -206,7 +208,7 @@ export default class MainScreen extends Component{
       }
     });
     this.setState({destinate:this.state.destinationplace})
-    // this.getUserPlacesHandler() // comment function alert พื้นที่ใกล้เคียง
+     this.getUserPlacesHandler() // comment function alert พื้นที่ใกล้เคียง
     }
 
   closeDrawer = () => {
@@ -217,12 +219,41 @@ export default class MainScreen extends Component{
       this.drawer._root.open()
   };
   
+  markerClick = (a,b) =>{ //แสดงผลหลังกด marker
+    Alert.alert(a,b);
+  };
+  
 
   render() {
     
     const usersMarkers = this.state.usersPlaces.map(userPlace => (
-      <MapView.Marker coordinate={userPlace} key={userPlace.id} title={userPlace.topic} />
+      <MapView.Marker 
+        coordinate={userPlace} 
+        key={userPlace.id} 
+        title={userPlace.topic} 
+        description={userPlace.description}
+        pinColor={'green'} 
+      >
+        <MapView.Callout tooltip onPress={()=>this.markerClick(userPlace.topic,userPlace.description)}>
+        <View style={styles.callOut} >
+          <TouchableOpacity >
+              <View style={{alignContent:"center"}}>
+                  <Image
+                    resizeMode="cover"
+                    style={{width: 50, height: 50}}
+                    source={require('src/image/UnderConstruct.png')}
+                  />
+                  {/* comment ^^ภาพยังไม่ขึ้น  */}
+                  <Text style={{fontSize:15}}>{userPlace.topic}</Text>                  
+                  <Text style={{marginTop:5}}>{userPlace.description}</Text>
+              </View>
+          </TouchableOpacity>
+          </View>
+        </MapView.Callout>
+      </MapView.Marker>
     ));
+
+
     const data = this. state.place;
     const place = []
     const origin = this.state.initail;
@@ -254,7 +285,7 @@ export default class MainScreen extends Component{
      </MapView>
      <SearchBar 
       navigation={this.props.navigation}
-      // direction={this.Direction} 
+      direction={this.Direction} 
       findplace={this.FindPlace} 
       defaultvalue={this.state.query}
       data={data.length>=0 &&  place.includes(this.state.query) == true   ? [] : data}
@@ -286,6 +317,11 @@ const styles = StyleSheet.create({
   },
   infoText: {
     textAlign: 'center'
+  },callOut:{
+    backgroundColor:'white',
+    padding: 10,
+    borderColor: "black",
+    borderRadius: 10,
   },
   map:{
     ...StyleSheet.absoluteFillObject
