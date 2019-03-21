@@ -23,6 +23,7 @@ export default class MainScreen extends Component{
       super(props);
       this.state = {
       usersPlaces:[],
+      processPlaces:[],
       place: [],
       query: '', 
       initialPosition:{
@@ -75,6 +76,7 @@ export default class MainScreen extends Component{
         },
       })
       this.getUserPlacesHandler()
+      this.getProcessPlacesHandler()
     },
     (error) =>console.log(error))
 
@@ -153,6 +155,27 @@ export default class MainScreen extends Component{
     .catch((error) => console.log(error.message));
   }
 
+  getProcessPlacesHandler=()=>{
+    fetch('https://test-2e10e.firebaseio.com/Process.json')
+      .then(res => res.json())
+      .then(parsedRes => {
+        const placesArray=[];
+        for(const key in parsedRes){
+          placesArray.push({
+            latitude: parsedRes[key].latitude,
+            longitude: parsedRes[key].longitude,
+            description: parsedRes[key].description,
+            id: key,
+            topic: parsedRes[key].topic
+          });
+        }
+
+        this.setState({
+          processPlaces: placesArray
+        });
+      })
+  };
+
   getUserPlacesHandler=()=>{
     fetch('https://test-2e10e.firebaseio.com/Report.json')
       .then(res => res.json())
@@ -225,7 +248,7 @@ export default class MainScreen extends Component{
 
   render() {
     
-    const usersMarkers = this.state.usersPlaces.map(userPlace => (
+    const reportMarkers = this.state.usersPlaces.map(userPlace => (
       <MapView.Marker 
         coordinate={userPlace} 
         key={userPlace.id} 
@@ -245,6 +268,33 @@ export default class MainScreen extends Component{
                   {/* comment ^^ภาพยังไม่ขึ้น  */}
                   <Text style={{fontSize:15,fontWeight: 'bold'}}>{userPlace.topic}</Text>                  
                   <Text style={{marginTop:5}}>{userPlace.description}</Text>
+              </View>
+          </TouchableOpacity>
+          </View>
+        </MapView.Callout>
+      </MapView.Marker>
+    ));
+
+    const processMarkers = this.state.processPlaces.map(processPlace => (
+      <MapView.Marker 
+        coordinate={processPlace} 
+        key={processPlace.id} 
+        title={processPlace.topic} 
+        description={processPlace.description}
+        pinColor={'orange'} 
+      >
+        <MapView.Callout tooltip onPress={()=>this.markerClick(processPlace)}>
+        <View style={styles.callOut} >
+          <TouchableOpacity >
+              <View style={{alignContent:"center"}}>
+                  <Image
+                    resizeMode="cover"
+                    style={{width: 50, height: 50}}
+                    source={require('src/image/UnderConstruct.png')}
+                  />
+                  {/* comment ^^ภาพยังไม่ขึ้น  */}
+                  <Text style={{fontSize:15,fontWeight: 'bold'}}>{processPlace.topic}</Text>                  
+                  <Text style={{marginTop:5}}>{processPlace.description}</Text>
               </View>
           </TouchableOpacity>
           </View>
@@ -280,7 +330,8 @@ export default class MainScreen extends Component{
         strokeColor='hotpink'
         alternatives={true}
       />
-  {usersMarkers}
+        {reportMarkers}
+        {processMarkers}
      </MapView>
      <SearchBar 
       navigation={this.props.navigation}
