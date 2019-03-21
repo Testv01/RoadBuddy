@@ -74,6 +74,7 @@ export default class MainScreen extends Component{
           longitude:position.coords.longitude,
         },
       })
+      this.getUserPlacesHandler()
     },
     (error) =>console.log(error))
 
@@ -112,8 +113,6 @@ export default class MainScreen extends Component{
     BackgroundGeolocation.removeAllListeners('location');
     
   }
-
-  
 
   
   FindPlace=(text)=>{
@@ -208,7 +207,7 @@ export default class MainScreen extends Component{
       }
     });
     this.setState({destinate:this.state.destinationplace})
-     this.getUserPlacesHandler() // comment function alert พื้นที่ใกล้เคียง
+     //this.getUserPlacesHandler() // comment function alert พื้นที่ใกล้เคียง
     }
 
   closeDrawer = () => {
@@ -219,8 +218,8 @@ export default class MainScreen extends Component{
       this.drawer._root.open()
   };
   
-  markerClick = (a,b) =>{ //แสดงผลหลังกด marker
-    Alert.alert(a,b);
+  markerClick = (item) =>{ //แสดงผลหลังกด marker
+    this.props.navigation.navigate('NotificationDetailScreen',{item})
   };
   
 
@@ -234,7 +233,7 @@ export default class MainScreen extends Component{
         description={userPlace.description}
         pinColor={'green'} 
       >
-        <MapView.Callout tooltip onPress={()=>this.markerClick(userPlace.topic,userPlace.description)}>
+        <MapView.Callout tooltip onPress={()=>this.markerClick(userPlace)}>
         <View style={styles.callOut} >
           <TouchableOpacity >
               <View style={{alignContent:"center"}}>
@@ -244,7 +243,7 @@ export default class MainScreen extends Component{
                     source={require('src/image/UnderConstruct.png')}
                   />
                   {/* comment ^^ภาพยังไม่ขึ้น  */}
-                  <Text style={{fontSize:15}}>{userPlace.topic}</Text>                  
+                  <Text style={{fontSize:15,fontWeight: 'bold'}}>{userPlace.topic}</Text>                  
                   <Text style={{marginTop:5}}>{userPlace.description}</Text>
               </View>
           </TouchableOpacity>
