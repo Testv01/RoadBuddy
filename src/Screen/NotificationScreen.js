@@ -8,9 +8,10 @@ export default class NotificationScreen extends Component {
   state ={
     userLocation:null,
     usersPlaces:[],
+    processPlaces:[],
   }
   componentWillMount(){
-    const url = 'https://test-2e10e.firebaseio.com/Process.json'
+    const url = 'https://test-2e10e.firebaseio.com/Report.json'
     fetch(url)
       .then(res => res.json())
       .then(parsedRes => {
@@ -30,6 +31,25 @@ export default class NotificationScreen extends Component {
         });
       })
 
+      fetch('https://test-2e10e.firebaseio.com/Process.json')
+      .then(res => res.json())
+      .then(parsedRes => {
+        const placesArray=[];
+        for(const key in parsedRes){
+          placesArray.push({
+            latitude: parsedRes[key].latitude,
+            longitude: parsedRes[key].longitude,
+            id: key,
+            topic: parsedRes[key].topic,
+            description: parsedRes[key].description,
+            user:parsedRes[key].user
+          });
+        }
+
+        this.setState({
+          processPlaces: placesArray
+        });
+      })
   }
 
   
@@ -61,6 +81,34 @@ export default class NotificationScreen extends Component {
     };
 }
 
+renderProcess=({item})=>{
+  if(item.user == firebase.auth().currentUser.email){
+    return(
+      <TouchableOpacity onPress={()=>this.props.navigation.navigate('NotificationDetailScreen',{item})}>
+        <View style={{flex:1,flexDirection:'row',padding:10,backgroundColor:'white'}}> 
+            <Image style={{width:80,height:80, margin:5}}
+              source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
+            />
+            <View style={{flex:1,justifyContent:'center'}}>
+              <Text style={{fontSize:18,color:'green',marginBottom:15}}>
+                  Topic : {item.topic}
+              </Text>            
+              <Text style={{fontSize:16,color:'red'}}>
+                  Description : {item.description}
+              </Text>
+              <Text style={{fontSize:16,color:'red'}}>
+                  Sender : {item.user}
+              </Text>
+              <Text style={{fontSize:16,color:'red'}}>
+                  Status : In Process....
+              </Text>
+            </View>
+        </View>
+        </TouchableOpacity>
+    )
+  };
+}
+
   renderSeparator=()=>{
     return(
       <View style={{height:1,width:'100%',backgroundColor:'black'}}>
@@ -70,6 +118,7 @@ export default class NotificationScreen extends Component {
 
   render() {
     return (
+     <View >
      <View style={styles.container}>
         <FlatList
           data={this.state.usersPlaces}
@@ -77,6 +126,13 @@ export default class NotificationScreen extends Component {
           keyExtractor={(item,index) => index}
           ItemSeparatorComponent={this.renderSeparator}
         />
+        <FlatList
+          data={this.state.processPlaces}
+          renderItem={this.renderProcess}
+          keyExtractor={(item,index) => index}
+          ItemSeparatorComponent={this.renderSeparator}
+        />
+        </View>
         <Footer>
           <FooterTab>
               <Button vertical >
@@ -100,6 +156,15 @@ export default class NotificationScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
+    position: 'absolute', 
+    left:0,
+    top:0,
+    right:0,
+    bottom:0,
+    backgroundColor: 'rgb(32, 53, 70)',
+  },
+  container2: {
+    justifyContent: 'flex-start',
     position: 'absolute', 
     left:0,
     top:0,
