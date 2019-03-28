@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text ,StyleSheet } from 'react-native';
+import { View, Text ,StyleSheet,TouchableHighlight } from 'react-native';
 import {Content} from 'native-base';
+import firebase from 'firebase';
+import DrawerButton from './DrawerButton' 
 
 export default class SamplingSlide extends Component {
   constructor(props) {
@@ -10,9 +12,11 @@ export default class SamplingSlide extends Component {
   }
 
   render() {
+    const mail =  firebase.auth().currentUser.email
     return (
       <Content style={{backgroundColor:'#ffffff'}}>
-        <Text style={{justifyContent:'center'}}> Hello! Mor </Text>
+        <DrawerButton label="All Report " specific={false}/>
+        <DrawerButton label="Your Report " specific={true}/>
       </Content>
     );
   }

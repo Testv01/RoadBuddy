@@ -5,11 +5,15 @@ import {Footer, FooterTab,Button, Icon} from 'native-base'
 
 
 export default class NotificationScreen extends Component {
-  state ={
-    userLocation:null,
-    usersPlaces:[],
-    processPlaces:[],
+  constructor(props) {
+    super(props);
+    this.state = {
+      userLocation:null,
+      usersPlaces:[],
+      processPlaces:[],
+    };
   }
+  
   componentWillMount(){
     const url = 'https://test-2e10e.firebaseio.com/Report.json'
     fetch(url)
@@ -72,13 +76,40 @@ export default class NotificationScreen extends Component {
                     Sender : {item.user}
                 </Text>
                 <Text style={{fontSize:16,color:'red'}}>
-                    Status : In Process
+                    Status : Reported
                 </Text>
               </View>
           </View>
           </TouchableOpacity>
       )
     };
+}
+
+renderAllReport=({item})=>{
+  
+    return(
+      <TouchableOpacity onPress={()=>this.props.navigation.navigate('NotificationDetailScreen',{item})}>
+        <View style={{flex:1,flexDirection:'row',padding:10,backgroundColor:'white'}}> 
+            <Image style={{width:80,height:80, margin:5}}
+              source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
+            />
+            <View style={{flex:1,justifyContent:'center'}}>
+              <Text style={{fontSize:18,color:'green',marginBottom:15}}>
+                  Topic : {item.topic}
+              </Text>            
+              <Text style={{fontSize:16,color:'red'}}>
+                  Description : {item.description}
+              </Text>
+              <Text style={{fontSize:16,color:'red'}}>
+                  Sender : {item.user}
+              </Text>
+              <Text style={{fontSize:16,color:'red'}}>
+                  Status : Reported
+              </Text>
+            </View>
+        </View>
+        </TouchableOpacity>
+    );
 }
 
 renderProcess=({item})=>{
@@ -117,22 +148,33 @@ renderProcess=({item})=>{
   };
 
   render() {
+    const {specific} = this.props.navigation
     return (
-     <View >
      <View style={styles.container}>
+        <View style={{padding:10,backgroundColor:'white'}}> 
+              <Text style={{fontSize:24,color:'lightBlue'}}>
+                  {specific}
+                  REPORTED
+              </Text>
+        </View>
         <FlatList
           data={this.state.usersPlaces}
-          renderItem={this.renderReport}
+          renderItem={specific ==false ? this.renderAllReport:this.renderReport }
           keyExtractor={(item,index) => index}
           ItemSeparatorComponent={this.renderSeparator}
         />
+        <View style={{padding:10,backgroundColor:'white'}}> 
+              <Text style={{fontSize:24,color:'lightBlue'}}>
+                  IN PROCESS
+              </Text>
+        </View>
+           
         <FlatList
           data={this.state.processPlaces}
           renderItem={this.renderProcess}
           keyExtractor={(item,index) => index}
           ItemSeparatorComponent={this.renderSeparator}
         />
-        </View>
         <Footer>
           <FooterTab>
               <Button vertical >
@@ -156,15 +198,6 @@ renderProcess=({item})=>{
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    position: 'absolute', 
-    left:0,
-    top:0,
-    right:0,
-    bottom:0,
-    backgroundColor: 'rgb(32, 53, 70)',
-  },
-  container2: {
-    justifyContent: 'flex-start',
     position: 'absolute', 
     left:0,
     top:0,
