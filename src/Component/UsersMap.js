@@ -11,7 +11,7 @@ const usersMap = props =>{
     }
     */
     const usersMarkers = props.usersPlaces.map(userPlace => (
-        <MapView.Marker coordinate={userPlace} key={userPlace.id} title={userPlace.topic} />
+        <MapView.Marker coordinate={userPlace} key={userPlace.id} title={userPlace.topic} pinColor={'green'} />
     ));
 
     return (

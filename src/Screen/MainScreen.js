@@ -5,57 +5,57 @@ import {
   View,
   TouchableOpacity,
   Button,
+  Image,
+  Keyboard,
   Alert
 } from 'react-native';
+import {Drawer} from 'native-base';
 import MapView,{Marker,Callout} from 'react-native-maps';
 import RNGooglePlaces from 'react-native-google-places';
 import MapViewDirections from 'react-native-maps-directions';
-import Autocomplete from 'react-native-autocomplete-input'
-import CircleButton from 'react-native-circle-button'
 import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
 import FirebaseInitial from '../Services/FirebaseInitial';
-import {  Icon, Fab } from 'native-base';
-
+import SearchBar from './Searchbar'
+import SideBar from './DrawerMenu';
 export default class MainScreen extends Component{
  
-
-    
-
     constructor(props) {
       super(props);
       this.state = {
-        usersPlaces:[],
-        place: [],
-        query: '', 
-        initialPosition:{
-          latitude: 13.6493108,
-          longitude:100.4945608,
-          latitudeDelta:0.0922,
-          longitudeDelta:0.0421
-        },
-        markerPosition:{
-          latitude:0,
-          longitude:0
-        },
-        destinationplace:{
-          latitude:0,
-          longitude:0,
-        },
-        origin:{
-          latitude:0,
-          longitude:0,
-        },
-        initail:{
-          latitude:0,
-          longitude:0,
-        },
-        destinate:{
-          latitude:0,
-          longitude:0,
-        },
-        result:[],
-        active: false
-      };
+      usersPlaces:[],
+      processPlaces:[],
+      place: [],
+      query: '', 
+      initialPosition:{
+        latitude: 0,
+        longitude:0,
+        latitudeDelta:0.0922,
+        longitudeDelta:0.0421
+      },
+      markerPosition:{
+        latitude:0,
+        longitude:0
+      },
+      destinationplace:{
+        latitude:0,
+        longitude:0,
+      },
+      origin:{
+        latitude:0,
+        longitude:0,
+      },
+      initail:{
+        latitude:0,
+        longitude:0,
+      },
+      destinate:{
+        latitude:0,
+        longitude:0,
+      },
+      result:[],
+      showlist:false
+    };
+    
     }
    
   
@@ -75,8 +75,8 @@ export default class MainScreen extends Component{
           longitude: position.coords.longitude,
         },
       })
-
-      console.log(this.state.initialPosition.latitude, this.state.initialPosition.longitude, '<<<<<<')
+      this.getUserPlacesHandler()
+      this.getProcessPlacesHandler()
     },
     (error) => console.log(error))
 
@@ -114,8 +114,10 @@ export default class MainScreen extends Component{
     BackgroundGeolocation.removeAllListeners('location');
     
   }
+
   
-  FindPlace(text){
+  FindPlace=(text)=>{
+    this.setState({showlist:true})
     this.setState({query:text})
     if(text == ''){
       this.setState({destinationplace:{
@@ -134,7 +136,9 @@ export default class MainScreen extends Component{
   }
 
 
-  SelectPlace(item){
+  SelectPlace=(item)=>{
+    this.setState({showlist:false})
+    this.Direction()
     this.setState({ query: Object.values(item)[3]})
     RNGooglePlaces.lookUpPlaceByID((item.placeID))
     .then((results) => {
@@ -150,6 +154,27 @@ export default class MainScreen extends Component{
     .catch((error) => console.log(error.message));
   }
 
+  getProcessPlacesHandler=()=>{
+    fetch('https://test-2e10e.firebaseio.com/Process.json')
+      .then(res => res.json())
+      .then(parsedRes => {
+        const placesArray=[];
+        for(const key in parsedRes){
+          placesArray.push({
+            latitude: parsedRes[key].latitude,
+            longitude: parsedRes[key].longitude,
+            description: parsedRes[key].description,
+            id: key,
+            topic: parsedRes[key].topic
+          });
+        }
+
+        this.setState({
+          processPlaces: placesArray
+        });
+      })
+  };
+
   getUserPlacesHandler=()=>{
     fetch('https://test-2e10e.firebaseio.com/Report.json')
       .then(res => res.json())
@@ -159,6 +184,7 @@ export default class MainScreen extends Component{
           placesArray.push({
             latitude: parsedRes[key].latitude,
             longitude: parsedRes[key].longitude,
+            description: parsedRes[key].description,
             id: key,
             topic: parsedRes[key].topic
           });
@@ -167,35 +193,34 @@ export default class MainScreen extends Component{
         this.setState({
           usersPlaces: placesArray
         });
-        
-        BackgroundGeolocation.on('location', (location) => {
-          let alertPlaces = [];
-          BackgroundGeolocation.getCurrentLocation(function(response) {
-            const lat = [response.latitude-0.005, response.latitude+0.005];
-            const lon = [response.longitude-0.005, response.longitude+0.005];
-            Object.keys(placesArray).map(key => {
-              if(placesArray[key].latitude >= lat[0] && placesArray[key].latitude <= lat[1]
-                && placesArray[key].longitude >= lon[0] && placesArray[key].longitude <= lon[1]) {
-                  let report = placesArray[key];
-                  alertPlaces.push(placesArray[key]) // <------ add report in area
-                  Alert.alert(
-                    'Report Nearby',
-                    ''+report.topic,
-                    [
-                      {text: 'Cancel', onPress: () => {  BackgroundGeolocation.stop(); }},
-                      {text: 'OK', onPress: () => console.log('OK Pressed')},
-                    ],
-                    { cancelable: false }
-                  )
-                }
-            });
-          })
-        });
-        BackgroundGeolocation.start();
+        // BackgroundGeolocation.on('location', (location) => {
+        //   let alertPlaces = [];
+        //   BackgroundGeolocation.getCurrentLocation(function(response) {
+        //     const lat = [response.latitude-0.005, response.latitude+0.005];
+        //     const lon = [response.longitude-0.005, response.longitude+0.005];
+        //     Object.keys(placesArray).map(key => {
+        //       if(placesArray[key].latitude >= lat[0] && placesArray[key].latitude <= lat[1]
+        //         && placesArray[key].longitude >= lon[0] && placesArray[key].longitude <= lon[1]) {
+        //           let report = placesArray[key];
+        //           alertPlaces.push(placesArray[key]) // <------ add report in area
+        //           alert(
+        //             'Report Nearby',
+        //             ''+report.topic,
+        //             [
+        //               {text: 'Cancel', onPress: () => {  BackgroundGeolocation.stop(); }},
+        //               {text: 'OK', onPress: () => console.log('OK Pressed')},
+        //             ],
+        //             { cancelable: false }
+        //           )
+        //         }
+        //     });
+        //   })
+        // });
+        // BackgroundGeolocation.start();
       })
   };
 
-  Direction(){
+  Direction=()=>{
     this.setState({initail:this.state.origin})
     this.setState({
       destination:{
@@ -204,26 +229,90 @@ export default class MainScreen extends Component{
       }
     });
     this.setState({destinate:this.state.destinationplace})
-    this.getUserPlacesHandler()
+     //this.getUserPlacesHandler() // comment function alert พื้นที่ใกล้เคียง
     }
+
+  closeDrawer = () => {
+      this.drawer._root.close()
+  };
+  openDrawer = () => {
+   
+      this.drawer._root.open()
+  };
   
+  markerClick = (item) =>{ //แสดงผลหลังกด marker
+    this.props.navigation.navigate('NotificationDetailScreen',{item})
+  };
   
 
   render() {
-    const usersMarkers = this.state.usersPlaces.map(userPlace => (
-      <MapView.Marker coordinate={userPlace} key={userPlace.id} title={userPlace.topic} />
+    
+    const reportMarkers = this.state.usersPlaces.map(userPlace => (
+      <MapView.Marker 
+        coordinate={userPlace} 
+        key={userPlace.id} 
+        title={userPlace.topic} 
+        description={userPlace.description}
+        pinColor={'green'} 
+      >
+        <MapView.Callout tooltip onPress={()=>this.markerClick(userPlace)}>
+        <View style={styles.callOut} >
+          <TouchableOpacity >
+              <View style={{alignContent:"center"}}>
+                  <Image
+                    resizeMode="cover"
+                    style={{width: 50, height: 50}}
+                    source={require('src/image/UnderConstruct.png')}
+                  />
+                  {/* comment ^^ภาพยังไม่ขึ้น  */}
+                  <Text style={{fontSize:15,fontWeight: 'bold'}}>{userPlace.topic}</Text>                  
+                  <Text style={{marginTop:5}}>{userPlace.description}</Text>
+              </View>
+          </TouchableOpacity>
+          </View>
+        </MapView.Callout>
+      </MapView.Marker>
     ));
+
+    const processMarkers = this.state.processPlaces.map(processPlace => (
+      <MapView.Marker 
+        coordinate={processPlace} 
+        key={processPlace.id} 
+        title={processPlace.topic} 
+        description={processPlace.description}
+        pinColor={'orange'} 
+      >
+        <MapView.Callout tooltip onPress={()=>this.markerClick(processPlace)}>
+        <View style={styles.callOut} >
+          <TouchableOpacity >
+              <View style={{alignContent:"center"}}>
+                  <Image
+                    resizeMode="cover"
+                    style={{width: 50, height: 50}}
+                    source={require('src/image/UnderConstruct.png')}
+                  />
+                  {/* comment ^^ภาพยังไม่ขึ้น  */}
+                  <Text style={{fontSize:15,fontWeight: 'bold'}}>{processPlace.topic}</Text>                  
+                  <Text style={{marginTop:5}}>{processPlace.description}</Text>
+              </View>
+          </TouchableOpacity>
+          </View>
+        </MapView.Callout>
+      </MapView.Marker>
+    ));
+
+
     const data = this. state.place;
     const place = []
-    const x =  Object.values(this.state.place).forEach(function(value) {
-      place.push(Object.values(value)[3])
-    });
-      
     const origin = this.state.initail;
     const destination = this.state.destinate;
     const GOOGLE_MAPS_APIKEY = "AIzaSyB_1gqNDYMyc10X_3lp5qh2iTM3DlAm4gE"
     console.log('-------', this.state.initialPosition)
     return (
+      <Drawer
+      ref={(ref) => { this.drawer = ref; }}
+      content={<SideBar navigator={this.navigator} />}
+      onClose={() => this.closeDrawer()} >
       <View style={styles.container}>
         <MapView style={styles.map}
           showsMyLocationButton={true}
@@ -301,6 +390,7 @@ export default class MainScreen extends Component{
           </Fab>
         </View>
       </View>
+      </Drawer>
     );
   }
 }
@@ -309,16 +399,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#F5FCFF',
     flex: 1,
-    paddingTop: 50
-  },
-  autocompleteContainer: {
-    flex: 1,
-    left: 0,
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    zIndex: 1,
-    width:240
+    
   },
   itemText: {
     fontSize: 15,
@@ -332,6 +413,11 @@ const styles = StyleSheet.create({
   },
   infoText: {
     textAlign: 'center'
+  },callOut:{
+    backgroundColor:'white',
+    padding: 10,
+    borderColor: "black",
+    borderRadius: 10,
   },
   map:{
     ...StyleSheet.absoluteFillObject

@@ -93,6 +93,19 @@ export default class ReportScreen extends Component {
             longitudeDelta: 0.0010,
           }
         });
+        //vvvvvvvvv comment เอามาวางตรงนี้ชั่วคราวก่อน เพราะคอมเมนท์ส่วนอัพภาพไป 
+        FirebaseInitial.insertReport(
+          position.coords.latitude,
+          position.coords.longitude,
+          this.state.topicText,
+          this.state.descText,
+          this.state.uploadURL,
+          this.state.accident,
+          this.state.roadProblem,
+          this.state.drainSystem,
+          this.state.electricity,
+          this.state.lightSystem,
+        )
         // fetch('https://test-2e10e.firebaseio.com/places.json',{
         //   method: 'POST',
         //   body: JSON.stringify({
@@ -105,8 +118,8 @@ export default class ReportScreen extends Component {
         //   })
         // })
 
-        console.log(this.state.selectedFile)
-        this.uploadPic();
+        // console.log(this.state.selectedFile)
+        // this.uploadPic();
 
         // alert("Send Success!");
         // this.props.navigation.goBack();
