@@ -4,7 +4,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Button
+  Button,
+  Alert
 } from 'react-native';
 import MapView,{Marker,Callout} from 'react-native-maps';
 import RNGooglePlaces from 'react-native-google-places';
@@ -23,60 +24,61 @@ export default class MainScreen extends Component{
     constructor(props) {
       super(props);
       this.state = {
-      usersPlaces:[],
-      place: [],
-      query: '', 
-      initialPosition:{
-        latitude: 0,
-        longitude:0,
-        latitudeDelta:0.0922,
-        longitudeDelta:0.0421
-      },
-      markerPosition:{
-        latitude:0,
-        longitude:0
-      },
-      destinationplace:{
-        latitude:0,
-        longitude:0,
-      },
-      origin:{
-        latitude:0,
-        longitude:0,
-      },
-      initail:{
-        latitude:0,
-        longitude:0,
-      },
-      destinate:{
-        latitude:0,
-        longitude:0,
-      },
-      result:[],
-      active: false
-    };
-    
-    }
-   
-  
- 
-  componentWillMount(){
-    FirebaseInitial.asd()
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.setState({
+        usersPlaces:[],
+        place: [],
+        query: '', 
         initialPosition:{
-          latitude:position.coords.latitude,
-          longitude:position.coords.longitude,
+          latitude: 13.6493108,
+          longitude:100.4945608,
           latitudeDelta:0.0922,
           longitudeDelta:0.0421
         },
         markerPosition:{
-          latitude:position.coords.latitude,
-          longitude:position.coords.longitude,
+          latitude:0,
+          longitude:0
+        },
+        destinationplace:{
+          latitude:0,
+          longitude:0,
+        },
+        origin:{
+          latitude:0,
+          longitude:0,
+        },
+        initail:{
+          latitude:0,
+          longitude:0,
+        },
+        destinate:{
+          latitude:0,
+          longitude:0,
+        },
+        result:[],
+        active: false
+      };
+    }
+   
+  
+  componentWillMount(){
+    FirebaseInitial.asd()
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log('====', position.coords.latitude, position.coords.longitude)
+      this.setState({
+        initialPosition:{
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421
+        },
+        markerPosition:{
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
         },
       })
+
+      console.log(this.state.initialPosition.latitude, this.state.initialPosition.longitude, '<<<<<<')
     },
-    (error) =>console.log(error))
+    (error) => console.log(error))
 
     BackgroundGeolocation.configure({
       desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
@@ -96,12 +98,11 @@ export default class MainScreen extends Component{
 
   }
   componentDidMount(){
-    
     navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
         origin:{
-          latitude:position.coords.latitude,
-          longitude:position.coords.longitude,
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
         }
       })
     },
@@ -113,9 +114,6 @@ export default class MainScreen extends Component{
     BackgroundGeolocation.removeAllListeners('location');
     
   }
-
-  
-
   
   FindPlace(text){
     this.setState({query:text})
@@ -169,6 +167,7 @@ export default class MainScreen extends Component{
         this.setState({
           usersPlaces: placesArray
         });
+        
         BackgroundGeolocation.on('location', (location) => {
           let alertPlaces = [];
           BackgroundGeolocation.getCurrentLocation(function(response) {
@@ -209,11 +208,8 @@ export default class MainScreen extends Component{
     }
   
   
-  
 
   render() {
-    console.log(this.state.initail)
-    console.log('des',this.state.destination)
     const usersMarkers = this.state.usersPlaces.map(userPlace => (
       <MapView.Marker coordinate={userPlace} key={userPlace.id} title={userPlace.topic} />
     ));
@@ -226,53 +222,53 @@ export default class MainScreen extends Component{
     const origin = this.state.initail;
     const destination = this.state.destinate;
     const GOOGLE_MAPS_APIKEY = "AIzaSyB_1gqNDYMyc10X_3lp5qh2iTM3DlAm4gE"
+    console.log('-------', this.state.initialPosition)
     return (
       <View style={styles.container}>
-      <MapView style={styles.map}
-        showsMyLocationButton
-        // showsUserLocation
-        initialRegion={this.state.initialPosition}
-        // showsTraffic
->
-        <Marker coordinate={this.state.markerPosition} />
-        <Marker coordinate={destination} />
+        <MapView style={styles.map}
+          showsMyLocationButton={true}
+          showsUserLocation={true}
+          initialRegion={this.state.initialPosition}
+          region={this.state.initialPosition}
+          // showsTraffic
+        >
+          <Marker coordinate={this.state.markerPosition} />
+          <Marker coordinate={destination} />
           
         
 
-        <MapViewDirections
-        origin={origin}
-        destination={destination}
-        apikey={GOOGLE_MAPS_APIKEY}
-        strokeWidth={10}
-        strokeColor='hotpink'
-        alternatives={true}
-        
-        
-        
-  />
-  {usersMarkers}
-     </MapView>
-      <View style={{justifyContent:'center',flexDirection:'row'}}>
+          <MapViewDirections
+            origin={origin}
+            destination={destination}
+            apikey={GOOGLE_MAPS_APIKEY}
+            strokeWidth={10}
+            strokeColor='hotpink'
+            alternatives={true}
+          />
+
+          {usersMarkers}
+        </MapView>
+        <View style={{justifyContent:'center',flexDirection:'row'}}>
       
-      <Autocomplete 
-           autoCapitalize="none"
-           autoCorrect={true}
-           data={data.length>=0 &&  place.includes(this.state.query) == true   ? [] : data }
-           containerStyle={styles.autocompleteContainer}
-           defaultValue={this.state.query}
-           onChangeText={text => this.FindPlace(text)}
-           placeholder="Enter Place"
-           renderItem={(item )=> (
-            <TouchableOpacity onPress={() => { 
-              this.SelectPlace(item) 
-            }  }>
-              <Text style={styles.itemText}>{Object.values(item)[3]} </Text>
-              <Text style={styles.itemText}> </Text>
-            </TouchableOpacity>
-          )}
-      />
+        <Autocomplete 
+            autoCapitalize="none"
+            autoCorrect={true}
+            data={data.length>=0 &&  place.includes(this.state.query) == true   ? [] : data }
+            containerStyle={styles.autocompleteContainer}
+            defaultValue={this.state.query}
+            onChangeText={text => this.FindPlace(text)}
+            placeholder="Enter Place"
+            renderItem={(item )=> (
+              <TouchableOpacity onPress={() => { 
+                this.SelectPlace(item) 
+              }  }>
+                <Text style={styles.itemText}>{Object.values(item)[3]} </Text>
+                <Text style={styles.itemText}> </Text>
+              </TouchableOpacity>
+            )}
+        />
       
-      <View style={{width:100,left:100}}>
+        <View style={{width:100,left:100}}>
         <Button style={{width:50}} title='Enter'  onPress={this.Direction.bind(this)}/>
       </View>
       </View>
@@ -293,13 +289,13 @@ export default class MainScreen extends Component{
                 position="bottomRight"
                 onPress={() => this.setState({ active: !this.state.active })}>
             <Icon name="add" type='MaterialIcons' />
-            <Button style={{ backgroundColor: '#34A34F' }} onPress={()=> this.props.navigation.navigate('CallInfoScreen')}>
+            <Button style={{ backgroundColor: '#34A34F' }} onPress={()=> this.props.navigation.navigate('CallInfoScreen')} title="">
               <Icon name="info-outline" type='MaterialIcons' />
             </Button>
-            <Button style={{ backgroundColor: '#3B5998' }} onPress={()=> this.props.navigation.navigate('NotificationScreen')}>
+            <Button style={{ backgroundColor: '#3B5998' }} onPress={()=> this.props.navigation.navigate('NotificationScreen')} title="">
               <Icon name="ios-notifications" type='Ionicons' />
             </Button>
-            <Button  style={{ backgroundColor: '#DD5144' }} onPress={()=> this.props.navigation.navigate('ReportScreen')}>
+            <Button  style={{ backgroundColor: '#DD5144' }} onPress={()=> this.props.navigation.navigate('ReportScreen')} title="">
               <Icon name="report-problem" type='MaterialIcons' />
             </Button>
           </Fab>
