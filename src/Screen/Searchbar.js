@@ -47,7 +47,7 @@ export default class Searchbar extends React.Component {
     <View style={styles.container}>
       <View style={{flex:1,padding:20}}>
       <View>
-        <View style={{height:60,backgroundColor:'white',justifyContent:'flex-start',flexDirection:'row',alignItems:'center'}}>
+        <View style={{height:50, width: 330, backgroundColor:'white',justifyContent:'flex-start',flexDirection:'row',alignItems:'center', borderRadius: 7}}>
         <Animatable.View animation='slideInRight' style={{height:50,backgroundColor:'white',padding:10,alignItems:'center'}}>
         <Animatable.View animation={this.state.searchBarFocused?'fadeInLeft':'fadeInRight'} duration={400}>
           <Icon name={this.state.searchBarFocused?'md-arrow-back':'md-menu'} style={{fontSize:30}} onPress={this.state.searchBarFocused?Keyboard.dismiss:()=>this.props.opendrawer()}/>

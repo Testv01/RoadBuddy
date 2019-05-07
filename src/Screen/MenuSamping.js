@@ -7,8 +7,6 @@ export default class MenuSamping extends React.Component {
       super(props);
      
       }
-    
-  
   
     render() {
       return (

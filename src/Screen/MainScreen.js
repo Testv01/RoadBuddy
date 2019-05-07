@@ -58,27 +58,25 @@ export default class MainScreen extends Component{
     
     }
    
-  
   componentWillMount(){
     FirebaseInitial.asd()
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log('====', position.coords.latitude, position.coords.longitude)
       this.setState({
         initialPosition:{
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
+          latitude:position.coords.latitude,
+          longitude:position.coords.longitude,
+          latitudeDelta:0.0922,
+          longitudeDelta:0.0421
         },
         markerPosition:{
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
+          latitude:position.coords.latitude,
+          longitude:position.coords.longitude,
         },
       })
       this.getUserPlacesHandler()
       this.getProcessPlacesHandler()
     },
-    (error) => console.log(error))
+    (error) =>console.log(error))
 
     BackgroundGeolocation.configure({
       desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
@@ -101,8 +99,8 @@ export default class MainScreen extends Component{
     navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
         origin:{
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
+          latitude:position.coords.latitude,
+          longitude:position.coords.longitude,
         }
       })
     },
@@ -176,7 +174,7 @@ export default class MainScreen extends Component{
   };
 
   getUserPlacesHandler=()=>{
-    fetch('https://test-2e10e.firebaseio.com/Report.json')
+    fetch('https://test-2e10e.firebaseio.com/Process.json')
       .then(res => res.json())
       .then(parsedRes => {
         const placesArray=[];
@@ -193,30 +191,31 @@ export default class MainScreen extends Component{
         this.setState({
           usersPlaces: placesArray
         });
-        // BackgroundGeolocation.on('location', (location) => {
-        //   let alertPlaces = [];
-        //   BackgroundGeolocation.getCurrentLocation(function(response) {
-        //     const lat = [response.latitude-0.005, response.latitude+0.005];
-        //     const lon = [response.longitude-0.005, response.longitude+0.005];
-        //     Object.keys(placesArray).map(key => {
-        //       if(placesArray[key].latitude >= lat[0] && placesArray[key].latitude <= lat[1]
-        //         && placesArray[key].longitude >= lon[0] && placesArray[key].longitude <= lon[1]) {
-        //           let report = placesArray[key];
-        //           alertPlaces.push(placesArray[key]) // <------ add report in area
-        //           alert(
-        //             'Report Nearby',
-        //             ''+report.topic,
-        //             [
-        //               {text: 'Cancel', onPress: () => {  BackgroundGeolocation.stop(); }},
-        //               {text: 'OK', onPress: () => console.log('OK Pressed')},
-        //             ],
-        //             { cancelable: false }
-        //           )
-        //         }
-        //     });
-        //   })
-        // });
-        // BackgroundGeolocation.start();
+        BackgroundGeolocation.on('location', (location) => {
+          let alertPlaces = [];
+          BackgroundGeolocation.getCurrentLocation(function(response) {
+            const lat = [response.latitude-0.005, response.latitude+0.005];
+            const lon = [response.longitude-0.005, response.longitude+0.005];
+            Object.keys(placesArray).map(key => {
+              if(placesArray[key].latitude >= lat[0] && placesArray[key].latitude <= lat[1]
+                && placesArray[key].longitude >= lon[0] && placesArray[key].longitude <= lon[1]) {
+                  let report = placesArray[key];
+                  alertPlaces.push(placesArray[key]) // <------ add report in area
+                  // alert(
+                  //   'Report Nearby',
+                  //   ''+report.topic,
+                  //   [
+                  //     {text: 'Cancel', onPress: () => {  BackgroundGeolocation.stop(); }},
+                  //     {text: 'OK', onPress: () => console.log('OK Pressed')},
+                  //   ],
+                  //   { cancelable: false }
+                  // )
+                  console.log("Report Nearby", report.topic, report.description)
+                }
+            });
+          })
+        });
+        BackgroundGeolocation.start();
       })
   };
 
@@ -307,88 +306,42 @@ export default class MainScreen extends Component{
     const origin = this.state.initail;
     const destination = this.state.destinate;
     const GOOGLE_MAPS_APIKEY = "AIzaSyB_1gqNDYMyc10X_3lp5qh2iTM3DlAm4gE"
-    console.log('-------', this.state.initialPosition)
     return (
       <Drawer
       ref={(ref) => { this.drawer = ref; }}
       content={<SideBar navigator={this.navigator} />}
       onClose={() => this.closeDrawer()} >
       <View style={styles.container}>
-        <MapView style={styles.map}
-          showsMyLocationButton={true}
-          showsUserLocation={true}
-          initialRegion={this.state.initialPosition}
-          region={this.state.initialPosition}
-          // showsTraffic
-        >
-          <Marker coordinate={this.state.markerPosition} />
-          <Marker coordinate={destination} />
-          
-        
-
-          <MapViewDirections
-            origin={origin}
-            destination={destination}
-            apikey={GOOGLE_MAPS_APIKEY}
-            strokeWidth={10}
-            strokeColor='hotpink'
-            alternatives={true}
-          />
-
-          {usersMarkers}
-        </MapView>
-        <View style={{justifyContent:'center',flexDirection:'row'}}>
-      
-        <Autocomplete 
-            autoCapitalize="none"
-            autoCorrect={true}
-            data={data.length>=0 &&  place.includes(this.state.query) == true   ? [] : data }
-            containerStyle={styles.autocompleteContainer}
-            defaultValue={this.state.query}
-            onChangeText={text => this.FindPlace(text)}
-            placeholder="Enter Place"
-            renderItem={(item )=> (
-              <TouchableOpacity onPress={() => { 
-                this.SelectPlace(item) 
-              }  }>
-                <Text style={styles.itemText}>{Object.values(item)[3]} </Text>
-                <Text style={styles.itemText}> </Text>
-              </TouchableOpacity>
-            )}
+      <MapView style={styles.map}
+        showsMyLocationButton={true}
+        showsUserLocation={true}
+        initialRegion={this.state.initialPosition}
+        region={this.state.initialPosition}
+        // showsTraffic
+      >
+        <Marker coordinate={this.state.markerPosition} />
+        <Marker coordinate={destination} />
+        <MapViewDirections
+        origin={origin}
+        destination={destination}
+        apikey={GOOGLE_MAPS_APIKEY}
+        strokeWidth={10}
+        strokeColor='hotpink'
+        alternatives={true}
+      />
+        {reportMarkers}
+        {processMarkers}
+     </MapView>
+      <SearchBar 
+        navigation={this.props.navigation}
+        direction={this.Direction} 
+        findplace={this.FindPlace} 
+        defaultvalue={this.state.query}
+        data={data.length>=0 &&  place.includes(this.state.query) == true   ? [] : data}
+        selectplace={this.SelectPlace}
+        opendrawer={this.openDrawer}
+        showlist={this.state.showlist}
         />
-      
-        <View style={{width:100,left:100}}>
-        <Button style={{width:50}} title='Enter'  onPress={this.Direction.bind(this)}/>
-      </View>
-      </View>
-      <View  style={{ flex: 1 }}>
-        {/* <CircleButton 
-                  size={45} 
-                  onPressButtonTop={()=> this.props.navigation.navigate('ReportScreen')}
-                  onPressButtonLeft={()=> this.props.navigation.navigate('NotificationScreen')}
-                  onPressButtonRight={()=> this.props.navigation.navigate('CallInfoScreen')}
-                  primaryColor="#f27663"
-                  secondaryColor="#f99a8b"
-                /> */}
-            <Fab
-                active={this.state.active}
-                direction="up"
-                containerStyle={{ }}
-                style={{ backgroundColor: '#5067FF' }}
-                position="bottomRight"
-                onPress={() => this.setState({ active: !this.state.active })}>
-            <Icon name="add" type='MaterialIcons' />
-            <Button style={{ backgroundColor: '#34A34F' }} onPress={()=> this.props.navigation.navigate('CallInfoScreen')} title="">
-              <Icon name="info-outline" type='MaterialIcons' />
-            </Button>
-            <Button style={{ backgroundColor: '#3B5998' }} onPress={()=> this.props.navigation.navigate('NotificationScreen')} title="">
-              <Icon name="ios-notifications" type='Ionicons' />
-            </Button>
-            <Button  style={{ backgroundColor: '#DD5144' }} onPress={()=> this.props.navigation.navigate('ReportScreen')} title="">
-              <Icon name="report-problem" type='MaterialIcons' />
-            </Button>
-          </Fab>
-        </View>
       </View>
       </Drawer>
     );
@@ -399,7 +352,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#F5FCFF',
     flex: 1,
-    
   },
   itemText: {
     fontSize: 15,

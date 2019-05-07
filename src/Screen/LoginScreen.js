@@ -24,7 +24,7 @@ export default class LoginScreen extends React.Component {
     let { email, password } = this.state;
     firebase.auth().signInWithEmailAndPassword(email, password)
     .then((checkVerify) => {
-      firebase.auth().onAuthStateChanged(firebaseUser =>{
+      firebase.auth().onAuthStateChanged(firebaseUser => {
         if (firebaseUser.emailVerified){
           Alert.alert("  Greeting", "Welcome to Road Buddy , " + email + " !")
           this.props.navigation.navigate('MainScreen')

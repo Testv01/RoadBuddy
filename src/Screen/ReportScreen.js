@@ -94,18 +94,19 @@ export default class ReportScreen extends Component {
           }
         });
         //vvvvvvvvv comment เอามาวางตรงนี้ชั่วคราวก่อน เพราะคอมเมนท์ส่วนอัพภาพไป 
-        FirebaseInitial.insertReport(
-          position.coords.latitude,
-          position.coords.longitude,
-          this.state.topicText,
-          this.state.descText,
-          this.state.uploadURL,
-          this.state.accident,
-          this.state.roadProblem,
-          this.state.drainSystem,
-          this.state.electricity,
-          this.state.lightSystem,
-        )
+        this.uploadPic();
+        // FirebaseInitial.insertReport(
+        //   position.coords.latitude,
+        //   position.coords.longitude,
+        //   this.state.topicText,
+        //   this.state.descText,
+        //   this.state.uploadURL,
+        //   this.state.accident,
+        //   this.state.roadProblem,
+        //   this.state.drainSystem,
+        //   this.state.electricity,
+        //   this.state.lightSystem,
+        // )
         // fetch('https://test-2e10e.firebaseio.com/places.json',{
         //   method: 'POST',
         //   body: JSON.stringify({
@@ -119,7 +120,6 @@ export default class ReportScreen extends Component {
         // })
 
         // console.log(this.state.selectedFile)
-        // this.uploadPic();
 
         // alert("Send Success!");
         // this.props.navigation.goBack();
@@ -152,48 +152,44 @@ export default class ReportScreen extends Component {
           'audio/',
           'foo/',
       ]
-  }).build()
-		window.Blob = blob;
+    }).build()
+
+    window.Blob = blob;
     let rand = Math.random().toString(36);
-		let uploadBlob = null;
-		const imgRef = firebase.storage().ref('avatar').child(rand+'.jpg');
-		let mime = 'image/jpg'
-		fs.readFile( img ,'base64')
-		.then( (data) => {
-			return blob.build(data , {type : '${mime};BASE64'})
-		}).then( (blob) => {
-			uploadBlob = blob
-			return imgRef.put(blob , { contentType : mime})
-		}).then((resp) => {
-			console.log(resp);
-      return imgRef.getDownloadURL();
-  }).then( (url) => {
-    this.setState({uploadURL : url} );
-  })
-  .then( () => {
-    this.setState({
-      avatarSource: null
-    })
-  }).then( () => {
-    console.log(this.state.uploadURL);
-    FirebaseInitial.insertReport(
-      position.coords.latitude,
-      position.coords.longitude,
-      this.state.topicText,
-      this.state.descText,
-      this.state.uploadURL,
-      this.state.accident,
-      this.state.roadProblem,
-      this.state.drainSystem,
-      this.state.electricity,
-      this.state.lightSystem,
-    )
-    uploadBlob.close();
-    alert('your new report successfully');
-  })
-  .catch( (error) => {
-			console.log(error);
-		})
+    let uploadBlob = null;
+    const imgRef = firebase.storage().ref('avatar').child(rand+'.jpg');
+    let mime = 'image/jpg'
+    fs.readFile( img ,'base64')
+      .then( (data) => {
+        return blob.build(data , {type : '${mime};BASE64'})
+      }).then( (blob) => {
+        uploadBlob = blob
+        return imgRef.put(blob , { contentType : mime})
+      }).then((resp) => {
+        console.log(resp);
+        return imgRef.getDownloadURL();
+    }).then( (url) => {
+      this.setState({
+        avatarSource: null,
+        uploadURL : url
+      })
+      FirebaseInitial.insertReport(
+        this.state.userLocation.latitude,
+        this.state.userLocation.longitude,
+        this.state.topicText,
+        this.state.descText,
+        url,
+        this.state.accident,
+        this.state.roadProblem,
+        this.state.drainSystem,
+        this.state.electricity,
+        this.state.lightSystem,
+      )
+      uploadBlob.close();
+      alert('your new report successfully');
+    }).catch( (error) => {
+        console.log(error);
+      })
 	}
 
   setTopic = (text) => {

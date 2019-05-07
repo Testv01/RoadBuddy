@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View,Text,FlatList,Image,TouchableOpacity } from 'react-native';
 import firebase from 'firebase';
-import {Footer, FooterTab,Button, Icon} from 'native-base'
-
+import {Footer, FooterTab,Button, Icon} from 'native-base';
 
 export default class NotificationScreen extends Component {
   constructor(props) {
@@ -16,44 +15,62 @@ export default class NotificationScreen extends Component {
   
   componentWillMount(){
     const url = 'https://test-2e10e.firebaseio.com/Report.json'
+    const userEmail = firebase.auth().currentUser.email;
     fetch(url)
       .then(res => res.json())
       .then(parsedRes => {
-        const placesArray=[];
-        for(const key in parsedRes){
-          placesArray.push({
-            latitude: parsedRes[key].latitude,
-            longitude: parsedRes[key].longitude,
-            id: key,
-            topic: parsedRes[key].topic,
-            description: parsedRes[key].description,
-            user:parsedRes[key].user
-          });
+        let placesArray = [];
+        // const placesArray = parsedRes.filter(function(place) {
+        //   return place.user == userEmail
+        // })
+        // .map(function(place) {
+        //   return {
+        //     latitude: place.latitude,
+        //     longitude: place.longitude,
+        //     id: key,
+        //     image: place.image,
+        //     topic: place.topic,
+        //     description: place.description,
+        //     user:place.user
+        //   }
+        // });
+        for(const key in parsedRes) {
+          if(parsedRes[key].user == userEmail) {
+            placesArray.push({
+              latitude: parsedRes[key].latitude,
+              longitude: parsedRes[key].longitude,
+              id: key,
+              image: parsedRes[key].image,
+              topic: parsedRes[key].topic,
+              description: parsedRes[key].description,
+              user:parsedRes[key].user
+            });
+          }
         }
         this.setState({
           usersPlaces: placesArray
         });
       })
 
-      fetch('https://test-2e10e.firebaseio.com/Process.json')
-      .then(res => res.json())
-      .then(parsedRes => {
-        const placesArray=[];
-        for(const key in parsedRes){
-          placesArray.push({
-            latitude: parsedRes[key].latitude,
-            longitude: parsedRes[key].longitude,
-            id: key,
-            topic: parsedRes[key].topic,
-            description: parsedRes[key].description,
-            user:parsedRes[key].user
-          });
-        }
+      // fetch('https://test-2e10e.firebaseio.com/Process.json')
+      // .then(res => res.json())
+      // .then(parsedRes => {
+      //   const placesArray=[];
+      //   for(const key in parsedRes){
+      //     placesArray.push({
+      //       latitude: parsedRes[key].latitude,
+      //       longitude: parsedRes[key].longitude,
+      //       id: key,
+      //       topic: parsedRes[key].topic,
+      //       description: parsedRes[key].description,
+      //       user:parsedRes[key].user
+      //     });
+      //   }
 
-        this.setState({
-          processPlaces: placesArray
-        });
-      })
+      //   this.setState({
+      //     processPlaces: placesArray
+      //   });
+      // })
   }
 
   
@@ -63,7 +80,7 @@ export default class NotificationScreen extends Component {
         <TouchableOpacity onPress={()=>this.props.navigation.navigate('NotificationDetailScreen',{item})}>
           <View style={{flex:1,flexDirection:'row',padding:10,backgroundColor:'white'}}> 
               <Image style={{width:80,height:80, margin:5}}
-                source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
+                source={{uri: item.image}}
               />
               <View style={{flex:1,justifyContent:'center'}}>
                 <Text style={{fontSize:18,color:'green',marginBottom:15}}>
@@ -156,22 +173,14 @@ renderProcess=({item})=>{
                   {specific}
                   REPORTED
               </Text>
+
+            <Button style={{ backgroundColor: '#3B5998' }} onPress={()=> this.props.navigation.navigate('NotificationScreen')} title="">
+              <Icon name="refresh-circle" type='Ionicons' />
+            </Button>
         </View>
         <FlatList
           data={this.state.usersPlaces}
           renderItem={specific ==false ? this.renderAllReport:this.renderReport }
-          keyExtractor={(item,index) => index}
-          ItemSeparatorComponent={this.renderSeparator}
-        />
-        <View style={{padding:10,backgroundColor:'white'}}> 
-              <Text style={{fontSize:24,color:'lightBlue'}}>
-                  IN PROCESS
-              </Text>
-        </View>
-           
-        <FlatList
-          data={this.state.processPlaces}
-          renderItem={this.renderProcess}
           keyExtractor={(item,index) => index}
           ItemSeparatorComponent={this.renderSeparator}
         />

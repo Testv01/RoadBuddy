@@ -15,7 +15,7 @@ export default class NotificationDetailScreen extends Component {
     return (
       <View style={{backgroundColor:'#ffffff',flex:1}}>
             <Image style={{width: 150, height: 150,alignSelf:'center',margin:20}}
-                source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
+                source={{uri: item.image}}
             />
             <View style={styles.row}>
                 <Text style={styles.detail}>Topic: </Text>
