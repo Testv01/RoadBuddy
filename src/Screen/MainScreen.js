@@ -184,7 +184,8 @@ export default class MainScreen extends Component{
             longitude: parsedRes[key].longitude,
             description: parsedRes[key].description,
             id: key,
-            topic: parsedRes[key].topic
+            topic: parsedRes[key].topic,
+            image:parsedRes[key].image
           });
         }
 
@@ -260,8 +261,8 @@ export default class MainScreen extends Component{
               <View style={{alignContent:"center"}}>
                   <Image
                     resizeMode="cover"
-                    style={{width: 50, height: 50}}
-                    source={require('src/image/UnderConstruct.png')}
+                    style={{width: 75, height: 75}}
+                    source={{uri:userPlace.image}}
                   />
                   {/* comment ^^ภาพยังไม่ขึ้น  */}
                   <Text style={{fontSize:15,fontWeight: 'bold'}}>{userPlace.topic}</Text>                  
@@ -330,7 +331,7 @@ export default class MainScreen extends Component{
         alternatives={true}
       />
         {reportMarkers}
-        {processMarkers}
+        {/* {processMarkers} */}
      </MapView>
       <SearchBar 
         navigation={this.props.navigation}

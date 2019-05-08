@@ -75,7 +75,7 @@ export default class NotificationScreen extends Component {
 
   
   renderReport=({item})=>{
-    if(item.user == firebase.auth().currentUser.email){
+    // if(item.user == firebase.auth().currentUser.email){
       return(
         <TouchableOpacity onPress={()=>this.props.navigation.navigate('NotificationDetailScreen',{item})}>
           <View style={{flex:1,flexDirection:'row',padding:10,backgroundColor:'white'}}> 
@@ -99,7 +99,7 @@ export default class NotificationScreen extends Component {
           </View>
           </TouchableOpacity>
       )
-    };
+    // };
 }
 
 renderAllReport=({item})=>{
@@ -168,38 +168,36 @@ renderProcess=({item})=>{
     const {specific} = this.props.navigation
     return (
      <View style={styles.container}>
-        <View style={{padding:10,backgroundColor:'white'}}> 
-              <Text style={{fontSize:24,color:'lightBlue'}}>
+        <View style={{padding:10,backgroundColor:'white',flexDirection:"row",borderBottomColor:"black",borderBottomWidth:2}}> 
+              <Text style={{fontSize:24,color:'lightBlue',flex:1}}>
                   {specific}
                   REPORTED
               </Text>
-
-            <Button style={{ backgroundColor: '#3B5998' }} onPress={()=> this.props.navigation.navigate('NotificationScreen')} title="">
-              <Icon name="refresh-circle" type='Ionicons' />
+            <View style={{ right:0,flex:1,justifyContent:"flex-end",flexDirection:"row"}}>
+            <Button style={{ backgroundColor: '#3B5998' ,right:0}} onPress={()=>this.props.navigation.pop() && this.props.navigation.navigate('NotificationScreen')} title="">
+              <Icon name="refresh-circle" type='Ionicons'  />
             </Button>
+            </View>
         </View>
         <FlatList
           data={this.state.usersPlaces}
-          renderItem={specific ==false ? this.renderAllReport:this.renderReport }
+          renderItem={this.renderReport}
           keyExtractor={(item,index) => index}
           ItemSeparatorComponent={this.renderSeparator}
         />
-        <Footer>
+        {/* <Footer>
           <FooterTab>
               <Button vertical >
-                {/* <Icon name="apps" /> */}
                 <Text>1</Text>
               </Button>
               <Button vertical>
-                {/* <Icon name="camera" /> */}
                 <Text>2</Text>
               </Button>
               <Button vertical>
-                {/* <Icon active name="navigate" /> */}
                 <Text>3</Text>
               </Button>
             </FooterTab>
-        </Footer>
+        </Footer> */}
       </View> 
     );
   }

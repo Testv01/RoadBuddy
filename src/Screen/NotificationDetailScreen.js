@@ -14,7 +14,7 @@ export default class NotificationDetailScreen extends Component {
     const item = navigation.getParam('item');
     return (
       <View style={{backgroundColor:'#ffffff',flex:1}}>
-            <Image style={{width: 150, height: 150,alignSelf:'center',margin:20}}
+            <Image style={{width: 250, height: 250,alignSelf:'center',margin:20}}
                 source={{uri: item.image}}
             />
             <View style={styles.row}>
