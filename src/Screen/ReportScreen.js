@@ -398,23 +398,27 @@ export default class ReportScreen extends Component {
           visible={this.state.Modal}
           title="Send Success! Do you want to contact an organization immediately?"
           // title="Do you want to contact an organization immediately?" 
-          titleStyle={{ textAlign: 'center', color: 'white' }}
+          titleStyle={{ textAlign: 'center', color: '#203546' }}
           onTouchOutside={() => { this.setState({ Modal: false }) }}
         >
           <View style={{ marginBottom: 20, alignItems: 'center', flexDirection: 'row', flex:1 }}>
-            <TouchableOpacity
-              style={[styles.ScreenButton, { /*backgroundColor: "#4D6375",*/ marginRight: 120, }]}
-              onPress={() => { this.goMain() }}
-            >
-              <Text style={{ color: 'white' }}>No</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.ScreenButton, { backgroundColor: "#35495A", /*marginLeft: 100,*/ }]}
-              onPress={() => { this.goCallinfo() }}
-            >
-              <Text style={{ color: 'white' }}>Yes</Text>
-            </TouchableOpacity>
-
+            
+          <View  style={{ flex:1, alignItems: 'center'}}>
+              <TouchableOpacity
+                style={[styles.ScreenButton, { backgroundColor: "#35495A", /*marginLeft: 100,*/ }]}
+                onPress={() => { this.goCallinfo() }}
+              >
+                <Text style={{ color: 'white' }}>Yes</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ flex:1, alignItems: 'center'}}>
+              <TouchableOpacity
+                style={[styles.ScreenButton, { backgroundColor: "#4D6375",  }]}
+                onPress={() => { this.goMain() }}
+              >
+                <Text style={{ color: 'white' }}>No</Text>
+              </TouchableOpacity>
+            </View>
 
           </View>
         </Dialog>
