@@ -186,7 +186,6 @@ export default class ReportScreen extends Component {
         this.state.lightSystem,
       )
       uploadBlob.close();
-      alert('your new report successfully');
     }).catch( (error) => {
         console.log(error);
       })

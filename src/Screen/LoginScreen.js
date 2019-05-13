@@ -42,7 +42,10 @@ export default class LoginScreen extends React.Component {
       <SafeAreaView style={styles.container}>
         <StatusBar barStyle="light-content" />
         <View style={styles.container}>
-          <Text style={styles.title}>Road Buddy</Text>
+          <Image style={{width: 250, height: 250,alignSelf:'center'}}
+                source={require('../image/TestWhite.png')}
+                ></Image>
+          {/* <Text style={styles.title}>Road Buddy</Text> */}
           {this.state.errorMessage &&
             <Text style={{ color: 'red' }}>
               {this.state.errorMessage}
